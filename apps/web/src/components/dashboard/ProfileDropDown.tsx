@@ -46,7 +46,7 @@ export default function UserDropdown() {
             <div>
                 {
                     dropDown && (
-                        <div className="absolute right-8 mt-2 w-36 font-light bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+                        <div className="absolute cursor-pointer right-8 mt-2 w-36 font-light bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="py-1">
                                 <div className="block px-4 py-2 text-xs font-thin text-gray-700">
                                     <i>Hi {session?.user?.name}</i>

@@ -7,12 +7,12 @@ interface ButtonProps {
     children: ReactNode;
 }
 
-export const WhiteBtn = ({ onClick, children }: ButtonProps) => {
+export default function({ onClick, children }: ButtonProps) {
     return (
         <button
             onClick={onClick}
             type="button"
-            className="bg-[#ffffff] w-full px-3 py-1 text-sm rounded-[3px] font-thin hover:bg-[#ededed]"
+            className="bg-[#ffffff] w-full px-3 py-2 text-sm rounded-[3px] font-light hover:bg-[#ededed]"
         >
             {children}
         </button>
