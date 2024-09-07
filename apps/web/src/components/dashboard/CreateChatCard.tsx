@@ -9,7 +9,7 @@ export default function CreateRoomComponent() {
 
     return (
         <>
-            <div className="w-2/5 transform bg-[#202a2e] px-12 py-4 rounded-[8px] ml-8">
+            <div className="w-2/5 transform bg-[#202a2e] px-12 py-4 rounded-[8px]">
                 <div className="flex flex-col">
                     <div className="flex flex-row gap-x-8 items-center mt-4 justify-between">
                         <p className="text-white font-thin text-xs">
