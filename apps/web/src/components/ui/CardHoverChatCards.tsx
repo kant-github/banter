@@ -1,64 +1,103 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { MdDelete } from "react-icons/md";
 import { SlOptionsVertical } from "react-icons/sl";
+import DeleteDialogBox from "../utility/DeleteDialogBox";
 
-export default function CardList({
-    items,
-    className,
-}: {
+interface CardListProps {
     items: {
+        id: string;
+        user_id: number;
         title: string;
         passcode: string;
         created_at: string;
     }[];
     className?: string;
-}) {
-    let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+}
+
+export default function CardList({
+    items,
+    className,
+}: CardListProps) {
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+    const [deleteDialogBox, setDeleteDialogBox] = useState<boolean>(false);
+    const [editDialogBox, setEditDialogBox] = useState<boolean>(false);
 
     return (
-        <div className={cn("flex flex-row gap-x-4", className)}>
-            {items.map((item, idx) => (
-                <div
-                    key={idx}
-                    className="relative group block p-2 h-full w-1/4"
-                    onMouseEnter={() => setHoveredIndex(idx)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                >
-                    <AnimatePresence>
-                        {hoveredIndex === idx && (
-                            <motion.span
-                                className="absolute inset-0 h-full w-full bg-[#c9d0d4] dark:bg-slate-800/[0.8] block rounded-3xl"
-                                layoutId="hoverBackground"
-                                initial={{ opacity: 0 }}
-                                animate={{
-                                    opacity: 1,
-                                    transition: { duration: 0.15 },
-                                }}
-                                exit={{
-                                    opacity: 0,
-                                    transition: { duration: 0.15, delay: 0.2 },
-                                }}
-                            />
-                        )}
-                    </AnimatePresence>
-                    <Card>
-                        <div className="flex justify-between items-start">
-                            <CardTitle>{item.title}</CardTitle>
-                            <OptionsMenu />
-                        </div>
-                        <CardDescription>{item.passcode}</CardDescription>
-                        <CardDate>{item.created_at}</CardDate>
-                    </Card>
-                </div>
-            ))}
-        </div>
+        <>
+            <div className={cn("flex flex-wrap gap-x-4 justify-center", className)}>
+                {items.map((item, idx) => (
+                    <div
+                        key={item.id}
+                        className="relative group block p-2 h-full w-1/4"
+                        onMouseEnter={() => setHoveredIndex(idx)}
+                        onMouseLeave={() => setHoveredIndex(null)}
+                    >
+                        <AnimatePresence>
+                            {hoveredIndex === idx && (
+                                <motion.span
+                                    className="absolute inset-0 h-full w-full bg-[#c9d0d4] dark:bg-slate-800/[0.8] block rounded-3xl"
+                                    layoutId="hoverBackground"
+                                    initial={{ opacity: 0 }}
+                                    animate={{
+                                        opacity: 1,
+                                        transition: { duration: 0.15 },
+                                    }}
+                                    exit={{
+                                        opacity: 0,
+                                        transition: { duration: 0.15, delay: 0.2 },
+                                    }}
+                                />
+                            )}
+                        </AnimatePresence>
+                        <Card>
+                            <div className="flex justify-between items-start">
+                                <CardTitle>{item.title}</CardTitle>
+                                <OptionsMenu
+                                    deleteDialogBox={deleteDialogBox}
+                                    setDeleteDialogBox={setDeleteDialogBox}
+                                    setSelectedItemId={setSelectedItemId}
+                                    itemId={item.id} // Pass item ID
+                                />
+                            </div>
+                            <CardDescription>{item.passcode}</CardDescription>
+                            <CardDate>{item.created_at}</CardDate>
+                        </Card>
+                    </div>
+                ))}
+            </div>
+            {deleteDialogBox && selectedItemId && (
+                <DeleteDialogBox
+                    itemId={selectedItemId} // Pass item ID
+                    deleteDialogBox={deleteDialogBox}
+                    setDeleteDialogBox={setDeleteDialogBox}
+                />
+            )}
+        </>
     );
 }
 
-function OptionsMenu({ className }: { className?: string }) {
+
+
+interface OptionsMenuProps {
+    className?: string;
+    deleteDialogBox: boolean;
+    setDeleteDialogBox: (value: boolean) => void;
+    setSelectedItemId: (id: string | null) => void; // Add this
+    itemId: string; // Add this
+}
+
+function OptionsMenu({
+    className,
+    deleteDialogBox,
+    setDeleteDialogBox,
+    setSelectedItemId,
+    itemId,
+}: OptionsMenuProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -99,18 +138,27 @@ function OptionsMenu({ className }: { className?: string }) {
                         exit={{ opacity: 0, y: -10 }}
                         className="absolute rounded-[4px] right-0 mt-2 w-28 bg-white dark:bg-slate-800 shadow-lg z-50"
                     >
-                        <ul className="py-0.5  text-sm text-zinc-900 dark:text-zinc-100 ">
-                            <li className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Copy</li>
-                            <li className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Edit</li>
-                            <li className="px-4 py-2 hover:bg-red-200 dark:hover:bg-slate-700 cursor-pointer text-xs bg-red-50 flex flex-row items-center justify-between">Delete <MdDelete color="red" size={14} />
-                            </li>
-                        </ul>
+                        <div className="py-0.5 text-sm text-zinc-900 dark:text-zinc-100">
+                            <div className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Copy</div>
+                            <div className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Edit</div>
+                            <div
+                                onClick={() => {
+                                    setSelectedItemId(itemId);
+                                    setDeleteDialogBox(true);
+                                }}
+                                className="px-4 py-2 hover:bg-red-200 dark:hover:bg-slate-700 cursor-pointer text-xs bg-red-50 flex flex-row items-center justify-between"
+                            >
+                                Delete
+                                <MdDelete color="red" size={14} />
+                            </div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
         </div>
     );
 }
+
 
 function Card({
     className,

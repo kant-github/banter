@@ -3,9 +3,53 @@ import Image from "next/image";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
 import { useState } from "react";
 import CreateRoom from "./CreateRoom";
+import axios from "axios";
+import { toast } from "sonner";
+import moment from 'moment';
+import { createChatSchema } from "@/validations/createChatZod";
+import { clearCache } from "actions/common";
 
-export default function CreateRoomComponent() {
+export default function CreateRoomComponent({ user }: { user: any }) {
     const [createRoomModal, setCreateRoomModal] = useState<boolean>(false);
+    const [roomTitle, setRoomTitle] = useState<string>("");
+    const [roomPasscode, setRoomPasscode] = useState<string>("");
+    const [loading, setLoading] = useState(false);
+
+    async function createChatHandler() {
+        const payload = { title: roomTitle, passcode: roomPasscode };
+        const result = createChatSchema.safeParse(payload);
+        if (!result.success) {
+            const errorMessages = result.error.errors.map(err => err.message).join(", ");
+            toast.error(`Error: ${errorMessages}`);
+            return;
+        }
+
+        try {
+            setLoading(true);
+            await axios.post("http://localhost:7001/api/chat-group", result.data, {
+                headers: {
+                    authorization: `Bearer ${user.token}`,
+                },
+            });
+            const formattedDate = moment().format('dddd, MMMM D, YYYY');
+            toast.message('Chat Room has been created', {
+                description: formattedDate
+            });
+            setRoomTitle("");
+            setRoomPasscode("");
+            clearCache("dashboard")
+            setCreateRoomModal(false);
+        } catch (err) {
+            console.log(err);
+            toast.error("Failed to create chat room. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    function openModal() {
+        setCreateRoomModal(true);
+    }
 
     return (
         <>
@@ -18,11 +62,19 @@ export default function CreateRoomComponent() {
                         <Image src="/images/talking.png" width={80} height={80} alt="talking" />
                     </div>
                     <div className="w-3/5 flex flex-row justify-center mt-8 mb-3">
-                        <BigWhiteBtn onClick={() => setCreateRoomModal(true)}>Create Room</BigWhiteBtn>
+                        <BigWhiteBtn onClick={openModal}>Create Room</BigWhiteBtn>
                     </div>
                 </div>
             </div>
-            <CreateRoom open={createRoomModal} setOpen={setCreateRoomModal} />
+            <CreateRoom
+                createChatHandler={createChatHandler}
+                roomTitle={roomTitle}
+                setRoomTitle={setRoomTitle}
+                roomPasscode={roomPasscode}
+                setRoomPasscode={setRoomPasscode}
+                open={createRoomModal}
+                setOpen={setCreateRoomModal}
+            />
         </>
     );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SessionProvider from "providers/SessionProvider";
 import localFont from "next/font/local";
+import { Toaster } from 'sonner'
 import "./globals.css";
 
 
@@ -28,6 +29,7 @@ export default function RootLayout({
       <SessionProvider>
         <body className={`${geistSans.variable} ${geistMono.variable}`}>
           {children}
+          <Toaster position="bottom-right" closeButton duration={5000} />
         </body>
       </SessionProvider>
     </html>

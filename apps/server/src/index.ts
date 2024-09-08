@@ -1,8 +1,10 @@
 import express, { Request, Response } from "express";
 import { createServer } from "http";
 import Routes from "./routes/index";
+import cors from "cors"
 
 const app = express();
+app.use(cors())
 const PORT = process.env.PORT || 7001;
 
 const server = createServer(app);
