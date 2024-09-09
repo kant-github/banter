@@ -1,6 +1,6 @@
 "use client"
 
-export default function({onClick, children, disabled}: {onClick: () => void, children: React.ReactNode, disabled:boolean}) {
+export default function({onClick, children, disabled}: {onClick: () => void, children: React.ReactNode, disabled?:boolean}) {
     return (
         <>
             <button 

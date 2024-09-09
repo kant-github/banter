@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 export default async function updateChatGroup(req: Request, res: Response) {
     try {
         const groupId = req.params.id;
-
         if (!groupId) {
             return res.status(400).json({
                 message: "Group ID is required",
@@ -19,7 +18,6 @@ export default async function updateChatGroup(req: Request, res: Response) {
         if (chatGroup) {
             return res.status(200).json({
                 message: "Chat group updated successfully",
-                chatGroup,
             });
         } else {
             return res.status(404).json({

@@ -23,7 +23,6 @@ export default function DeleteDialogBox({
     const { data: session } = useSession();
 
     async function deleteRoomHandler() {
-        console.log("Hi")
         if (!session?.user?.token) {
             console.error("User is not authenticated.");
             return;
@@ -39,7 +38,7 @@ export default function DeleteDialogBox({
                 },
             });
             clearCache("dashboard");
-            toast.success('Chat has been deleted');
+            toast.success(data.message);
             setDeleteDialogBox(false);
         } catch (err) {
             console.error("Failed to delete the room:", err);

@@ -26,13 +26,13 @@ export default function CreateRoomComponent({ user }: { user: any }) {
 
         try {
             setLoading(true);
-            await axios.post("http://localhost:7001/api/chat-group", result.data, {
+            const { data } = await axios.post("http://localhost:7001/api/chat-group", result.data, {
                 headers: {
                     authorization: `Bearer ${user.token}`,
                 },
             });
             const formattedDate = moment().format('dddd, MMMM D, YYYY');
-            toast.message('Chat Room has been created', {
+            toast.message(data.message, {
                 description: formattedDate
             });
             setRoomTitle("");

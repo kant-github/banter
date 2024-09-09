@@ -7,9 +7,10 @@ interface TextInputProps {
     input: string;
     setInput: (value: string) => void;
     type?: string;
+    value?: string
 }
 
-export default function TextInput({ label, input, setInput, type }: TextInputProps) {
+export default function ({ label, input, setInput, type, value }: TextInputProps) {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value);
@@ -21,7 +22,7 @@ export default function TextInput({ label, input, setInput, type }: TextInputPro
             </label>
             <div className="relative">
                 <input
-                    value={input}
+                    value={value}
                     onChange={handleChange}
                     id="input"
                     type={type ? showPassword ? 'text' : 'password' : "text"}

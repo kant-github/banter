@@ -6,15 +6,18 @@ import { useState, useEffect, useRef } from "react";
 import { MdDelete } from "react-icons/md";
 import { SlOptionsVertical } from "react-icons/sl";
 import DeleteDialogBox from "../utility/DeleteDialogBox";
+import EditDialogBox from "../utility/EditDialogBox";
+
+interface Item {
+    id: string;
+    user_id: number;
+    title: string;
+    passcode: string;
+    created_at: string;
+}
 
 interface CardListProps {
-    items: {
-        id: string;
-        user_id: number;
-        title: string;
-        passcode: string;
-        created_at: string;
-    }[];
+    items: Item[];
     className?: string;
 }
 
@@ -58,10 +61,10 @@ export default function CardList({
                             <div className="flex justify-between items-start">
                                 <CardTitle>{item.title}</CardTitle>
                                 <OptionsMenu
-                                    deleteDialogBox={deleteDialogBox}
                                     setDeleteDialogBox={setDeleteDialogBox}
+                                    setEditDialogBox={setEditDialogBox}
                                     setSelectedItemId={setSelectedItemId}
-                                    itemId={item.id} // Pass item ID
+                                    item={item}
                                 />
                             </div>
                             <CardDescription>{item.passcode}</CardDescription>
@@ -72,31 +75,40 @@ export default function CardList({
             </div>
             {deleteDialogBox && selectedItemId && (
                 <DeleteDialogBox
-                    itemId={selectedItemId} // Pass item ID
+                    itemId={selectedItemId}
                     deleteDialogBox={deleteDialogBox}
                     setDeleteDialogBox={setDeleteDialogBox}
                 />
             )}
+            {
+                editDialogBox && selectedItemId && (
+                    <EditDialogBox 
+                    itemId={selectedItemId} 
+                    editDialogBox={editDialogBox} 
+                    setEditDialogBox={setEditDialogBox} 
+                    selectedItem={items.find(item => item.id === selectedItemId) ?? null} 
+                />
+                
+            )
+            }
         </>
     );
 }
 
-
-
 interface OptionsMenuProps {
     className?: string;
-    deleteDialogBox: boolean;
     setDeleteDialogBox: (value: boolean) => void;
-    setSelectedItemId: (id: string | null) => void; // Add this
-    itemId: string; // Add this
+    setEditDialogBox: (value: boolean) => void;
+    setSelectedItemId: (id: string | null) => void;
+    item: Item;
 }
 
 function OptionsMenu({
     className,
-    deleteDialogBox,
     setDeleteDialogBox,
+    setEditDialogBox,
     setSelectedItemId,
-    itemId,
+    item,
 }: OptionsMenuProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -140,10 +152,13 @@ function OptionsMenu({
                     >
                         <div className="py-0.5 text-sm text-zinc-900 dark:text-zinc-100">
                             <div className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Copy</div>
-                            <div className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Edit</div>
+                            <div onClick={() => {
+                                setSelectedItemId(item.id);
+                                setEditDialogBox(true);
+                            }} className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Edit</div>
                             <div
                                 onClick={() => {
-                                    setSelectedItemId(itemId);
+                                    setSelectedItemId(item.id);
                                     setDeleteDialogBox(true);
                                 }}
                                 className="px-4 py-2 hover:bg-red-200 dark:hover:bg-slate-700 cursor-pointer text-xs bg-red-50 flex flex-row items-center justify-between"
@@ -158,7 +173,6 @@ function OptionsMenu({
         </div>
     );
 }
-
 
 function Card({
     className,
