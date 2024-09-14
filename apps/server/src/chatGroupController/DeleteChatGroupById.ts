@@ -7,7 +7,7 @@ export default async function (req: Request, res: Response) {
     if (!groupId) {
         return res.status(400).json({ message: "Chat group ID is required" });
     }
-
+    await new Promise(t => setTimeout(t, 2000));
     try {
         const deletedGroup = await prisma.chatGroup.delete({
             where: {

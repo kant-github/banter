@@ -223,7 +223,7 @@ function CardDescription({
                 className
             )}
         >
-            <p>Passcode : </p>
+            <p>Passcode: {" "}</p>
             <i className="font-thin">{children}</i>
         </div>
     );

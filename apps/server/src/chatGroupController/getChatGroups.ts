@@ -5,7 +5,6 @@ import moment from "moment";
 export default async function getChatGroups(req: Request, res: Response) {
     try {
         const user = req.user;
-        console.log(user);
         const groups = await prisma.chatGroup.findMany({
             where: {
                 user_id: Number(user?.id),

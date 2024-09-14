@@ -68,8 +68,7 @@ export default function EditDialogBox({
                 </div>
                 <div>
                     <InputBox label="Passcode" input={passcode} setInput={setPasscode} />
-                </div>
-                <div className="w-full pt-4 flex items-center justify-center">
+                </div> <div className="w-full pt-4 flex items-center justify-center">
                     <BigBlackButton onClick={handleSaveChanges}>Save Changes</BigBlackButton>
                 </div>
             </div>

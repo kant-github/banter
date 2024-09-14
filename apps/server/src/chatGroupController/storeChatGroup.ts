@@ -24,7 +24,7 @@ export default async function(req: Request, res: Response) {
  } catch(err) {
     console.log("Error in created a chat group")
     res.json({
-        message: "Error in created a chat group"
+        message: "Error in creating a chat group"
     })
  }
 }
