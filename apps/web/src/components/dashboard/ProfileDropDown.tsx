@@ -3,7 +3,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 
-export default function UserDropdown() {
+export default function() {
     const [dropDown, setDropDown] = useState(false);
     const { data: session } = useSession();
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -51,7 +51,7 @@ export default function UserDropdown() {
                                 <div className="block px-4 py-2 text-xs font-thin text-gray-700">
                                     <i>Hi {session?.user?.name}</i>
                                 </div>
-                                <a href="https://github.com/kant-github/trsx" target="_blank" rel="noopener noreferrer" className="flex flex-row justify-between px-4 py-2 text-xs text-blue-700 bg-blue-50 hover:bg-blue-100">
+                                <a href="https://github.com/kant-github/chat-app" target="_blank" rel="noopener noreferrer" className="flex flex-row justify-between px-4 py-2 text-xs text-blue-700 bg-blue-50 hover:bg-blue-100">
                                     Github
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"

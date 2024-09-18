@@ -56,16 +56,16 @@ export default function () {
                 </div>
             </div>
             {/* Form to Send Messages */}
-            <form className="mt-2 flex justify-between items-center w-full" onSubmit={handleSendMessage}>
+            <form className="mt-2 flex justify-between items-center gap-x-4 w-full" onSubmit={handleSendMessage}>
                 <input
                     type="text"
                     placeholder="Type a message..."
                     value={message}
-                    className="flex-1 p-2 font-light text-sm border rounded-lg outline-none"
+                    className="flex-1 p-2 font-light text-sm border rounded-[4px] outline-none"
                     onChange={(e) => setMessage(e.target.value)}
                 />
                 <div className="ml-2 w-[120px]">
-                    <BigBlackButton>Send</BigBlackButton>
+                    <BigBlackButton onClick={() => {}}>Send</BigBlackButton>
                 </div>
             </form>
         </div>

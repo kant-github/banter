@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { clearCache } from "actions/common";
 import { toast } from "sonner";
+import { RxCross2 } from "react-icons/rx";
 
 interface Props {
     itemId: string;
@@ -62,13 +63,27 @@ export default function EditDialogBox({
 
     return (
         <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${!editDialogBox ? 'hidden' : ''}`}>
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg relative">
-                <div>
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg relative w-2/6">
+                <div className="flex justify-between">
+                    <p className="text-sm font-md">
+                        Update the room's title and passcode.
+                    </p>
+                    <div onClick={() => {
+                        setEditDialogBox(false);
+                    }} className="cursor-pointer p-1 hover:shadow-lg hover:bg-gray-100 rounded-[4px] transition-all duration-300">
+                        <RxCross2 />
+                    </div>
+                </div>
+                <div className="text-xs font-thin mb-4">
+                    Share the new passcode for access
+                </div>
+                <div className="mb-4">
                     <InputBox value={title} label="Title" input={title} setInput={setTitle} />
                 </div>
                 <div>
-                    <InputBox label="Passcode" input={passcode} setInput={setPasscode} />
-                </div> <div className="w-full pt-4 flex items-center justify-center">
+                    <InputBox type="password" label="Passcode" input={passcode} setInput={setPasscode} />
+                </div>
+                <div className="w-full pt-4 flex items-center justify-center">
                     <BigBlackButton onClick={handleSaveChanges}>Save Changes</BigBlackButton>
                 </div>
             </div>

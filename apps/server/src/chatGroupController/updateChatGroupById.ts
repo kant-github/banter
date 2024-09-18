@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 export default async function updateChatGroup(req: Request, res: Response) {
     try {
         const groupId = req.params.id;
+        console.log(req.params);
         if (!groupId) {
             return res.status(400).json({
                 message: "Group ID is required",

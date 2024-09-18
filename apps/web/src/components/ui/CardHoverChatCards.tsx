@@ -1,5 +1,4 @@
 "use client";
-
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
@@ -7,6 +6,9 @@ import { MdDelete } from "react-icons/md";
 import { SlOptionsVertical } from "react-icons/sl";
 import DeleteDialogBox from "../utility/DeleteDialogBox";
 import EditDialogBox from "../utility/EditDialogBox";
+import { useRouter } from "next/navigation";
+import { FRONTEND_BASE_URL } from "@/lib/apiAuthRoutes";
+import { toast } from "sonner";
 
 interface Item {
     id: string;
@@ -29,14 +31,19 @@ export default function CardList({
     const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
     const [deleteDialogBox, setDeleteDialogBox] = useState<boolean>(false);
     const [editDialogBox, setEditDialogBox] = useState<boolean>(false);
+    const router = useRouter();
 
     return (
         <>
             <div className={cn("flex flex-wrap gap-x-4 justify-center", className)}>
                 {items.map((item, idx) => (
                     <div
+                        onDoubleClick={() => {
+                            console.log("check")
+                            router.push(`${FRONTEND_BASE_URL}/chat/${item.id}`)
+                        }}
                         key={item.id}
-                        className="relative group block p-2 h-full w-1/4"
+                        className="relative group block p-2 h-full w-1/4 select-none"
                         onMouseEnter={() => setHoveredIndex(idx)}
                         onMouseLeave={() => setHoveredIndex(null)}
                     >
@@ -82,14 +89,14 @@ export default function CardList({
             )}
             {
                 editDialogBox && selectedItemId && (
-                    <EditDialogBox 
-                    itemId={selectedItemId} 
-                    editDialogBox={editDialogBox} 
-                    setEditDialogBox={setEditDialogBox} 
-                    selectedItem={items.find(item => item.id === selectedItemId) ?? null} 
-                />
-                
-            )
+                    <EditDialogBox
+                        itemId={selectedItemId}
+                        editDialogBox={editDialogBox}
+                        setEditDialogBox={setEditDialogBox}
+                        selectedItem={items.find(item => item.id === selectedItemId) ?? null}
+                    />
+
+                )
             }
         </>
     );
@@ -151,7 +158,14 @@ function OptionsMenu({
                         className="absolute rounded-[4px] right-0 mt-2 w-28 bg-white dark:bg-slate-800 shadow-lg z-50"
                     >
                         <div className="py-0.5 text-sm text-zinc-900 dark:text-zinc-100">
-                            <div className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Copy</div>
+                            <div
+                                onClick={() => {
+                                    navigator.clipboard.writeText(`${FRONTEND_BASE_URL}/chat/${item.id}`).then(() => {
+                                        toast.success("Copied to clipboard");
+                                        setIsOpen(false);
+                                    })
+                                }}  
+                                className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Copy</div>
                             <div onClick={() => {
                                 setSelectedItemId(item.id);
                                 setEditDialogBox(true);

@@ -9,19 +9,23 @@ export default async function (req: Request, res: Response) {
                 where: {
                     id: groupId
                 }
-            })
-
-            res.status(200).json({
-                data: chatGroup
-            })
+            });
+            if (chatGroup) {
+                return res.status(200).json({
+                    data: chatGroup
+                });
+            }
+            return res.status(404).json({
+                message: "This group doesn't exist"
+            });
         }
-        res.status(200).json({
-            message: "This group doesn't exist"
-        })
+        return res.status(400).json({
+            message: "Group ID is required"
+        });
     } catch (err) {
-        console.log("Error in recieving single chat group");
-        res.status(500).json({
-            message: "Error in recieving single chat group"
-        })
+        console.error("Error in receiving single chat group:", err);
+        return res.status(500).json({
+            message: "Error in receiving single chat group"
+        });
     }
 }

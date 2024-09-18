@@ -1,9 +1,53 @@
-export default function ChatNavTitle() {
+"use client";
+
+import { useParams, useRouter } from "next/navigation";
+import { RedBtn } from "../buttons/RedBtn";
+import axios from "axios";
+import { CHAT_GROUP_USERS } from "@/lib/apiAuthRoutes";
+import { toast } from "sonner";
+
+interface Props {
+    groupTitle: string;
+}
+
+export default function ChatNavTitle({ groupTitle }: Props) {
+    const router = useRouter();
+    const params = useParams();
+    const data = localStorage.getItem(params["id"] as string);
+
+    let user_id: string | null = null;
+    if (data) {
+        try {
+            const parsedData = JSON.parse(data);
+            user_id = parsedData.data.id;
+        } catch (err) {
+            console.error("Error parsing localStorage data:", err);
+        }
+    }
+
+    async function exitRoomHandler() {
+        if (!user_id) {
+            console.error("No user_id found in localStorage.");
+            return;
+        }
+        try {
+            await axios.delete(`${CHAT_GROUP_USERS}?user_id=${user_id}`)
+            localStorage.clear();
+            router.push("/dashboard");
+            toast.success("Room exitted successfully");
+        } catch (err) {
+            console.error("Error exiting the room:", err);
+        }
+    }
+
     return (
-        <div className="flex-grow bg-[#f2f2f2] h-[82px]">
+        <div className="flex items-center justify-between bg-[#f2f2f2] h-[82px]">
             <h1 className="font-bold text-2xl pl-12 py-6">
-                Flora Homes
+                {groupTitle}
             </h1>
+            <div className="mr-4">
+                <RedBtn onClick={exitRoomHandler}>Exit Room</RedBtn>
+            </div>
         </div>
     );
 }

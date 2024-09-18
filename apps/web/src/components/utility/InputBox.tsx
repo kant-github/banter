@@ -16,7 +16,7 @@ export default function ({ label, input, setInput, type, value }: TextInputProps
         setInput(e.target.value);
     };
     return (
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-[4px]">
             <label htmlFor="input" className="text-xs font-mono text-gray-700">
                 {label}
             </label>
