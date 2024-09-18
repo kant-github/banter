@@ -1,40 +1,55 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import BigBlackButton from "../buttons/BigBlackButton";
+import { GroupChatType, GroupChatUserType, MessageType } from "types";
+import { getSocket } from "@/lib/socket.config";
+import { v4 as uuidv4 } from "uuid"
 
-interface Message {
-    id: number;
-    name: string;
-    message: string;
+interface props {
+    olderChats: Array<MessageType> | [];
+    chatUser: GroupChatUserType | undefined;
+    group: GroupChatType
 }
 
-export default function () {
+export default function ({ chatUser, olderChats, group }: props) {
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState<Message[]>([
-        { id: 1, name: "Rishi", message: "Hello!" },
-        { id: 2, name: "Aarav", message: "Hey, how's it going?" },
-        { id: 3, name: "Rishi", message: "It's going well, thanks for asking!" },
-        { id: 4, name: "Aarav", message: "That's great to hear! ❤️" },
-        { id: 5, name: "Rishi", message: "What are you up to today?" }
-    ]);
+    const [messages, setMessages] = useState<Array<MessageType>>([]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
+    let socket = useMemo(() => {
+        const socket = getSocket();
+        socket.auth = {
+            room: group.id
+        }
+        return socket.connect();
+    }, [])
+
     useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
+        socket.on('message', (data: MessageType) => {
+            setMessages((prevMessages) => [...prevMessages, data]);
+            scrollToBottom();
+        });
+
+        return () => {
+            socket.off('message');
+        };
+    }, [socket]);
 
     const handleSendMessage = (e: React.FormEvent) => {
         e.preventDefault();
-        if (message.trim()) {
-            setMessages((prev) => [
-                ...prev,
-                { id: prev.length + 1, name: "Rishi", message }
-            ]);
-            setMessage("");
-        }
+        const payload: MessageType = {
+            id: uuidv4(),
+            message: message,
+            name: chatUser?.name ?? "Unknown",
+            created_at: new Date().toISOString(),
+            group_id: group.id,
+        };
+        socket.emit("message", payload);
+        setMessage("");
+        setMessages([...messages, payload]);
     };
 
     return (
@@ -45,9 +60,9 @@ export default function () {
                     {messages.map((msg) => (
                         <div
                             key={msg.id}
-                            className={`max-w-sm rounded-[3px] py-2 px-4 text-sm font-light ${msg.name === "Rishi"
-                                    ? "bg-gradient-to-r from-[#1f282e] to-[black] text-white self-end"
-                                    : "bg-gradient-to-r from-gray-200 to-gray-300 text-black self-start"
+                            className={`max-w-sm rounded-[3px] py-2 px-4 text-sm font-light ${msg.name === chatUser?.name
+                                ? "bg-gradient-to-r from-[#1f282e] to-[black] text-white self-end"
+                                : "bg-gradient-to-r from-gray-200 to-gray-300 text-black self-start"
                                 }`}
                         >
                             {msg.message}
@@ -55,7 +70,6 @@ export default function () {
                     ))}
                 </div>
             </div>
-            {/* Form to Send Messages */}
             <form className="mt-2 flex justify-between items-center gap-x-4 w-full" onSubmit={handleSendMessage}>
                 <input
                     type="text"
@@ -65,7 +79,7 @@ export default function () {
                     onChange={(e) => setMessage(e.target.value)}
                 />
                 <div className="ml-2 w-[120px]">
-                    <BigBlackButton onClick={() => {}}>Send</BigBlackButton>
+                    <BigBlackButton onClick={() => { }}>Send</BigBlackButton>
                 </div>
             </form>
         </div>

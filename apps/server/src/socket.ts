@@ -23,7 +23,7 @@ export function setupSocket(io: Server) {
             socket.on("message", (data: string) => {
                 console.log("The server side message is...", data);
                 if (socket.room) {
-                    io.to(socket.room).emit("message", data);
+                    socket.to(socket.room).emit("message", data);
                 }
             });
             socket.on("disconnect", () => {

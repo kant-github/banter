@@ -12,8 +12,6 @@ export default async function(req: Request, res: Response) {
             user_id: Number(user?.id)
         },
     }) 
-    console.log(chatGroup);
-
     return res.status(200).json({
         message: "Chat group created successfully"
     })

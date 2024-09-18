@@ -4,8 +4,8 @@ import DashNav from "@/components/dashboard/DashNav";
 export default function () {
     return (
         <div className="h-screen">
-            <DashNav/>
-            <Dashboard/>
+            <DashNav />
+            <Dashboard />
         </div>
     )
 }

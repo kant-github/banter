@@ -1,12 +1,34 @@
 "use client"; // Add this directive at the top of the file
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchInput from "../utility/SearchInput";
 import ProfileDropDown from "./ProfileDropDown";
 import Image from "next/image";
+import axios from "axios";
+import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
+import { GroupChatType } from "types";
 
 export default function NavBar() {
     const [searchInput, setSearchInput] = useState("");
+    const [searchResults, setSearchResults] = useState<GroupChatType[] | []>([]);
+    async function getSearchInputChatGroups() {
+        try {
+            const response = await axios.get(`${CHAT_GROUP}-by-search?group_id=${searchInput}`);
+            console.log("Search results:", response.data.data);
+            setSearchResults(response.data.data)
+        } catch (err) {
+            console.error("Error in searching chat groups:", err);
+        }
+    }
+
+    useEffect(() => {
+       const debounedTimeout = setTimeout(() => {
+        getSearchInputChatGroups();
+        }, 600);
+
+        () => {
+            clearTimeout(debounedTimeout);
+        }
+    }, [searchInput]);
 
     return (
         <div className="flex bg-white flex-row justify-between items-center w-full px-8 h-16">
@@ -16,7 +38,7 @@ export default function NavBar() {
             </div>
             <div className="flex flex-row justify-center items-center gap-x-8">
                 <div className="w-[300px]">
-                    <SearchInput input={searchInput} setInput={setSearchInput} />
+                    <SearchInput input={searchInput} setInput={setSearchInput}/>
                 </div>
                 <ProfileDropDown />
             </div>
