@@ -24,6 +24,7 @@ export function setupSocket(io: Server) {
                 console.log("The server side message is...", data);
                 if (socket.room) {
                     socket.to(socket.room).emit("message", data);
+                    console.log("emitted");
                 }
             });
             socket.on("disconnect", () => {

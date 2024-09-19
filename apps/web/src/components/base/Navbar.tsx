@@ -5,6 +5,7 @@ import { WhiteBtn } from "../buttons/WhiteBtn";
 import { useState } from "react";
 import LoginModal from "./LoginModal";
 import { useSession } from "next-auth/react";
+import AppLogo from "../heading/AppLogo";
 
 export default function () {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -21,10 +22,7 @@ export default function () {
   return (
     <>
       <div className="flex justify-between w-full px-8 h-16">
-        <div className="flex flex-row gap-2 items-center cursor-pointer">
-          <Image src={"/images/icon_192x192.png"} width={22} height={22} alt="logo" />
-          <div className="text-xl md:text-md font-extrabold">ChatApp</div>
-        </div>
+        <AppLogo/>
         <div className="flex flex-row items-center justify-center gap-x-2">
           <WhiteBtn onClick={() => { /* Your Home button logic */ }}>Home</WhiteBtn>
           <WhiteBtn onClick={() => { /* Your Features button logic */ }}>Features</WhiteBtn>

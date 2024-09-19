@@ -65,6 +65,7 @@ export default function ({ chatUser, olderChats, group }: props) {
                                 : "bg-gradient-to-r from-gray-200 to-gray-300 text-black self-start"
                                 }`}
                         >
+                            
                             {msg.message}
                         </div>
                     ))}

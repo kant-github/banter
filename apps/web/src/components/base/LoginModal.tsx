@@ -2,7 +2,7 @@ import GoogleSignInButton from "../buttons/GoogleSignInButton"
 import { signIn } from "next-auth/react"
 export default function ({isModalOpen, setIsModalOpen}: {
     isModalOpen: boolean,
-    setIsModalOpen: () => void
+    setIsModalOpen: (value: boolean) => void
 }) {
 
     async function handleLogin() {

@@ -8,12 +8,11 @@ export default async function getChatGroupUserBySearch(req: Request, res: Respon
         const groups = await prisma.chatGroup.findMany({
             where: {
                 title: {
-                    contains: group_id,
+                    startsWith: group_id,
                     mode: "insensitive"
                 }
             }
         })
-
         return res.status(200).json({
             message: "Succesfully searched all the chat groups",
             data: groups
