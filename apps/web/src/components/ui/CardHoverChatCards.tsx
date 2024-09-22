@@ -23,6 +23,14 @@ interface CardListProps {
     className?: string;
 }
 
+interface OptionsMenuProps {
+    className?: string;
+    setDeleteDialogBox: (value: boolean) => void;
+    setEditDialogBox: (value: boolean) => void;
+    setSelectedItemId: (id: string | null) => void;
+    item: Item;
+}
+
 export default function CardList({
     items,
     className,
@@ -39,7 +47,6 @@ export default function CardList({
                 {items.map((item, idx) => (
                     <div
                         onDoubleClick={() => {
-                            console.log("check")
                             router.push(`${FRONTEND_BASE_URL}/chat/${item.id}`)
                         }}
                         key={item.id}
@@ -102,13 +109,7 @@ export default function CardList({
     );
 }
 
-interface OptionsMenuProps {
-    className?: string;
-    setDeleteDialogBox: (value: boolean) => void;
-    setEditDialogBox: (value: boolean) => void;
-    setSelectedItemId: (id: string | null) => void;
-    item: Item;
-}
+
 
 function OptionsMenu({
     className,
@@ -155,7 +156,7 @@ function OptionsMenu({
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute rounded-[4px] right-0 mt-2 w-28 bg-white dark:bg-slate-800 shadow-lg z-50"
+                        className="absolute rounded-[4px] right-0  w-28 bg-white dark:bg-slate-800 shadow-lg z-50"
                     >
                         <div className="py-0.5 text-sm text-zinc-900 dark:text-zinc-100">
                             <div
@@ -257,7 +258,7 @@ function CardDate({
                 className
             )}
         >
-            <p className="font-light">Created at:</p> <i>{children}</i>
+            <p className="font-light">Created at:</p><i>{children}</i>
         </div>
     );
 }

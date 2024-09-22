@@ -3,10 +3,7 @@ import { Request, Response } from "express";
 
 export async function getChatGroupUsers(req: Request, res: Response) {
     try {
-        console.log("hihihihihi");
         const { group_id} = req.query;
-        console.log(group_id);
-
         if(!group_id){
             return res.status(401).json({
                 message: "ChT GROUP id is unavailable"

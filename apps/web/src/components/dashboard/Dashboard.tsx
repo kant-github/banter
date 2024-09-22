@@ -8,7 +8,7 @@ import { fetchGroups } from "fetch/fetchGroups";
 export default async function () {
     const session = await getServerSession(authOption);
     const groups = await fetchGroups(session?.user?.token || null);
-
+    
     return (
         <div className="w-full h-screen bg-[#f2f2f2]">
             <div className="pl-12 w-full flex flex-row justify-center gap-x-40 items-center">

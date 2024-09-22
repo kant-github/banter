@@ -1,10 +1,12 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import LogOutDialogBox from "../utility/LogOutDialogBox";
 
-export default function() {
-    const [dropDown, setDropDown] = useState(false);
+export default function () {
+    const [dropDown, setDropDown] = useState<boolean>(false);
+    const [logoutDropdown, setLogoutDropDown] = useState<boolean>(false);
     const { data: session } = useSession();
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -13,11 +15,9 @@ export default function() {
             setDropDown(false);
         }
     };
-    const handleLogout = async () => {
-        signOut({
-            redirect: true,
-            callbackUrl: "/"
-        })
+
+    function handleLogout() {
+        setLogoutDropDown(true);
     }
 
     useEffect(() => {
@@ -80,6 +80,11 @@ export default function() {
                                     Logout
                                     <svg fill="none" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M17 16L21 12M21 12L17 8M21 12L7 12M13 16V17C13 18.6569 11.6569 20 10 20H6C4.34315 20 3 18.6569 3 17V7C3 5.34315 4.34315 4 6 4H10C11.6569 4 13 5.34315 13 7V8" stroke="red" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" /></svg>
                                 </div>
+                                <>
+                                    {
+                                        logoutDropdown && <LogOutDialogBox logoutDropdown={logoutDropdown} setLogoutDropDown={setLogoutDropDown} />
+                                    }
+                                </>
                             </div>
                         </div>
                     )

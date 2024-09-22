@@ -25,16 +25,12 @@ export const authOption: AuthOptions = {
     callbacks: {
         async signIn({ user, account }: { user: UserType; account: Account | null }) {
             try {
-                console.log("Hi");
                 if (account?.provider === "google") {
                     const existingUser = await prisma.users.findFirst({
                         where: {
                             email: user.email!,
                         },
                     });
-
-                    console.log("Printing")
-
                     let myUser;
                     if (existingUser) {
                         myUser = await prisma.users.update({

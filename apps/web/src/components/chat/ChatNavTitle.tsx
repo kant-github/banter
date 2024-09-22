@@ -34,7 +34,7 @@ export default function ChatNavTitle({ groupTitle }: Props) {
             await axios.delete(`${CHAT_GROUP_USERS}?user_id=${user_id}`)
             localStorage.clear();
             router.push("/dashboard");
-            toast.success("Room exitted successfully");
+            toast.success("Exitted room successfully");
         } catch (err) {
             console.error("Error exiting the room:", err);
         }

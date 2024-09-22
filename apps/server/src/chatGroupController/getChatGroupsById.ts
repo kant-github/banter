@@ -3,6 +3,7 @@ import { Response, Request } from "express";
 
 export default async function (req: Request, res: Response) {
     try {
+        console.log("Hitting right url");
         const groupId = req.params.id;
         if (groupId) {
             const chatGroup = await prisma.chatGroup.findUnique({

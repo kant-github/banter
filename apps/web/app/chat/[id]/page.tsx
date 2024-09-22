@@ -1,6 +1,5 @@
 import ChatBase from "@/components/chat/ChatBase";
 import ChatNav from "@/components/chat/ChatNav";
-import NavBar from "@/components/dashboard/DashNav";
 import fetchChats from "fetch/fetchChats";
 import { fetchChatGroupUsers, fetchGroup } from "fetch/fetchGroups";
 import { notFound } from "next/navigation";
@@ -8,6 +7,7 @@ import { MessageType } from "types";
 
 export default async function({ params }: { params: { id: string }}) {
     const group = await fetchGroup(params.id);
+    console.log("the group is ---->", group);
     if(!group) {
         return notFound();
     }
