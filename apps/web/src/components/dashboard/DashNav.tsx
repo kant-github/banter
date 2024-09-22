@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import SearchInput from "../utility/SearchInput";
 import ProfileDropDown from "./ProfileDropDown";
-import Image from "next/image";
 import axios from "axios";
 import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 import { GroupChatType } from "types";

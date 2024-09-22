@@ -4,7 +4,6 @@ import moment from "moment";
 
 export default async function getChatGroups(req: Request, res: Response) {
     try {
-        console.log("Hitting wrong route")
         const user = req.user;
         const groups = await prisma.chatGroup.findMany({
             where: {

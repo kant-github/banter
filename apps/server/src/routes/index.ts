@@ -25,7 +25,6 @@ router.get("/chat-group-user", getChatGroupUsers);
 router.post("/chat-group-user", createChatGroupUser);
 router.delete("/chat-group-user", deleteChatGroupUser);
 
-
 // chats-controller
 router.get("/chats/:group_id", getChats);
 

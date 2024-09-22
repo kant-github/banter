@@ -1,5 +1,4 @@
 import { CHAT_GROUP, CHAT_GROUP_USERS } from "@/lib/apiAuthRoutes";
-import { clearCache } from "actions/common";
 import { notFound } from "next/navigation";
 
 export async function fetchGroups(token: string | null) {

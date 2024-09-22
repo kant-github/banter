@@ -17,7 +17,7 @@ export default function ChatBase({ groupId, group, users, olderChats }: props) {
     const [permissionDialogBox, setPermissionDialogBox] = useState(true);
     const [chatUser, setChatUser] = useState<GroupChatUserType>();
     useEffect(() => {
-        const data = localStorage.getItem(group.id);
+            const data = localStorage.getItem(group.id);
         if (data) {
             const pData = JSON.parse(data);
             setChatUser(pData.data);
