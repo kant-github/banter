@@ -20,7 +20,6 @@ router.put("/chat-group/:id", authmiddleware, updateChatGroupById);
 router.delete("/chat-group/:id", authmiddleware, DeleteChatGroupById);
 router.get("/chat-group-by-search", getChatGroupUserBySearch);
 
-
 //chat-group-user-controller
 router.get("/chat-group-user", getChatGroupUsers);
 router.post("/chat-group-user", createChatGroupUser);
