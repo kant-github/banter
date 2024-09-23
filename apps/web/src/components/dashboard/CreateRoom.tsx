@@ -42,7 +42,7 @@ export default function CreateRoom({
                     >
                         <button
                             type="button"
-                            className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                            className="absolute top-3 right-5 text-gray-500 hover:text-gray-700 hover:bg-[#f2f2f2] transition duration-150 px-1.5"
                             onClick={() => setOpen(false)}
                         >
                             &#10005;

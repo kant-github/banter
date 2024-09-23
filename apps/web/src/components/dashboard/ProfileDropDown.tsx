@@ -49,7 +49,7 @@ export default function () {
                         <div className="absolute cursor-pointer right-8 mt-2 w-36 font-light bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="py-1">
                                 <div className="block px-4 py-2 text-xs font-thin text-gray-700">
-                                    <i>Hi {session?.user?.name}</i>
+                                    <i>Hi {session?.user?.name?.split(" ")[0]}</i>
                                 </div>
                                 <a href="https://github.com/kant-github/chat-app" target="_blank" rel="noopener noreferrer" className="flex flex-row justify-between px-4 py-2 text-xs text-blue-700 bg-blue-50 hover:bg-blue-100">
                                     Github
