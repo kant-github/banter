@@ -1,7 +1,7 @@
 export default function BlackBtn({ onClick, children }: { onClick: () => void; children: React.ReactNode }) {
     return (
         <button
-            className="bg-black hover:bg-gray-800 w-full text-white px-4 py-2 text-xs rounded-[5px] font-thin min-w-[120px]"
+            className="bg-black select-none w-full hover:bg-gray-800 text-white px-3 py-2 text-xs rounded-[5px] font-thin"
             onClick={onClick}
         >
             {children}

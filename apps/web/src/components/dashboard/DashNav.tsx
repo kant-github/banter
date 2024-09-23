@@ -7,6 +7,9 @@ import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 import { GroupChatType } from "types";
 import SearchResultDialogBox from "../utility/SearchResultDialogBox";
 import AppLogo from "../heading/AppLogo";
+import BlackBtn from "../buttons/BlackBtn";
+import BigBlackButton from "../buttons/BigBlackButton";
+import { WhiteBtn } from "../buttons/WhiteBtn";
 
 export default function NavBar() {
     const [searchInput, setSearchInput] = useState("");
@@ -37,15 +40,18 @@ export default function NavBar() {
 
     return (
         <div className="flex bg-white flex-row justify-between items-center w-full px-8 h-16">
-            <AppLogo/>
+            <AppLogo />
             <div className="flex flex-row justify-center items-center gap-x-8">
+                <div className="w-20">
+                    <BlackBtn>Docs</BlackBtn>
+                </div>
                 <div className="w-[300px]">
                     <SearchInput setSearchResultDialogBox={setSearchResultDialogBox} input={searchInput} setInput={setSearchInput} />
                     {searchResultDialogBox && (
-                        <SearchResultDialogBox 
-                            searchResultDialogBox={searchResultDialogBox} 
+                        <SearchResultDialogBox
+                            searchResultDialogBox={searchResultDialogBox}
                             setSearchResultDialogBox={setSearchResultDialogBox}
-                            searchResults={searchResults} 
+                            searchResults={searchResults}
                         />
                     )}
                 </div>

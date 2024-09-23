@@ -13,10 +13,10 @@ export default async function getChatGroups(req: Request, res: Response) {
                 created_at: "desc",
             },
         });
-
+    
         const formattedGroups = groups.map(group => ({
             ...group,
-            created_at: moment(group.created_at).format('dddd, MMMM D, YYYY'), // Format date
+            created_at: moment(group.created_at).format('dddd, MMMM D, YYYY'),
         }));
 
         res.status(200).json({
