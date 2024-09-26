@@ -6,9 +6,11 @@ import { useState } from "react";
 import LoginModal from "./LoginModal";
 import { useSession } from "next-auth/react";
 import AppLogo from "../heading/AppLogo";
+import { useRouter } from "next/navigation";
 
 export default function () {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const router = useRouter();
   const { data: session } = useSession();
 
   const handleGettingStartedClick = () => {
@@ -16,7 +18,7 @@ export default function () {
   };
 
   const handleDashboardClick = () => {
-    window.location.href = "/dashboard";
+    router.push("/dashboard");
   };
 
   return (

@@ -7,12 +7,12 @@ interface ButtonProps {
     children: ReactNode;
 }
 
-export default function({ onClick, children }: ButtonProps) {
+export default function ({ onClick, children }: ButtonProps) {
     return (
         <button
             onClick={onClick}
             type="button"
-            className="bg-[#f2f2f2] w-full px-3 py-2 text-sm rounded-[3px] font-light hover:bg-[#ededed]"
+            className="flex items-center justify-center gap-1 bg-[#ffffff] px-3 py-2 text-xs rounded-[3px] font-thin hover:bg-[#ededed] hover:shadow-lg transition-all duration-100 ease-in-out"
         >
             {children}
         </button>

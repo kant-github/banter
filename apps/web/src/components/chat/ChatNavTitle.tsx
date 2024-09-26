@@ -1,10 +1,12 @@
 "use client";
-
+import { IoIosArrowBack } from "react-icons/io";
 import { useParams, useRouter } from "next/navigation";
 import { RedBtn } from "../buttons/RedBtn";
 import axios from "axios";
 import { CHAT_GROUP_USERS } from "@/lib/apiAuthRoutes";
 import { toast } from "sonner";
+import { WhiteBtn } from "../buttons/WhiteBtn";
+import BigWhiteBtn from "../buttons/BigWhiteBtn";
 
 interface Props {
     groupTitle: string;
@@ -45,7 +47,11 @@ export default function ChatNavTitle({ groupTitle }: Props) {
             <h1 className="font-bold text-2xl pl-12 py-6">
                 {groupTitle}
             </h1>
-            <div className="mr-4">
+            <div className="mr-4 flex items-center justify-center gap-x-6 w-[250px]">
+                <BigWhiteBtn onClick={() => router.push("/dashboard")}>
+                        <IoIosArrowBack size={18} className="stroke-[2px]" /> 
+                        <span>Dashboard</span>
+                </BigWhiteBtn>
                 <RedBtn onClick={exitRoomHandler}>Exit Room</RedBtn>
             </div>
         </div>
