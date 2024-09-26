@@ -1,10 +1,12 @@
 import { GroupChatUserType } from "types";
+import { FaUserTie } from "react-icons/fa";
 
 export default function ({users}: {users: Array<GroupChatUserType> | []}) {
     return (
         <div className="w-1/5 bg-[#f2f2f2] h-[91.5vh] flex flex-col pb-[12px]">
-            <div className="text-2xl pl-8 py-6 pb-7 font-bold">
-                <h1>Users</h1>
+            <div className="flex items-center gap-x-3 text-2xl pl-8 py-6 font-bold">
+                <FaUserTie />      
+                <h1 className="mt-1">Users</h1>
             </div>
             <div className="px-6 flex-grow overflow-y-auto space-y-4">
                 {

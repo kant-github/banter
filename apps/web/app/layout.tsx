@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import SessionProvider from "providers/SessionProvider";
 import localFont from "next/font/local";
-import { Toaster } from 'sonner'
+import { Toaster } from 'sonner';
 import "./globals.css";
-
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,6 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+      </head>
       <SessionProvider>
         <body className={`${geistSans.variable} ${geistMono.variable}`}>
           {children}

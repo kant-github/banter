@@ -1,5 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
+import { LuPencilLine } from "react-icons/lu";
+import { IoIosCopy } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { MdDelete } from "react-icons/md";
@@ -165,12 +167,18 @@ function OptionsMenu({
                                         toast.success("Copied to clipboard");
                                         setIsOpen(false);
                                     })
-                                }}  
-                                className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Copy</div>
+                                }}
+                                className=" flex items-center justify-between px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">
+                                <span>Copy</span>
+                                <IoIosCopy />
+                            </div>
                             <div onClick={() => {
                                 setSelectedItemId(item.id);
                                 setEditDialogBox(true);
-                            }} className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">Edit</div>
+                            }} className="flex items-center justify-between px-4 py-2 hover:bg-gray-200 dark:hover:bg-slate-700 cursor-pointer text-xs">
+                                <span>Edit</span>
+                                <LuPencilLine />
+                            </div>
                             <div
                                 onClick={() => {
                                     setSelectedItemId(item.id);

@@ -39,7 +39,7 @@ export default function NavBar() {
     }, [searchInput]);
 
     return (
-        <div className="flex bg-white flex-row justify-between items-center w-full px-8 h-16">
+        <div className="flex bg-[white] flex-row justify-between items-center w-full px-8 h-16">
             <AppLogo />
             <div className="flex flex-row justify-center items-center gap-x-8">
                 <div className="w-20">
