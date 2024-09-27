@@ -8,8 +8,6 @@ import { GroupChatType } from "types";
 import SearchResultDialogBox from "../utility/SearchResultDialogBox";
 import AppLogo from "../heading/AppLogo";
 import BlackBtn from "../buttons/BlackBtn";
-import BigBlackButton from "../buttons/BigBlackButton";
-import { WhiteBtn } from "../buttons/WhiteBtn";
 
 export default function NavBar() {
     const [searchInput, setSearchInput] = useState("");
@@ -43,9 +41,9 @@ export default function NavBar() {
             <AppLogo />
             <div className="flex flex-row justify-center items-center gap-x-8">
                 <div className="w-20">
-                    <BlackBtn>Docs</BlackBtn>
+                    <BlackBtn onClick={() => (console.log(true))}>Docs</BlackBtn>
                 </div>
-                <div className="w-[300px]">
+                <div className="w-[350px]">
                     <SearchInput setSearchResultDialogBox={setSearchResultDialogBox} input={searchInput} setInput={setSearchInput} />
                     {searchResultDialogBox && (
                         <SearchResultDialogBox

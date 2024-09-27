@@ -24,19 +24,17 @@ export default function () {
   return (
     <>
       <div className="flex justify-between w-full px-8 h-16">
-        <AppLogo/>
-        <div className="flex flex-row items-center justify-center gap-x-2">
-          <WhiteBtn onClick={() => { /* Your Home button logic */ }}>Home</WhiteBtn>
-          <WhiteBtn onClick={() => { /* Your Features button logic */ }}>Features</WhiteBtn>
-          <div className="px-4">
-            {
-              session?.user ? (
-                <BlackBtn onClick={handleDashboardClick}>Dashboard</BlackBtn>
-              ) : (
-                <BlackBtn onClick={handleGettingStartedClick}>Getting Started</BlackBtn>
-              )
-            }
-          </div>
+        <AppLogo />
+        <div className="flex flex-row items-center justify-center w-[360px] gap-x-4">
+            <WhiteBtn onClick={() => { /* Your Home button logic */ }}>Home</WhiteBtn>
+            <WhiteBtn onClick={() => { /* Your Features button logic */ }}>Features</WhiteBtn>
+          {
+            session?.user ? (
+              <BlackBtn onClick={handleDashboardClick}>Dashboard</BlackBtn>
+            ) : (
+              <BlackBtn onClick={handleGettingStartedClick}>Getting Started</BlackBtn>
+            )
+          }
         </div>
       </div>
       <LoginModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />

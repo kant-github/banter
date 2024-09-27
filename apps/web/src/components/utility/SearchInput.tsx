@@ -12,9 +12,9 @@ export default function({ input, setInput, setSearchResultDialogBox }: SearchInp
 
   const placeholders = [
     "Search - Room404",
-    "Search for Rooms",
-    "Connect with Friends",
-    "Rooms accross Globe"
+    "Connect with Friends...",
+    "Rooms accross Globe...",
+    "Search for Rooms..."
   ];
 
  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

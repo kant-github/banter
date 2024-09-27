@@ -17,7 +17,7 @@ export function PlaceholdersAndVanishInput({
   const startAnimation = () => {
     intervalRef.current = setInterval(() => {
       setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
-    }, 5000);
+    }, 3000);
   };
   const handleVisibilityChange = () => {
     if (document.visibilityState !== "visible" && intervalRef.current) {
@@ -167,7 +167,7 @@ export function PlaceholdersAndVanishInput({
     }
   };
 
-  
+
   return (
     <form
       className={cn(
@@ -183,6 +183,7 @@ export function PlaceholdersAndVanishInput({
         ref={canvasRef}
       />
       <input
+        aria-label="Input field"
         onChange={(e) => {
           if (!animating) {
             setValue(e.target.value);

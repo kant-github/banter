@@ -1,5 +1,9 @@
 "use client"
 import { HoverEffect } from "../ui/card-hover-effect";
+import { PiPasswordFill } from "react-icons/pi";
+import { FaHouseLock } from "react-icons/fa6";
+import { SiWechat } from "react-icons/si";
+
 
 export default function CardHoverEffectDemo() {
   return (
@@ -10,21 +14,18 @@ export default function CardHoverEffectDemo() {
 }
 export const projects = [
   {
-    title: "Secure",
-    description:
-      "A technology company that builds economic infrastructure for the internet.",
-    link: "https://stripe.com",
+    title: "Secure Rooms",
+    description: "Creating highly secure digital environments for private, safe, and seamless online interactions.",
+    icon: <FaHouseLock color="white" size={17}/>
   },
   {
-    title: "Netflix",
-    description:
-      "A streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.",
-    link: "https://netflix.com",
+    title: "Password Authentication",
+    description: "Providing robust, password-protected access to digital content and online services for enhanced security.",
+    icon: <PiPasswordFill color="white" size={17}/>
   },
   {
-    title: "Google",
-    description:
-      "A multinational technology company that specializes in Internet-related services and products.",
-    link: "https://google.com",
+    title: "Chat with Friends",
+    description: "Enabling fast, secure, and reliable messaging to stay connected and communicate effortlessly with friends.",
+    icon: <SiWechat color="white" size={17}/>
   },
 ];
