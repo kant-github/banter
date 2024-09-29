@@ -4,6 +4,7 @@ import { OptionsMenu } from "../ui/OptionsMenu";
 import { useState } from "react";
 import DeleteDialogBox from "../utility/DeleteDialogBox";
 import EditDialogBox from "../utility/EditDialogBox";
+import AppLogo from "../heading/AppLogo";
 
 interface props {
     myRoomDropdown: boolean;
@@ -35,7 +36,7 @@ export default function ({ myRoomDropdown, setMyRoomDropDown, groups }: props) {
                         Browse through the complete collection of rooms you've created, and take control of their customization and management.
                     </p>
                 </div>
-                <div className="mx-4 mt-8 overflow-y-auto">
+                <div className="mx-4 mt-4 h-[520px] overflow-y-auto">
                     {groups.map((group, index) => (
                         <div
                             key={index}
@@ -47,6 +48,11 @@ export default function ({ myRoomDropdown, setMyRoomDropDown, groups }: props) {
                             </div>
                         </div>
                     ))}
+                </div>
+                <div className="mt-2 mx-4">
+                    <AppLogo />
+                    <p className="text-xs font-thin mx-3 my-2 mb-4">Banter is the go-to solution for managing group chats and rooms. Customize, organize, and stay connected with ease.
+                    </p>
                 </div>
             </div>
             {deleteDialogBox && selectedItemId && (
