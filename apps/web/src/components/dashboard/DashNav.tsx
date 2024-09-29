@@ -9,7 +9,11 @@ import SearchResultDialogBox from "../utility/SearchResultDialogBox";
 import AppLogo from "../heading/AppLogo";
 import BlackBtn from "../buttons/BlackBtn";
 
-export default function NavBar() {
+interface props {
+    groups: any;
+}
+
+export default function NavBar({groups}: props) {
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState<GroupChatType[] | []>([]);
     const [searchResultDialogBox, setSearchResultDialogBox] = useState<boolean>(false);
@@ -53,7 +57,7 @@ export default function NavBar() {
                         />
                     )}
                 </div>
-                <ProfileDropDown />
+                <ProfileDropDown groups={groups}/>
             </div>
         </div>
     );

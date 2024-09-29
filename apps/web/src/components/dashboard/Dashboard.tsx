@@ -1,14 +1,13 @@
 import Image from "next/image";
 import ChatCards from "../base/ChatCards";
 import CreateChatCard from "./CreateChatCard";
-import { getServerSession } from "next-auth";
-import { authOption } from "app/api/auth/[...nextauth]/options";
-import { fetchGroups } from "fetch/fetchGroups";
+import { GroupChatType } from "types";
+interface props {
+    groups: GroupChatType;
+    session: any
+}
 
-export default async function () {
-    const session = await getServerSession(authOption);
-    const groups = await fetchGroups(session?.user?.token || null);
-    
+export default async function ({ groups, session }: props) {
     return (
         <div className="w-full h-screen bg-[#f2f2f2]">
             <div className="pl-12 w-full flex flex-row justify-center gap-x-40 items-center">
@@ -18,7 +17,8 @@ export default async function () {
                 </div>
             </div>
             <div>
-                <ChatCards groups={groups.splice(0, 6)} />
+
+                <ChatCards groups={groups} />
             </div>
         </div>
     );
