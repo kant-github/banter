@@ -63,7 +63,7 @@ export default function UserMenu({ groups }: props) {
                                 setDropDown(false);
                                 setMyRoomDropDown(true);
                             }}
-                            className="px-4 py-2 text-xs font-extralight text-gray-700 hover:bg-gray-200"
+                            className="px-4 py-2 text-[12px] font-extralight text-gray-700 hover:bg-gray-200"
                         >
                             My rooms
                         </div>

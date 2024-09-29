@@ -11,7 +11,7 @@ interface SearchResultDialogBoxProps {
 export default function SearchResultDialogBox({ searchResultDialogBox, setSearchResultDialogBox, searchResults }: SearchResultDialogBoxProps) {
     return (
         <div
-            className={`absolute cursor-pointer right-24 mt-2 w-72 font-light bg-white rounded-[4px] shadow-lg ring-1 ring-black ring-opacity-5 ${searchResults.length > 0 && "overflow-y-auto max-h-60"} ${!searchResultDialogBox ? "hidden" : ""}`}
+            className={`absolute cursor-pointer right-28 mt-2 w-80 font-light bg-white rounded-[4px] shadow-lg ring-1 ring-black ring-opacity-5 ${searchResults.length > 0 && "overflow-y-auto max-h-60"} ${!searchResultDialogBox ? "hidden" : ""}`}
         >
             <div>
                 {searchResults.length > 0 ? (

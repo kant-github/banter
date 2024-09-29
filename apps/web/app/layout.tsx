@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "ChxtApp",
+  title: "Banter",
   description: "Send chats fast and foremost",
 };
 

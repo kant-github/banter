@@ -1,5 +1,5 @@
 {
-  "name": "chxtapp",
+  "name": "banter",
   "private": true,
   "scripts": {
     "build": "turbo build",
