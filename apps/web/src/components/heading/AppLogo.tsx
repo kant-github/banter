@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { GiJigsawPiece } from "react-icons/gi";
 import { useRouter } from "next/navigation";
 
@@ -9,9 +8,9 @@ export default function () {
             onClick={() => {
                 router.push("/dashboard");
             }}
-            className="flex flex-row gap-2 items-center cursor-pointer select-none">
-            <GiJigsawPiece size={25} />
-            <div className="text-xl md:text-md font-extrabold">ChatApp</div>
+            className="flex flex-row gap-2 items-center ml-2 cursor-pointer select-none group">
+            <GiJigsawPiece size={25} className="transition-transform transform group-hover:-translate-x-[2px]" />
+            <div className="text-xl md:text-md font-extrabold tracking-wider">Banter</div>
         </div>
     )
 }

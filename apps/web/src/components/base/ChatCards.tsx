@@ -5,10 +5,10 @@ export default function ({ groups }: { groups: any }) {
     return (
         <div className="bg-[#37474f] pt-6 pb-10">
             {/* Parent div that triggers the hover */}
-            <div className="flex items-center justify-start gap-x-2 text-white text-sm font-extralight ml-48 mb-2 tracking-wide group italic">
+            <span className="w-28 flex items-center justify-start select-none gap-x-2 text-white text-xs font-extralight ml-48 mb-3 tracking-wide group italic cursor-pointer">
                 recent rooms
                 <IoIosArrowForward className="mt-[2px] transition-transform transform group-hover:translate-x-[2px]" />
-            </div>
+            </span>
 
             <CardHoverChatCards items={groups} />
         </div>

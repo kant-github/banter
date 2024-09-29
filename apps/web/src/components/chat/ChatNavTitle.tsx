@@ -5,7 +5,6 @@ import { RedBtn } from "../buttons/RedBtn";
 import axios from "axios";
 import { CHAT_GROUP_USERS } from "@/lib/apiAuthRoutes";
 import { toast } from "sonner";
-import { WhiteBtn } from "../buttons/WhiteBtn";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
 
 interface Props {
@@ -47,9 +46,9 @@ export default function ChatNavTitle({ groupTitle }: Props) {
             <h1 className="font-bold text-2xl pl-12 py-6">
                 {groupTitle}
             </h1>
-            <div className="mr-4 flex items-center justify-center gap-x-6 w-[250px]">
+            <div className="mr-4 flex items-center justify-center gap-x-6 w-[250px] group">
                 <BigWhiteBtn onClick={() => router.push("/dashboard")}>
-                        <IoIosArrowBack size={18} className="stroke-[2px]" /> 
+                        <IoIosArrowBack size={18} className="stroke-[2px] transition-transform transform group-hover:-translate-x-[1px]" /> 
                         <span>Dashboard</span>
                 </BigWhiteBtn>
                 <RedBtn onClick={exitRoomHandler}>Exit Room</RedBtn>
