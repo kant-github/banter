@@ -58,7 +58,6 @@ export default function UserMenu({ groups }: props) {
                         </div>
                         <hr className="bg-black" />
 
-                        {/* My Rooms Option */}
                         <div
                             onClick={() => {
                                 setDropDown(false);
@@ -102,7 +101,6 @@ export default function UserMenu({ groups }: props) {
     );
 }
 
-// Svg Components
 function GithubSvg() {
     return (
         <svg

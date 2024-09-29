@@ -7,7 +7,6 @@ import { MessageType } from "types";
 
 export default async function({ params }: { params: { id: string }}) {
     const group = await fetchGroup(params.id);
-    console.log("the group is ---->", group);
     if(!group) {
         return notFound();
     }

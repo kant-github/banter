@@ -3,7 +3,7 @@ import ChatCards from "../base/ChatCards";
 import CreateChatCard from "./CreateChatCard";
 import { GroupChatType } from "types";
 interface props {
-    groups: GroupChatType;
+    groups: GroupChatType[];
     session: any
 }
 
