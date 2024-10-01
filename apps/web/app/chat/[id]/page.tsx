@@ -4,7 +4,6 @@ import ChatNav from "@/components/chat/ChatNav";
 import ChatSkeleton from "@/components/skeletons/ChatSkeleton";
 import fetchChats from "fetch/fetchChats";
 import { fetchChatGroupUsers, fetchGroup } from "fetch/fetchGroups";
-import Error from "next/error";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MessageType } from "types";
@@ -21,8 +20,8 @@ export default function ({ params }: { params: { id: string } }) {
         const fetchData = async () => {
             try {
                 const groupData = await fetchGroup(params.id);
+                // await new Promise(t => setTimeout(t, 5000));
                 if (!groupData) {
-                    throw Error
                     return;
                 }
                 const chatGroupUsers = await fetchChatGroupUsers(params.id);
@@ -40,8 +39,8 @@ export default function ({ params }: { params: { id: string } }) {
         fetchData();
     }, [router, params.id])
 
-    if(loading) {
-        return <ChatSkeleton/>
+    if (loading) {
+        return <ChatSkeleton />
     }
 
     return (

@@ -53,10 +53,10 @@ export default function CreateRoomComponent({ user }: { user: any }) {
 
     return (
         <>
-            <div className="w-2/5 transform bg-[#202a2e] px-12 py-4 rounded-[8px]">
+            <div className="md:w-2/5 w-screen transform bg-[#202a2e] px-12 py-4 rounded-[8px] mx-4 my-12">
                 <div className="flex flex-col">
                     <div className="flex flex-row gap-x-8 items-center mt-4 justify-between">
-                        <p className="text-white font-thin tracking-wider text-xs">
+                        <p className="text-white font-thin tracking-wider md:text-xs text-[8px]">
                             Start creating a room to chat with your friends and stay connected easily. Just a few clicks, and you’ll have your own space to chat, share, and catch up whenever you want.
                         </p>
                         <Image src="/images/talking.png" width={80} height={80} alt="talking" />

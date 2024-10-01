@@ -109,14 +109,17 @@ function Card({
     return (
         <div
             className={cn(
-                "rounded-2xl h-full w-full px-2 bg-[#1f282e] border border-transparent dark:border-white/[0.2] relative z-20",
+                "rounded-2xl h-full w-full bg-[#1f282e] border border-transparent dark:border-white/[0.2] relative z-20",
+                "w-full md:w-4/5 lg:w-full", // Adjust width based on screen size
+                "sm:px-2 md:px-4 lg:px-6", // Adjust padding on different screen sizes
                 className
             )}
         >
             <div className="relative z-50">
-                <div className="p-4">{children}</div>
+                <div className="p-4 sm:p-2 md:p-4 lg:p-6">{children}</div>
             </div>
         </div>
+
     );
 }
 
