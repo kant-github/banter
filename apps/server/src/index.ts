@@ -8,12 +8,10 @@ import { setupSocket } from "./socket";
 import redis from "./config/redis.config"; 
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 7001;
-
 const server = createServer(app);
 
 const io = new Server(server, {
@@ -22,7 +20,6 @@ const io = new Server(server, {
     },
     adapter: createAdapter(redis),
 });
-
 setupSocket(io);
 
 app.get("/", (req: Request, res: Response) => {

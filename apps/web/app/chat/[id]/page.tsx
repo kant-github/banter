@@ -20,7 +20,6 @@ export default function ({ params }: { params: { id: string } }) {
         const fetchData = async () => {
             try {
                 const groupData = await fetchGroup(params.id);
-                // await new Promise(t => setTimeout(t, 5000));
                 if (!groupData) {
                     return;
                 }

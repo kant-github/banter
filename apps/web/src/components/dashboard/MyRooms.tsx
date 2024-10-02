@@ -53,7 +53,7 @@ export default function MyRoomDropdown({ myRoomDropdown, setMyRoomDropDown, grou
                             </div>
                         ))
                     ) : (
-                        <p className="text-center text-gray-500 text-xs">No groups available</p>
+                        <p className="text-center text-gray-500 text-xs">No rooms available</p>
                     )}
                 </div>
                 <div className="mt-2 mx-4">

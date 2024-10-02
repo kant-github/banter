@@ -34,6 +34,11 @@ export default function CardList({
     return (
         <>
             <div className={cn("flex flex-wrap gap-x-4 justify-center", className)}>
+                {
+                    items.length === 0 && ( 
+                        <div className="p-16 text-white text-xs font-extralight tracking-wide">No rooms found, <i><u>Create a room</u></i> to chat with your peer groups</div>
+                    )
+                }
                 {items.map((item, idx) => (
                     <div
                         onDoubleClick={() => {

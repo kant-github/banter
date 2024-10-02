@@ -18,6 +18,7 @@ export function setupSocket(io: Server) {
 
     io.on("connection", (socket: customSocket) => {
             socket.join(socket.room!)
+            console.log("connecting to room is : ",socket.room)
             console.log("Your socket is connected", socket.id);
 
             socket.on("message", (data: string) => {
