@@ -3,7 +3,7 @@ import { IoIosArrowForward } from "react-icons/io";
 
 export default function ({ groups }: { groups: any }) {
     return (
-        <div className="bg-[#37474f] pt-6 pb-10">
+        <div className="bg-[#37474f] pt-6 pb-16">
             {
                 groups.length >= 1 && (
                     <span className="w-28 flex items-center justify-start select-none gap-x-2 text-white text-xs font-extralight ml-48 mb-3 tracking-wide group italic cursor-pointer">

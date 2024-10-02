@@ -3,17 +3,20 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import ShowPassword from './ShowPassword';
 
 interface TextInputProps {
-    label: string;
-    input: string;
-    setInput: (value: string) => void;
+    label?: string;
+    input?: string;
+    setInput?: (value: string) => void;
     type?: string;
-    value?: string
+    value?: string;
+    placeholder?: string;
 }
 
-export default function ({ label, input, setInput, type, value }: TextInputProps) {
+export default function ({ label, input, setInput, type, value, placeholder }: TextInputProps) {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInput(e.target.value);
+        if (setInput) {
+            setInput(e.target.value);
+        }
     };
     return (
         <div className="flex flex-col space-y-[4px]">
@@ -24,11 +27,16 @@ export default function ({ label, input, setInput, type, value }: TextInputProps
                 <input
                     value={value}
                     onChange={handleChange}
+                    placeholder={placeholder}
                     id="input"
                     type={type ? showPassword ? 'text' : 'password' : "text"}
-                    className="px-2 py-[9px] text-xs font-thin border border-gray-300 shadow-sm focus:outline-none rounded-[4px] w-full pr-10"
-                />
-                <ShowPassword showPassword={showPassword} setShowPassword={setShowPassword} type={type}/>
+                    className="px-2 py-[9px] text-xs font-thin border border-gray-300 text-black shadow-sm focus:outline-none rounded-[4px] w-full pr-10 placeholder:text-black"
+                />{
+                    type === "password" && (
+                        <ShowPassword showPassword={showPassword} setShowPassword={setShowPassword} type={type} />
+                    )
+                }
+
             </div>
         </div>
     );

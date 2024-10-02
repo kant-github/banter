@@ -51,7 +51,7 @@ export default function CreateRoom({
                             <InputBox input={roomTitle} setInput={setRoomTitle} label="Room Title" />
                         </div>
                         <div className="mt-2">
-                            <InputBox type="password" input={roomPasscode} setInput={setRoomPasscode} label="Enter Passcode" />
+                            <InputBox type="password" input={roomPasscode} setInput={setRoomPasscode} label="Create Passcode" />
                         </div>
 
                         <div className="mt-4 flex justify-end">

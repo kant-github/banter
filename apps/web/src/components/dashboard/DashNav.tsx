@@ -41,7 +41,7 @@ export default function NavBar({ groups }: props) {
     }, [searchInput]);
 
     return (
-        <div className="flex bg-[white] flex-row justify-between items-center w-full px-8 h-16">
+        <div className="flex bg-[white] flex-row justify-between items-center w-full px-8 h-16 border-b">
             <div className="flex-shrink-0">
                 <AppLogo />
             </div>
