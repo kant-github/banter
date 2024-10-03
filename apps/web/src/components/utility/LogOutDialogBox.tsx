@@ -2,6 +2,7 @@ import { useState } from "react";
 import { RedBtn } from "../buttons/RedBtn";
 import { WhiteBtn } from "../buttons/WhiteBtn";
 import { signOut } from "next-auth/react";
+import BigWhiteBtn from "../buttons/BigWhiteBtn";
 
 interface props {
     logoutDropdown: boolean;
@@ -19,7 +20,7 @@ export default function ({ logoutDropdown, setLogoutDropDown }: props) {
     }
     return (
         <div className={`fixed inset-0 bg-opacity-50 bg-black flex items-center justify-center z-50 `}>
-            <div className="bg-white max-w-lg p-6 relative">
+            <div className="bg-white dark:bg-[#262629] dark:text-gray-200 max-w-lg p-6 relative">
                 <div className="w-[400px]">
                     <p className="text-md font-bold mb-4">
                         Log out
@@ -29,7 +30,7 @@ export default function ({ logoutDropdown, setLogoutDropDown }: props) {
                         You can come back anytime, Press cancel to stay !!
                     </p>
                     <div className="flex items-center justify-end gap-4 pt-4 pr-2 w-full">
-                        <WhiteBtn onClick={() => setLogoutDropDown(false)}>Cancel</WhiteBtn>
+                        <BigWhiteBtn onClick={() => setLogoutDropDown(false)}>Cancel</BigWhiteBtn>
                         <RedBtn onClick={handleLogout}>
                             Log out
                         </RedBtn>

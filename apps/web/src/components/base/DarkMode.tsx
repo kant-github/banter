@@ -32,14 +32,14 @@ export default function () {
                 isDarkMode ? (
                     <MdDarkMode
                         onClick={toggleDarkMode}
-                        className="cursor-pointer text-gray-400"
+                        className="cursor-pointer text-gray-400 hover:text-gray-300 transition-colors duration-300 ease-in-out "
                         size={24}
                     />
 
                 ) : (
                     <MdLightMode
                         onClick={toggleDarkMode}
-                        className="cursor-pointer text-yellow-500"
+                        className="cursor-pointer text-yellow-500 hover:text-yellow-400 transition-colors ease-in-out duration-300"
                         size={24}
                     />
                 )

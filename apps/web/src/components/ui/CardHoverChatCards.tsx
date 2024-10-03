@@ -115,11 +115,11 @@ function Card({
         <div
             className={cn(
                 "rounded-2xl h-full w-full bg-[#1f282e] dark:bg-[#1c1c1c] border border-transparent dark:border-white/[0.2] relative z-20",
-                "w-full md:w-4/5 lg:w-full", // Adjust width based on screen size
-                "sm:px-2 md:px-4 lg:px-6", // Adjust padding on different screen sizes
+                "w-full md:w-4/5 lg:w-full",
+                "sm:px-2 md:px-4 lg:px-6",
                 className
             )}
-        >
+            >
             <div className="relative z-50">
                 <div className="p-4 sm:p-2 md:p-4 lg:p-6">{children}</div>
             </div>
@@ -156,11 +156,12 @@ function CardDescription({
                 className
             )}
         >
-            <p>Passcode: {" "}</p>
-            <i className="font-thin">{children}</i>
+            <p>Passcode:</p>
+            <i className="font-thin ml-1">{children}</i>
         </div>
     );
 }
+
 
 function CardDate({
     className,
@@ -176,7 +177,9 @@ function CardDate({
                 className
             )}
         >
-            <p className="font-light">Created at:</p><i>{children}</i>
+            <p className="font-light">Created at:</p>
+            <i className="ml-1">{children}</i>
         </div>
     );
 }
+
