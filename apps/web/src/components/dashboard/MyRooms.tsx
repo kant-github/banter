@@ -22,7 +22,7 @@ export default function MyRoomDropdown({ myRoomDropdown, setMyRoomDropDown, grou
     return (
         <>
             <div
-                className={`fixed top-0 right-0 h-screen w-[350px] bg-[#f2f2f2] shadow-xl z-50 rounded-xl transform transition-transform duration-400 ${myRoomDropdown ? "translate-x-0" : "translate-x-full"}`}
+                className={`fixed top-0 right-0 h-screen w-[350px] bg-[#f2f2f2] border-l-[1px] dark:border-zinc-800 dark:bg-[#1c1c1c] dark:text-gray-200 shadow-xl z-50 rounded-xl transform transition-transform duration-400 ${myRoomDropdown ? "translate-x-0" : "translate-x-full"}`}
             >
                 <div>
                     <div className="flex items-center justify-start gap-x-2 ml-4 mt-4 p-4 cursor-pointer">
@@ -44,7 +44,7 @@ export default function MyRoomDropdown({ myRoomDropdown, setMyRoomDropDown, grou
                             <div
                                 onDoubleClick={() => router.push(`/chat/${group.id}`)}
                                 key={group.id} // Use a unique key
-                                className="flex items-center justify-between py-[10px] pl-4 ml-2 hover:bg-gray-200 rounded-[2px] cursor-pointer select-none"
+                                className="flex items-center justify-between py-[10px] pl-4 ml-2 hover:bg-gray-200 dark:hover:bg-[#262629] rounded-[2px] cursor-pointer select-none"
                             >
                                 <div className="text-[11px] font-extralight">{group.title}</div>
                                 <div className="mr-4">

@@ -52,7 +52,7 @@ export default function CardList({
                         <AnimatePresence>
                             {hoveredIndex === idx && (
                                 <motion.span
-                                    className="absolute inset-0 h-full w-full bg-[#c9d0d4] dark:bg-slate-800/[0.8] block rounded-3xl"
+                                    className="absolute inset-0 h-full w-full bg-[#c9d0d4] dark:bg-gray-400 block rounded-3xl"
                                     layoutId="hoverBackground"
                                     initial={{ opacity: 0 }}
                                     animate={{
@@ -114,7 +114,7 @@ function Card({
     return (
         <div
             className={cn(
-                "rounded-2xl h-full w-full bg-[#1f282e] border border-transparent dark:border-white/[0.2] relative z-20",
+                "rounded-2xl h-full w-full bg-[#1f282e] dark:bg-[#1c1c1c] border border-transparent dark:border-white/[0.2] relative z-20",
                 "w-full md:w-4/5 lg:w-full", // Adjust width based on screen size
                 "sm:px-2 md:px-4 lg:px-6", // Adjust padding on different screen sizes
                 className

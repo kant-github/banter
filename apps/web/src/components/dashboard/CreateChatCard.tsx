@@ -55,15 +55,15 @@ export default function CreateRoomComponent({ user }: { user: any }) {
 
     return (
         <>
-            <div className="md:w-2/5 w-screen transform bg-[#202a2e] px-12 py-4 rounded-[8px] mx-4 my-12">
+    <div className="md:w-2/5 w-screen transform dark:bg-[#db6451] bg-[#202a2e] px-12 py-4 rounded-[8px] mx-4 my-12">
                 <div className="flex flex-col">
                     <div className="flex flex-row gap-x-8 items-center mt-4 justify-between">
                         <div>
                             <div className="flex flex-row items-center ml-0.5 gap-x-2">
-                                <ImHome size={18} color="white" />
-                                <h3 className="text-gray-300 font-semibold">Create a Room</h3>
+                                <ImHome size={18} className="dark:text-gray-200" color="white" />
+                                <h3 className="text-gray-200 font-semibold">Create a Room</h3>
                             </div>
-                            <p className="text-gray-200 font-thin tracking-wider md:text-xs text-[8px] mt-3">
+                            <p className="text-gray-200 dark:text-gray-100 font-extralight tracking-wider md:text-xs text-[8px] mt-3">
                                 Start a chat room with just a few clicks and stay connected with friends. Chat, share, and catch up anytime!
                             </p>
                         </div>

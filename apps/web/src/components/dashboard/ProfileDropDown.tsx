@@ -51,19 +51,19 @@ export default function UserMenu({ groups }: props) {
             </div>
 
             {dropDown && (
-                <div className="absolute cursor-pointer right-8 mt-2 w-36 font-light bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+                <div className="absolute border-[1px] dark:border-zinc-800 cursor-pointer right-8 mt-2 w-36 font-light dark:bg-[#1c1c1c] bg-white rounded-[4] shadow-lg ring-1 ring-black ring-opacity-5">
                     <div className="py-1">
-                        <div className="block px-4 py-2 text-xs font-thin text-gray-700">
+                        <div className="block px-4 py-2 text-xs font-thin text-gray-700 dark:text-gray-200">
                             <i>Hi {session?.user?.name?.split(" ")[0]}</i>
                         </div>
-                        <hr className="bg-black" />
+                        <hr className="border-gray-300 dark:border-gray-700" />
 
                         <div
                             onClick={() => {
                                 setDropDown(false);
                                 setMyRoomDropDown(true);
                             }}
-                            className="px-4 py-2 text-[12px] font-extralight text-gray-700 hover:bg-gray-200"
+                            className="px-4 py-2 text-[12px] font-extralight text-gray-700 dark:hover:bg-[#262629] hover:bg-gray-200 dark:text-gray-200"
                         >
                             My rooms
                         </div>
@@ -71,14 +71,14 @@ export default function UserMenu({ groups }: props) {
                             href="https://github.com/kant-github/chat-app"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex flex-row justify-between px-4 py-2 text-xs text-blue-700 bg-blue-50 hover:bg-blue-100"
+                            className="flex flex-row justify-between px-4 py-2 text-xs text-blue-400 dark:text-blue-300 bg-blue-50 dark:bg-blue-600 dark:hover:bg-blue-500 hover:bg-blue-100"
                         >
                             Github
                             <GithubSvg />
                         </a>
                         <div
                             onClick={handleLogout}
-                            className="flex justify-between px-4 py-2 text-xs text-red-600 bg-red-50 hover:bg-red-100"
+                            className="flex justify-between px-4 py-2 text-xs text-red-600 dark:text-red-300 bg-red-50 dark:bg-red-600 dark:hover:bg-red-500 hover:bg-red-100"
                         >
                             Logout
                             <LogOutSvg />
@@ -120,7 +120,8 @@ function LogOutSvg() {
         <svg fill="none" height="16" viewBox="0 0 24 24" width="16">
             <path
                 d="M17 16L21 12M21 12L17 8M21 12L7 12M13 16V17C13 18.6569 11.6569 20 10 20H6C4.34315 20 3 18.6569 3 17V7C3 5.34315 4.34315 4 6 4H10C11.6569 4 13 5.34315 13 7V8"
-                stroke="red"
+                stroke="red-200"
+                className=""
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="1.7"

@@ -30,7 +30,7 @@ export default function ({ label, input, setInput, type, value, placeholder }: T
                     placeholder={placeholder}
                     id="input"
                     type={type ? showPassword ? 'text' : 'password' : "text"}
-                    className="px-4 py-[9px] text-xs font-thin border border-gray-300 text-black shadow-sm focus:outline-none rounded-[4px] w-full pr-10 placeholder:text-black"
+                    className="px-4 py-[9px] text-xs font-thin border border-gray-300 text-black shadow-sm focus:outline-none rounded-[4px] w-full pr-10 placeholder:text-black dark:bg-zinc-800 dark:text-gray-200 dark:placeholder:text-gray-200"
                 />{
                     type === "password" && (
                         <ShowPassword showPassword={showPassword} setShowPassword={setShowPassword} type={type} />

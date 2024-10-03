@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import BlackBtn from "../buttons/BlackBtn";
 import { WhiteBtn } from "../buttons/WhiteBtn";
 import { useState } from "react";
