@@ -49,7 +49,7 @@ export default function DeleteDialogBox({
 
     return (
         <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${!deleteDialogBox ? 'hidden' : ''}`}>
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg relative">
+            <div className="bg-white dark:bg-[#262629] dark:text-gray-200 p-6 rounded-lg shadow-lg max-w-lg relative">
                 <div className="w-[400px]">
                     <p className="text-sm font-bold mb-4">
                         Danger Zone

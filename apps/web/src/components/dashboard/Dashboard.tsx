@@ -13,7 +13,7 @@ export default async function ({ groups, session }: props) {
             <div className="md:pl-12 w-full flex flex-row justify-center gap-x-40 items-center">
                 <CreateChatCard user={session?.user} />
                 <div className="mr-36 md:block hidden">
-                    <Image src="/images/dashboard-conversation.png" width={400} height={400} className="" alt="dashboard-conversation" />
+                    <Image src="/images/dashImage.jpeg" width={400} height={400} className="rounded-[8px]" alt="dashboard-conversation" />
                 </div>
             </div>
             <div>

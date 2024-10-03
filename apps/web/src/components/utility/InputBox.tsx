@@ -20,7 +20,7 @@ export default function ({ label, input, setInput, type, value, placeholder }: T
     };
     return (
         <div className="flex flex-col space-y-[4px]">
-            <label htmlFor="input" className="text-xs font-mono text-gray-700">
+            <label htmlFor="input" className="text-xs font-mono text-gray-700 dark:text-gray-200">
                 {label}
             </label>
             <div className="relative">

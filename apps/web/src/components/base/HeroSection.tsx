@@ -5,7 +5,7 @@ import FeatureSection from "./FeatureSection";
 
 export default function () {
     return (
-        <div className="bg-[#F1F1F1] w-full h-full">
+        <div className="bg-[#F1F1F1] dark:bg-[#141313] dark:text-gray-400 w-full h-full">
             <div className="flex flex-col items-center justify-center">
                 <div className="mt-12">
                     <Heading>Real-Time Conversations, Scalable Connections</Heading>
@@ -20,7 +20,7 @@ export default function () {
                 <div>
                     <Image className="transform transition-transform duration-300 hover:scale-105" src={"/images/conversation.svg"} width={600} height={600} alt="hero-image" />
                 </div>
-                <div>
+                <div className="">
                     <FeatureSection />
                 </div>
             </div>

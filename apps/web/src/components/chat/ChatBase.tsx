@@ -28,7 +28,7 @@ export default function ChatBase({ groupId, group, users, olderChats }: props) {
             {
                 permissionDialogBox && <GroupPermissionDialogBox group={group} permissionDialogBox={permissionDialogBox} setPermissionDialogBox={setPermissionDialogBox} />
             }
-            <div className="flex flex-row w-screen bg-[#f2f2f2]">
+            <div className="flex flex-row w-screen bg-[#f2f2f2] dark:bg-[#1c1c1c]">
                 <ChatSideBar users={users} />
                 <div className="w-full mr-6">
                     <ChatNavTitle groupTitle={group.title} />

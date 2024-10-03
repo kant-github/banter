@@ -42,7 +42,7 @@ export default function ChatNavTitle({ groupTitle }: Props) {
     }
 
     return (
-        <div className="flex items-center justify-between bg-[#f2f2f2] h-[82px]">
+        <div className="flex items-center justify-between bg-[#f2f2f2] dark:bg-[#1c1c1c] h-[82px] dark:text-gray-300">
             <h1 className="font-bold text-2xl pl-12 py-6">
                 {groupTitle}
             </h1>

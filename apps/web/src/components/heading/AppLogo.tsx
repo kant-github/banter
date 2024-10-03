@@ -12,11 +12,11 @@ export default function () {
             <GiJigsawPiece
                 size={25}
                 className="transition-transform transform group-hover:-translate-x-[2px] 
-                           text-black dark:text-gray-400"
+                           text-black dark:text-gray-300"
             />
             <div
                 className="text-xl md:text-md font-black tracking-widest 
-                           text-black dark:text-gray-400">
+                           text-black dark:text-gray-300">
                 BANTER
             </div>
         </div>

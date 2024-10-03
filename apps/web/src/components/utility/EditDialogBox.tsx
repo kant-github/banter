@@ -63,7 +63,7 @@ export default function EditDialogBox({
 
     return (
         <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${!editDialogBox ? 'hidden' : ''}`}>
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg relative w-2/6">
+            <div className="bg-white dark:bg-[#262629] dark:text-gray-200 p-6 rounded-lg shadow-lg max-w-lg relative w-2/6">
                 <div className="flex justify-between">
                     <p className="text-sm font-md">
                         Update the room's title and passcode.

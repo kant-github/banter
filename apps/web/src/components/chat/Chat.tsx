@@ -55,7 +55,7 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
     };
 
     return (
-        <div className="flex flex-col h-[80vh] p-4 bg-white rounded-[6px]">
+        <div className="flex flex-col h-[80vh] p-4 bg-white dark:bg-[#262629] rounded-[6px]">
             <div className="mt-4">
                 {messages.length < 1 && <EmptyConversation />}
             </div>
@@ -69,7 +69,7 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
                             className={`max-w-sm rounded-[3px] py-2 px-4 text-sm font-light ${msg.name === chatUser?.name
                                 ? "bg-gradient-to-r from-[#1f282e] to-black text-white self-end"
                                 : "bg-gradient-to-r from-gray-200 to-gray-300 text-black self-start"
-                                }`}
+                                } `}
                         >
                             {msg.message}
                         </div>
@@ -84,7 +84,7 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
                     type="text"
                     placeholder="Type a message..."
                     value={message}
-                    className="flex-1 p-2 font-light text-sm border rounded-[4px] outline-none"
+                    className="flex-1 p-2 pl-4 font-light text-sm border rounded-[4px] outline-none placeholder:text-black dark:bg-zinc-800 dark:text-gray-200 dark:placeholder:text-gray-200 placeholder:font-light"
                     onChange={(e) => setMessage(e.target.value)}
                 />
                 <div className="ml-2 w-[120px]">

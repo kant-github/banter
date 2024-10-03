@@ -33,14 +33,14 @@ export default function () {
                     <MdDarkMode
                         onClick={toggleDarkMode}
                         className="cursor-pointer text-gray-400"
-                        size={36}
+                        size={24}
                     />
 
                 ) : (
                     <MdLightMode
                         onClick={toggleDarkMode}
                         className="cursor-pointer text-yellow-500"
-                        size={36}
+                        size={24}
                     />
                 )
             }

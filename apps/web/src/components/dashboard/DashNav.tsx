@@ -42,15 +42,15 @@ export default function NavBar({ groups }: props) {
     }, [searchInput]);
 
     return (
-        <div className="flex bg-white dark:bg-[#171717] flex-row justify-between items-center w-full px-8 h-16 border-b dark:border-gray-700">
+        <div className="flex bg-white dark:bg-[#171717] flex-row justify-between items-center w-full px-8 h-16 border-b dark:border-gray-700 dark:shadow-[40px]">
             <div className="flex-shrink-0">
                 <AppLogo />
             </div>
             <div className="flex flex-row justify-center items-center gap-x-4">
-                <div className="flex items-center flex-row gap-x-6 w-3/12">
+                <div className="flex items-center justify-between flex-row gap-x-6 w-3/12">
                     <BlackBtn onClick={() => (console.log(true))}>Docs</BlackBtn>
-                    <DarkMode/>
                 </div>
+                <DarkMode />
                 <div className="w-[150px] sm:w-[300px] lg:w-[350px]">
                     <SearchInput setSearchResultDialogBox={setSearchResultDialogBox} input={searchInput} setInput={setSearchInput} />
                     {searchResultDialogBox && (

@@ -5,9 +5,11 @@ import { useState, useEffect, useRef } from "react";
 import LogOutDialogBox from "../utility/LogOutDialogBox";
 import MyRooms from "./MyRooms";
 import { GroupChatType } from "types";
+import { FaGithub } from "react-icons/fa";
+import { IoLogOutOutline } from "react-icons/io5";
 
 interface props {
-    groups: GroupChatType[];
+    groups?: GroupChatType[];
 }
 
 export default function UserMenu({ groups }: props) {
@@ -41,7 +43,7 @@ export default function UserMenu({ groups }: props) {
                 {session?.user && (
                     <Image
                         onClick={() => setDropDown(prev => !prev)}
-                        className="rounded-full cursor-pointer transform transition-transform duration-300 hover:scale-105"
+                        className="rounded-full select-none cursor-pointer transform transition-transform duration-300 hover:scale-105"
                         src={session.user.image!}
                         width={32}
                         height={32}
@@ -89,7 +91,7 @@ export default function UserMenu({ groups }: props) {
             <MyRooms
                 myRoomDropdown={myRoomDropdown}
                 setMyRoomDropDown={setMyRoomDropDown}
-                groups={groups}
+                groups={groups!}
             />
             {logoutDropdown && (
                 <LogOutDialogBox
@@ -103,29 +105,12 @@ export default function UserMenu({ groups }: props) {
 
 function GithubSvg() {
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 128 128"
-            width="16"
-            height="16"
-        >
-            {/* SVG Path */}
-            <path fill="#3E75C3" d="M63.996,1.333..." />
-        </svg>
+        <FaGithub size={16} />
     );
 }
 
 function LogOutSvg() {
     return (
-        <svg fill="none" height="16" viewBox="0 0 24 24" width="16">
-            <path
-                d="M17 16L21 12M21 12L17 8M21 12L7 12M13 16V17C13 18.6569 11.6569 20 10 20H6C4.34315 20 3 18.6569 3 17V7C3 5.34315 4.34315 4 6 4H10C11.6569 4 13 5.34315 13 7V8"
-                stroke="red-200"
-                className=""
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.7"
-            />
-        </svg>
+        <IoLogOutOutline size={16} />
     );
 }
