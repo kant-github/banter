@@ -79,7 +79,7 @@ export function OptionsMenu({
                             <div
                                 onClick={() => {
                                     navigator.clipboard.writeText(`${FRONTEND_BASE_URL}/chat/${item.id}`).then(() => {
-                                        toast.success("Copied to clipboard");
+                                        toast.success("Copied link to clipboard");
                                         setIsOpen(false);
                                     })
                                 }}

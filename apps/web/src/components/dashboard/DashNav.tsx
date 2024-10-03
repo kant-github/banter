@@ -7,6 +7,7 @@ import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 import { GroupChatType } from "types";
 import SearchResultDialogBox from "../utility/SearchResultDialogBox";
 import AppLogo from "../heading/AppLogo";
+import { MdLightMode } from "react-icons/md";
 import BlackBtn from "../buttons/BlackBtn";
 
 interface props {
@@ -45,9 +46,10 @@ export default function NavBar({ groups }: props) {
             <div className="flex-shrink-0">
                 <AppLogo />
             </div>
-            <div className="flex flex-row justify-center items-center gap-x-8">
-                <div className="w-20 hidden sm:block">
+            <div className="flex flex-row justify-center items-center gap-x-4">
+                <div className="flex items-center flex-row gap-x-6 w-3/12">
                     <BlackBtn onClick={() => (console.log(true))}>Docs</BlackBtn>
+                    <MdLightMode className="cursor-pointer" color="black" size={32} />
                 </div>
                 <div className="w-[150px] sm:w-[300px] lg:w-[350px]">
                     <SearchInput setSearchResultDialogBox={setSearchResultDialogBox} input={searchInput} setInput={setSearchInput} />

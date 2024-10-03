@@ -5,11 +5,11 @@ import { FaRegCopyright } from "react-icons/fa";
 
 export default function Footer() {
     return (
-        <div className="bg-[#1f282e] pt-12 pb-4 px-10 text-gray-300 font-thin text-xs border-t border-gray-500">
+        <div className="bg-[#1f282e] pt-10 pb-4 px-10 text-gray-300 font-thin text-xs border-t border-gray-500">
             <div className="flex flex-col md:flex-row justify-between items-start">
                 <div className="flex flex-col gap-4 w-full md:w-1/4">
                     <h4 className="text-lg font-semibold mb-3">About Us</h4>
-                    <p className="text-sm">
+                    <p className="text-xs italic">
                         Bringing people together for real-time chats, easy communication, and seamless collaboration.
                     </p>
                 </div>
