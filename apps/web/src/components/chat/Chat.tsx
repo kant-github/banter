@@ -55,7 +55,7 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
     };
 
     return (
-        <div className="flex flex-col h-[80vh] p-4 bg-white dark:bg-[#262629] rounded-[6px]">
+        <div className="flex flex-col h-[82vh] p-4 bg-white dark:bg-[#262629] rounded-[6px]">
             <div className="mt-4">
                 {messages.length < 1 && <EmptyConversation />}
             </div>

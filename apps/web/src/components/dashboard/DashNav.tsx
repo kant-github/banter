@@ -9,7 +9,10 @@ import SearchResultDialogBox from "../utility/SearchResultDialogBox";
 import AppLogo from "../heading/AppLogo";
 import BlackBtn from "../buttons/BlackBtn";
 import DarkMode from "../base/DarkMode";
+import { useSession } from "next-auth/react";
+import { Cedarville_Cursive } from "next/font/google"
 
+const font = Cedarville_Cursive({ weight: '400', subsets: ['latin'] })
 interface props {
     groups: any;
 }
@@ -18,6 +21,7 @@ export default function NavBar({ groups }: props) {
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState<GroupChatType[] | []>([]);
     const [searchResultDialogBox, setSearchResultDialogBox] = useState<boolean>(false);
+    const {data: session} = useSession();
 
     async function getSearchInputChatGroups() {
         try {
@@ -47,9 +51,7 @@ export default function NavBar({ groups }: props) {
                 <AppLogo />
             </div>
             <div className="flex flex-row justify-center items-center gap-x-4">
-                <div className="w-2/12 mr-2">
-                    <BlackBtn onClick={() => (console.log(true))}>Docs</BlackBtn>
-                </div>
+                <span className={`w-1/6 dark:text-gray-200 text-[17px] ${font.className}`}>Hey {session?.user.name?.split(" ")[0]}</span>
                 <DarkMode />
                 <div className="w-[150px] sm:w-[300px] lg:w-[350px]">
                     <SearchInput setSearchResultDialogBox={setSearchResultDialogBox} input={searchInput} setInput={setSearchInput} />
