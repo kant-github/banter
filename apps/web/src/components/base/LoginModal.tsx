@@ -1,6 +1,8 @@
 import GoogleSignInButton from "../buttons/GoogleSignInButton"
 import { signIn } from "next-auth/react"
-export default function ({isModalOpen, setIsModalOpen}: {
+import { RxCross2 } from "react-icons/rx";
+
+export default function ({ isModalOpen, setIsModalOpen }: {
     isModalOpen: boolean,
     setIsModalOpen: (value: boolean) => void
 }) {
@@ -17,12 +19,14 @@ export default function ({isModalOpen, setIsModalOpen}: {
             {
                 isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg relative">
+                        <div className="bg-white dark:bg-[#262629] dark:text-gray-200 p-6 rounded-lg shadow-lg max-w-lg relative">
                             <button
-                                className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+                                type="button"
+                                aria-label="cross"
+                                className="absolute top-3 right-5 text-gray-500 hover:text-gray-800"
                                 onClick={() => setIsModalOpen(false)}
                             >
-                                &times;
+                                <RxCross2 />
                             </button>
                             <h2 className="text-md font-bold mb-4">Getting Started ?</h2>
                             <div>

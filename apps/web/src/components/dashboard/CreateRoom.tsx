@@ -34,7 +34,7 @@ export default function CreateRoom({
             {open && (
                 <div className="fixed w-screen h-screen inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <form
-                        className="bg-white p-6 rounded-lg shadow-lg w-[400px] relative"
+                        className="bg-white dark:bg-[#262629] dark:text-gray-200 p-6 rounded-lg shadow-lg w-[400px] relative"
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleSubmit();
@@ -47,14 +47,14 @@ export default function CreateRoom({
                         >
                             &#10005;
                         </button>
-                        <div className="mt-2">
+                        <div className="mt-4">
                             <InputBox input={roomTitle} setInput={setRoomTitle} label="Room Title" />
                         </div>
-                        <div className="mt-2">
+                        <div className="mt-4">
                             <InputBox type="password" input={roomPasscode} setInput={setRoomPasscode} label="Create Passcode" />
                         </div>
 
-                        <div className="mt-4 flex justify-end">
+                        <div className="flex justify-end mt-6">
                             <BigBlackButton disabled={submitting}>
                                 {submitting ? "Creating..." : "Create Room"}
                             </BigBlackButton>

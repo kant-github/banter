@@ -47,7 +47,7 @@ export default function NavBar({ groups }: props) {
                 <AppLogo />
             </div>
             <div className="flex flex-row justify-center items-center gap-x-4">
-                <div className="flex items-center justify-between flex-row gap-x-6 w-3/12">
+                <div className="w-2/12">
                     <BlackBtn onClick={() => (console.log(true))}>Docs</BlackBtn>
                 </div>
                 <DarkMode />
