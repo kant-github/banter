@@ -1,3 +1,4 @@
+import prisma from "@repo/db/client";
 import { Server, Socket } from "socket.io";
 
 
@@ -21,8 +22,12 @@ export function setupSocket(io: Server) {
             console.log("connecting to room is : ",socket.room)
             console.log("Your socket is connected", socket.id);
 
-            socket.on("message", (data: string) => {
-                console.log("The server side message is...", data);
+            socket.on("message", async (data) => {
+                                
+                await prisma.chats.create({
+                    data: data    
+                })
+
                 if (socket.room) {
                     socket.to(socket.room).emit("message", data);
                     console.log("emitted");

@@ -62,10 +62,8 @@ export function OptionsMenu({
         <div ref={menuRef} className={`relative ${className}`}>
             <SlOptionsVertical
                 size={12}
-                className="cursor-pointer text-zinc-100"
+                className="cursor-pointer dark:text-zinc-100 text-zinc-700"
                 onClick={toggleMenu}
-                color={color || "white"}
-
             />
             <AnimatePresence>
                 {isOpen && (

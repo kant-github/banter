@@ -3,8 +3,7 @@ import { MdDarkMode } from "react-icons/md";
 import { useState, useEffect } from 'react';
 
 export default function () {
-    const [isDarkMode, setIsDarkMode] = useState(false);
-
+    const [isDarkMode, setIsDarkMode] = useState(true);
     useEffect(() => {
         const darkModePreference = localStorage.getItem('theme') === 'dark' ||
             (!('theme' in localStorage) &&

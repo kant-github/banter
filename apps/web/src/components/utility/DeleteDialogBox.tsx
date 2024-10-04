@@ -7,6 +7,7 @@ import { useState } from "react";
 import axios from "axios";
 import { clearCache } from "actions/common";
 import { toast } from "sonner";
+import BigWhiteBtn from "../buttons/BigWhiteBtn";
 
 interface Props {
     itemId: string;
@@ -58,7 +59,7 @@ export default function DeleteDialogBox({
                         Are you sure you want to delete this room? Remember this action can't be undone, and you will lose all your data including chats...
                     </p>
                     <div className="flex items-center justify-end gap-4 pt-4 pr-2 w-full">
-                        <WhiteBtn onClick={() => setDeleteDialogBox(false)}>Cancel</WhiteBtn>
+                        <BigWhiteBtn onClick={() => setDeleteDialogBox(false)}>Cancel</BigWhiteBtn>
                         <RedBtn onClick={deleteRoomHandler}>
                             {loading ? "Deleting..." : "Delete"}
                         </RedBtn>

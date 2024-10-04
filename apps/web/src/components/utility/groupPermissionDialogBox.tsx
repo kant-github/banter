@@ -32,7 +32,6 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
 
     const joinRoomHandler = async () => {
         if (group.passcode !== passcode) {
-            console.log("---> ",group.passcode);
             toast.error("Enter the correct passcode");
             return;
         }
@@ -46,6 +45,10 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
                 });
                 clearCache("chat-group-users");
                 localStorage.setItem(params["id"] as string, JSON.stringify(user.data));
+
+                // Dispatch a custom event to notify other components about the change
+                window.dispatchEvent(new Event('chatUserUpdated'));
+
                 toast.success("Hurray");
                 setPermissionDialogBox(false);
             } catch (err) {
@@ -56,6 +59,7 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
             setPermissionDialogBox(false);
         }
     };
+
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">

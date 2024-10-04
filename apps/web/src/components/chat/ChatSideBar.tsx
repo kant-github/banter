@@ -11,7 +11,7 @@ export default function ({users}: {users: Array<GroupChatUserType> | []}) {
             <div className="px-6 flex-grow overflow-y-auto space-y-4">
                 {
                     users.length > 0 && users.map((item, index) => (
-                        <div key={index} className="border-[1px] dark:border-gray-600 text-xs px-4 py-4 bg-white rounded-[8px] transition-shadow dark:hover:shadow-md hover:shadow-md dark:bg-[#262629]">
+                        <div key={index} className="border-[1px] dark:border-gray-600 text-xs px-4 py-4 bg-white rounded-[8px] transition-shadow dark:hover:shadow-lg hover:shadow-md dark:bg-[#262629]">
                             <div className="text-sm font-semibold">
                                 <h2>{item.name}</h2>
                             </div>

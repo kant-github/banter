@@ -62,7 +62,6 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
             <div className="flex-1 overflow-y-auto flex flex-col-reverse">
                 <div ref={messagesEndRef} />
                 <div className="flex flex-col gap-2">
-
                     {messages.map((msg) => (
                         <div
                             key={msg.id}

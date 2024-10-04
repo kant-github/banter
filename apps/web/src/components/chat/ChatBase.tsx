@@ -17,12 +17,21 @@ export default function ChatBase({ groupId, group, users, olderChats }: props) {
     const [permissionDialogBox, setPermissionDialogBox] = useState(true);
     const [chatUser, setChatUser] = useState<GroupChatUserType>();
     useEffect(() => {
+        const fetchChatUserFromLocalStorage = () => {
             const data = localStorage.getItem(group.id);
-        if (data) {
-            const pData = JSON.parse(data);
-            setChatUser(pData.data);
-        }
+            if (data) {
+                const pData = JSON.parse(data);
+                setChatUser(pData.data);
+            }
+        };
+        fetchChatUserFromLocalStorage();
+
+        window.addEventListener('chatUserUpdated', fetchChatUserFromLocalStorage);
+        return () => {
+            window.removeEventListener('chatUserUpdated', fetchChatUserFromLocalStorage);
+        };
     }, [group.id]);
+
     return (
         <>
             {
@@ -32,7 +41,7 @@ export default function ChatBase({ groupId, group, users, olderChats }: props) {
                 <ChatSideBar users={users} />
                 <div className="w-full mr-6">
                     <ChatNavTitle groupTitle={group.title} />
-                    <Chat chatUser={chatUser} olderChats={olderChats} group={group}/>
+                    <Chat chatUser={chatUser} olderChats={olderChats} group={group} />
                 </div>
             </div>
         </>
