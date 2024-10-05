@@ -25,7 +25,6 @@ export default function ({ params }: { params: { id: string } }) {
                 }
                 const chatGroupUsers = await fetchChatGroupUsers(params.id);
                 const chats: Array<MessageType> | [] = await fetchChats(params.id);
-
                 setGroup(groupData);
                 setChatGroupUsers(chatGroupUsers);
                 setChats(chats);

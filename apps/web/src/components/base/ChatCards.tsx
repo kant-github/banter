@@ -1,7 +1,11 @@
+import { getServerSession } from "next-auth";
 import CardHoverChatCards from "../ui/CardHoverChatCards";
 import { IoIosArrowForward } from "react-icons/io";
+import { authOption } from "app/api/auth/[...nextauth]/options";
 
-export default function ({ groups }: { groups: any }) {
+export default async function ({ groups }: { groups: any }) {
+    const session = await getServerSession(authOption);
+    console.log(session?.user);
     return (
         <div className="bg-[#37474f] dark:bg-[#141313] pt-6 pb-16">
             {

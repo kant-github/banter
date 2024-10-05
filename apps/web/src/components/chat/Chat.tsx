@@ -1,13 +1,13 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
 import BigBlackButton from "../buttons/BigBlackButton";
-import { GroupChatType, GroupChatUserType, MessageType } from "types";
+import { GroupChatType, GroupChatUserType, MessageType, UserType } from "types";
 import { getSocket } from "@/lib/socket.config";
 import { v4 as uuidv4 } from "uuid";
 import { EmptyConversation } from "./EmptyConversation";
 
 interface Props {
     olderChats: Array<MessageType> | [];
-    chatUser: GroupChatUserType | undefined;
+    chatUser: UserType
     group: GroupChatType;
 }
 
@@ -39,20 +39,22 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
 
     const handleSendMessage = (e: React.FormEvent) => {
         e.preventDefault();
-
+    
         if (!message.trim()) return;
-
+    
         const newMessage: MessageType = {
             id: uuidv4(),
             message: message,
             name: chatUser?.name ?? "Unknown",
-            created_at: new Date().toISOString(),
             group_id: group.id,
+            user_id: chatUser?.id ?? 0, // Make sure to send the user's ID
+            created_at: new Date().toISOString(), // Timestamp
         };
         socket.emit("message", newMessage);
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         setMessage("");
     };
+    
 
     return (
         <div className="flex flex-col h-[82vh] p-4 bg-white dark:bg-[#262629] rounded-[6px]">

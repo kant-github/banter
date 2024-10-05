@@ -4,6 +4,7 @@ import { Response, Request } from "express";
 export default async function (req: Request, res: Response) {
     try {
         const groupId = req.params.id;
+        console.log(groupId);
         if (groupId) {
             const chatGroup = await prisma.chatGroup.findUnique({
                 where: {

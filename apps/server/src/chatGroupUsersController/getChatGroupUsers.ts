@@ -12,9 +12,12 @@ export async function getChatGroupUsers(req: Request, res: Response) {
         const users = await prisma.groupUsers.findMany({
             where: {
                 group_id: group_id as string
+            },
+            include: {
+                user: true
             }
         })
-        console.log(users);
+        console.log("chat group user in backend is : ",users);
 
         return res.json({
             message: "Successfully fetched all the chat group users",

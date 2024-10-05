@@ -8,7 +8,6 @@ import { getServerSession } from "next-auth";
 export default async function () {
     const session = await getServerSession(authOption);
     const groups = await fetchGroups(session?.user?.token || null);
-    
     return (
         <div className="">
             <DashNav groups={groups} />

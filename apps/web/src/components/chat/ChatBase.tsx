@@ -13,24 +13,40 @@ interface props {
     olderChats: Array<MessageType> | [];
 }
 
+type UserType = {
+    id: number;
+    name: string;
+    image: string;
+    email: string;
+    provider: string;
+    oauth_id: string;
+    created_at: string;
+}
+
 export default function ChatBase({ groupId, group, users, olderChats }: props) {
     const [permissionDialogBox, setPermissionDialogBox] = useState(true);
-    const [chatUser, setChatUser] = useState<GroupChatUserType>();
+    const [chatUser, setChatUser] = useState<UserType>();
     useEffect(() => {
         const fetchChatUserFromLocalStorage = () => {
             const data = localStorage.getItem(group.id);
             if (data) {
                 const pData = JSON.parse(data);
-                setChatUser(pData.data);
+                console.log("parsed data is : ", pData.user);
+                setChatUser(pData.user);
             }
         };
         fetchChatUserFromLocalStorage();
-
         window.addEventListener('chatUserUpdated', fetchChatUserFromLocalStorage);
         return () => {
             window.removeEventListener('chatUserUpdated', fetchChatUserFromLocalStorage);
         };
-    }, [group.id]);
+    }, [groupId]);
+
+    useEffect(() => {
+        if (chatUser) {
+            console.log("chat suer is : ", chatUser?.name);
+        }
+    }, [])
 
     return (
         <>

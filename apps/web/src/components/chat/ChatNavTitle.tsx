@@ -20,7 +20,7 @@ export default function ChatNavTitle({ groupTitle }: Props) {
     if (data) {
         try {
             const parsedData = JSON.parse(data);
-            user_id = parsedData.data.id;
+            user_id = parsedData.id;
         } catch (err) {
             console.error("Error parsing localStorage data:", err);
         }
