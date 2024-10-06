@@ -1,5 +1,15 @@
-import { Redis } from "ioredis";
+import dotenv from 'dotenv';
+import { Redis } from 'ioredis';
 
-const redis = new Redis("rediss://default:AWoJAAIjcDEyNjc1NWZiOTRjMzM0YzIxYjNkYTlkOTYwZmU1MjM0NnAxMA@frank-bug-27145.upstash.io:6379")
+dotenv.config();
+
+const url = process.env.REDIS_URL;
+
+
+if (!url) {
+    throw new Error("REDIS_URL environment variable is not defined.");
+}
+
+const redis = new Redis(url); 
 
 export default redis;
