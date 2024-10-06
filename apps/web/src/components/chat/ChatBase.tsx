@@ -4,62 +4,61 @@ import ChatSideBar from "./ChatSideBar";
 import ChatNavTitle from "./ChatNavTitle";
 import Chat from "./Chat";
 import GroupPermissionDialogBox from "../utility/groupPermissionDialogBox";
-import { GroupChatType, GroupChatUserType, MessageType } from "types";
+import { GroupChatType, GroupChatUserType, MessageType, UserType } from "types";
 
-interface props {
-    groupId: string;
-    group: GroupChatType;
-    users: Array<GroupChatUserType> | [];
-    olderChats: Array<MessageType> | [];
+interface Props {
+  groupId: string;
+  group: GroupChatType;
+  users: GroupChatUserType[];
+  olderChats: MessageType[];
 }
 
-type UserType = {
-    id: number;
-    name: string;
-    image: string;
-    email: string;
-    provider: string;
-    oauth_id: string;
-    created_at: string;
-}
+const ChatBase: React.FC<Props> = ({ groupId, group, users, olderChats }: Props) => {
+  const [permissionDialogBox, setPermissionDialogBox] = useState(true);
+  const [chatUser, setChatUser] = useState<UserType | null>(null); // Set chatUser as null initially
 
-export default function ChatBase({ groupId, group, users, olderChats }: props) {
-    const [permissionDialogBox, setPermissionDialogBox] = useState(true);
-    const [chatUser, setChatUser] = useState<UserType>();
-    useEffect(() => {
-        const fetchChatUserFromLocalStorage = () => {
-            const data = localStorage.getItem(group.id);
-            if (data) {
-                const pData = JSON.parse(data);
-                console.log("parsed data is : ", pData.user);
-                setChatUser(pData.user);
-            }
-        };
-        fetchChatUserFromLocalStorage();
-        window.addEventListener('chatUserUpdated', fetchChatUserFromLocalStorage);
-        return () => {
-            window.removeEventListener('chatUserUpdated', fetchChatUserFromLocalStorage);
-        };
-    }, [groupId]);
+  useEffect(() => {
+    const fetchChatUserFromLocalStorage = () => {
+      const data = localStorage.getItem(group.id);
+      if (data) {
+        const pData = JSON.parse(data);
+        console.log("Parsed data is:", pData.user);
+        setChatUser(pData.user); // Assuming pData contains user details
+      }
+    };
+    fetchChatUserFromLocalStorage();
 
-    useEffect(() => {
-        if (chatUser) {
-            console.log("chat suer is : ", chatUser?.name);
-        }
-    }, [])
+    window.addEventListener("chatUserUpdated", fetchChatUserFromLocalStorage);
 
-    return (
-        <>
-            {
-                permissionDialogBox && <GroupPermissionDialogBox group={group} permissionDialogBox={permissionDialogBox} setPermissionDialogBox={setPermissionDialogBox} />
-            }
-            <div className="flex flex-row w-screen bg-[#f2f2f2] dark:bg-[#1c1c1c]">
-                <ChatSideBar users={users} />
-                <div className="w-full mr-6">
-                    <ChatNavTitle groupTitle={group.title} />
-                    <Chat chatUser={chatUser} olderChats={olderChats} group={group} />
-                </div>
-            </div>
-        </>
-    );
-}
+    return () => {
+      window.removeEventListener("chatUserUpdated", fetchChatUserFromLocalStorage);
+    };
+  }, [group.id]);
+
+  useEffect(() => {
+    if (chatUser) {
+      console.log("Chat user is:", chatUser.name);
+    }
+  }, [chatUser]);
+
+  return (
+    <>
+      {permissionDialogBox && (
+        <GroupPermissionDialogBox
+          group={group}
+          permissionDialogBox={permissionDialogBox}
+          setPermissionDialogBox={setPermissionDialogBox}
+        />
+      )}
+      <div className="flex flex-row w-screen bg-[#f2f2f2] dark:bg-[#1c1c1c]">
+        <ChatSideBar users={users} />
+        <div className="w-full mr-6">
+          <ChatNavTitle groupTitle={group.title} />
+          <Chat chatUser={chatUser} olderChats={olderChats} group={group} />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ChatBase;

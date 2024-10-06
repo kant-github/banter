@@ -5,6 +5,7 @@ export default async function fetchChats(group_id: string) {
         if (!group_id) {
             return [];
         }
+        console.log("logging group id : ",group_id);
         const response = await fetch(`${CHATS_URL}/${group_id}`, {
             cache: "no-cache",
         });
@@ -13,7 +14,7 @@ export default async function fetchChats(group_id: string) {
         }
         const chats = await response.json();
         if (chats?.data) {
-            return chats?.data;
+            return chats.data;
         }
     } catch (err) {
         console.log("Error in fetching chats from from frontend");

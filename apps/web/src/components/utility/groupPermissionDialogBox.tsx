@@ -44,7 +44,7 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
                 user_id: session?.user?.id,
                 group_id: group.id,
             });
-            console.log("response from backend is : ", response.data);
+            
             if (response.data.message === "User added to group successfully") {
                 localStorage.setItem(params["id"] as string, JSON.stringify(response.data.data));
                 clearCache("chat-group-users");

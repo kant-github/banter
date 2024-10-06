@@ -25,8 +25,16 @@ export function setupSocket(io: Server) {
             socket.on("message", async (data) => {
                                 
                 await prisma.chats.create({
-                    data: data    
-                })
+                    data: {
+                        id: data.id,
+                        message: data.message,
+                        name: data.name,
+                        group_id: data.group_id,
+                        user_id: data.user_id,
+                        created_at: data.created_at
+                    }
+                });
+                
 
                 if (socket.room) {
                     socket.to(socket.room).emit("message", data);

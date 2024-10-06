@@ -59,7 +59,6 @@ model Chats {
   user_id    Int
   message    String?
   name       String
-  file       String?
   created_at DateTime  @default(now())
 
   @@index([created_at])

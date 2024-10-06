@@ -11,7 +11,7 @@ export type GroupChatUserType = {
   group_id: string;
   user_id: number;
   joined_at: string;
-  user: UserType
+  user: UserType;
 };
 
 export type UserType = {
@@ -22,13 +22,14 @@ export type UserType = {
   provider: string;
   oauth_id: string;
   created_at: string;
-}
+};
 
 export type MessageType = {
   id: string;
   group_id: string;
-  user_id: number
+  user_id: number;
   message: string;
   name: string;
   created_at: string;
+  user?: UserType; // Optional in case the user might be missing in some cases
 };
