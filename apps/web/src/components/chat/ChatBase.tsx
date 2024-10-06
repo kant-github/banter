@@ -22,7 +22,7 @@ const ChatBase: React.FC<Props> = ({ groupId, group, users, olderChats }: Props)
       const data = localStorage.getItem(group.id);
       if (data) {
         const pData = JSON.parse(data);
-        console.log("Parsed data is:", pData.user);
+        // console.log("Parsed data is:", pData.user);
         setChatUser(pData.user); // Assuming pData contains user details
       }
     };
@@ -37,7 +37,7 @@ const ChatBase: React.FC<Props> = ({ groupId, group, users, olderChats }: Props)
 
   useEffect(() => {
     if (chatUser) {
-      console.log("Chat user is:", chatUser.name);
+      // console.log("Chat user is:", chatUser.name);
     }
   }, [chatUser]);
 

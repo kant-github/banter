@@ -19,15 +19,14 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
     const [passcode, setPasscode] = useState<string>("");
     const params = useParams();
     const { data: session } = useSession();
-    console.log("session is : ", session?.user?.id);
+    // console.log("session is : ", session?.user?.id);
 
     useEffect(() => {
         const data = localStorage.getItem(params["id"] as string);
         if (data) {
             const jsonData = JSON.parse(data);
-            console.log("local storage data is : ", jsonData);
+            // console.log("local storage data is : ", jsonData);
             if (jsonData?.id && jsonData?.group_id) {
-                console.log("reached");
                 setPermissionDialogBox(false);
             }
         }

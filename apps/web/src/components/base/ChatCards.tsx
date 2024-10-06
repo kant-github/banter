@@ -3,6 +3,7 @@ import CardHoverChatCards from "../ui/CardHoverChatCards";
 import { IoIosArrowForward } from "react-icons/io";
 import { authOption } from "app/api/auth/[...nextauth]/options";
 
+
 export default async function ({ groups }: { groups: any }) {
     const session = await getServerSession(authOption);
     console.log(session?.user);
@@ -16,7 +17,6 @@ export default async function ({ groups }: { groups: any }) {
                     </span>
                 )
             }
-
             <CardHoverChatCards items={groups} />
         </div>
     )

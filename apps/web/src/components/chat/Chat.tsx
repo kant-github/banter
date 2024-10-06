@@ -50,7 +50,7 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
             group_id: group.id,
             user_id: chatUser?.id ?? 0,
             created_at: new Date().toISOString(),
-            user: chatUser, // Include the entire user object here, including profile picture
+            user: chatUser,
         };
 
         socket.emit("message", newMessage);
@@ -66,12 +66,8 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
             <div className="flex-1 overflow-y-auto flex flex-col-reverse">
                 <div ref={messagesEndRef} />
                 <div className="flex flex-col gap-2 px-2">
-                    {messages.map((msg) => (
-                        <>
-                            {
-                                <Messages key={msg.id} msg={msg} chatUser={chatUser}/>
-                            }
-                        </>
+                    {messages.map((msg, index) => (
+                        <Messages key={index} msg={msg} chatUser={chatUser} />
                     ))}
                 </div>
             </div>

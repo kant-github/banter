@@ -2,7 +2,7 @@ import { MessageType, UserType } from "types";
 import FromUser from "./FromUser";
 import ToUser from "./ToUser";
 
-export default function ({ msg, chatUser }: { msg: MessageType, chatUser: UserType }) {
+export default function ({ msg, chatUser }: { msg: MessageType, chatUser: UserType | null }) {
     return (
         <>
             {

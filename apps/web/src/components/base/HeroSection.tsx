@@ -18,7 +18,7 @@ export default function () {
                     <ButtonGroup />
                 </div>
                 <div>
-                    <Image className="transform transition-transform duration-300 hover:scale-105" src={"/images/conversation.svg"} width={600} height={600} alt="hero-image" />
+                    <Image className="transform transition-transform duration-300 hover:scale-105" src={"/images/conversation.svg"} width={600} height={600} alt="hero" />
                 </div>
                 <div className="">
                     <FeatureSection />

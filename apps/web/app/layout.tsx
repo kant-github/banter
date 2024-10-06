@@ -25,10 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <SessionProvider>
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <SessionProvider>
         <body className={`${geistSans.variable} ${geistMono.variable} bg-[#f2f2f2]`}>
           {children}
           <Toaster position="bottom-right" closeButton duration={5000} />
