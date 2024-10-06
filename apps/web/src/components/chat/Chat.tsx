@@ -4,7 +4,7 @@ import { GroupChatType, MessageType, UserType } from "types";
 import { getSocket } from "@/lib/socket.config";
 import { v4 as uuidv4 } from "uuid";
 import { EmptyConversation } from "./EmptyConversation";
-import Image from "next/image";
+import Messages from "./messages/Messages";
 
 interface Props {
     olderChats: MessageType[];
@@ -69,20 +69,7 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
                     {messages.map((msg) => (
                         <>
                             {
-                                msg.user_id === chatUser?.id ? (
-                                    <div className="flex items-start gap-2 max-w-sm self-end mb-0.5">
-                                        <div className="flex items-center gap-x-2">
-                                            <span className="text-sm font-light bg-gradient-to-r from-zinc-900 to-black text-white rounded-[5px] py-1.5 px-4">{msg.message}</span>
-                                            <Image alt="rk" src={msg.user?.image!} width={32} height={32} className="rounded-full" />
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="flex items-start gap-2 max-w-sm self-start mb-0.5">
-                                        <div className="flex items-center gap-x-2">
-                                            <Image alt="rk" src={msg.user?.image!} width={32} height={32} className="rounded-full" />
-                                            <span className="rounded-[3px] py-1.5 px-4 text-sm font-light bg-gradient-to-r from-zinc-200 to-gray-300 text-black">{msg.message}</span>
-                                        </div>
-                                    </div>)
+                                <Messages key={msg.id} msg={msg} chatUser={chatUser}/>
                             }
                         </>
                     ))}
@@ -109,26 +96,3 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
 
 export default ChatComponent;
 
-// {messages.map((msg) => (
-//     <div
-//       key={msg.id}
-//       className={`flex items-start gap-2 max-w-sm rounded-[3px] py-2 px-4 text-sm font-light ${
-//         msg.user_id === chatUser?.id // Compare user_id instead of name
-//           ? "bg-gradient-to-r from-[#1f282e] to-black text-white self-end"
-//           : "bg-gradient-to-r from-gray-200 to-gray-300 text-black self-start"
-//       } `}
-//     >
-//       {msg.user?.image && (
-//         <Image
-//           width={20}
-//           height={20}
-//           src={msg.user.image}
-//           alt={msg.user.name}
-//           className="w-8 h-8 rounded-full"
-//         />
-//       )}
-//       <div>
-//         {msg.message}
-//       </div>
-//     </div>
-//   ))}
