@@ -1,7 +1,8 @@
 import { GroupChatUserType } from "types";
 import { FaUserTie } from "react-icons/fa";
+import { format } from "date-fns";
 
-export default function ({ users }: { users: Array<GroupChatUserType> | [] }) {
+export default function UsersList({ users }: { users: Array<GroupChatUserType> | [] }) {
     return (
         <div className="w-1/5 bg-[#f2f2f2] dark:bg-[#1c1c1c] dark:text-gray-300 h-[91.5vh] flex flex-col pb-[12px]">
             <div className="flex items-center gap-x-3 text-2xl pl-8 py-6 font-bold">
@@ -16,12 +17,12 @@ export default function ({ users }: { users: Array<GroupChatUserType> | [] }) {
                                 <h2>{item.user.name}</h2>
                             </div>
                             <div>
-                                <h5>joined: <i className="font-light">{item.joined_at}</i></h5>
+                                <h5>Joined: <i className="font-light">{format(new Date(item.joined_at), 'MMMM dd, yyyy')}</i></h5> {/* Format the date */}
                             </div>
                         </div>
                     ))
                 }
             </div>
         </div>
-    )
+    );
 }
