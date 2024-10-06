@@ -17,6 +17,7 @@ interface Props {
 
 export default function ChatPermissionDialog({ permissionDialogBox, setPermissionDialogBox, group }: Props) {
     const [passcode, setPasscode] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
     const params = useParams();
     const { data: session } = useSession();
     // console.log("session is : ", session?.user?.id);
@@ -33,6 +34,7 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
     }, [params, setPermissionDialogBox]);
 
     const joinRoomHandler = async () => {
+        setLoading(true);
         if (group.passcode !== passcode) {
             toast.error("Enter the correct passcode");
             return;
@@ -48,6 +50,7 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
                 localStorage.setItem(params["id"] as string, JSON.stringify(response.data.data));
                 clearCache("chat-group-users");
                 toast.success("You have joined the group successfully!");
+                setLoading(false);
                 setPermissionDialogBox(false);
             } else {
                 toast.error(response.data.message);
@@ -67,7 +70,7 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
                         <InputBox type="password" label="Room's Passcode" input={passcode} setInput={setPasscode} />
                     </div>
                     <div className="mt-4">
-                        <BigBlackButton onClick={joinRoomHandler}>Join</BigBlackButton>
+                        <BigBlackButton disabled={loading} onClick={joinRoomHandler}>{loading ? "Joining" : "Join"}</BigBlackButton>
                     </div>
                 </div>
             </div>
