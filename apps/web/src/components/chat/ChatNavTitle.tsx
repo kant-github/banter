@@ -6,12 +6,14 @@ import axios from "axios";
 import { CHAT_GROUP_USERS } from "@/lib/apiAuthRoutes";
 import { toast } from "sonner";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
+import Image from "next/image";
 
 interface Props {
     groupTitle: string;
+    groupImage: string;
 }
 
-export default function ChatNavTitle({ groupTitle }: Props) {
+export default function ChatNavTitle({ groupTitle, groupImage }: Props) {
     const router = useRouter();
     const params = useParams();
     const data = localStorage.getItem(params["id"] as string);
@@ -43,13 +45,15 @@ export default function ChatNavTitle({ groupTitle }: Props) {
 
     return (
         <div className="flex items-center justify-between bg-[#f2f2f2] dark:bg-[#1c1c1c] h-[82px] dark:text-gray-300">
-            <h1 className="font-bold text-2xl pl-12 py-6">
-                {groupTitle}
+            <h1 className="flex flex-row items-center gap-x-2 font-bold text-2xl ml-8 py-6">
+                <Image src={groupImage} width={22} height={22} alt="logo" className="rounded-full" />
+                <p className="">{groupTitle}</p>
             </h1>
+
             <div className="mr-4 flex items-center justify-center gap-x-6 w-[250px] group">
                 <BigWhiteBtn onClick={() => router.push("/dashboard")}>
-                        <IoIosArrowBack size={18} className="stroke-[2px] transition-transform transform group-hover:-translate-x-[1px]" /> 
-                        <span>Dashboard</span>
+                    <IoIosArrowBack size={18} className="stroke-[2px] transition-transform transform group-hover:-translate-x-[1px]" />
+                    <span>Dashboard</span>
                 </BigWhiteBtn>
                 <RedBtn onClick={exitRoomHandler}>Exit Room</RedBtn>
             </div>

@@ -10,6 +10,7 @@ if (!url) {
     throw new Error("REDIS_URL environment variable is not defined.");
 }
 
-const redis = new Redis(url); 
+const redis = new Redis("redis://localhost:6379");
+
 
 export default redis;

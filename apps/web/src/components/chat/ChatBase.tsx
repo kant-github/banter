@@ -15,31 +15,25 @@ interface Props {
 
 const ChatBase: React.FC<Props> = ({ groupId, group, users, olderChats }: Props) => {
   const [permissionDialogBox, setPermissionDialogBox] = useState(true);
-  const [chatUser, setChatUser] = useState<UserType | null>(null); // Set chatUser as null initially
+  const [chatUser, setChatUser] = useState<UserType | null>(null);
 
   useEffect(() => {
+    
     const fetchChatUserFromLocalStorage = () => {
       const data = localStorage.getItem(group.id);
       if (data) {
         const pData = JSON.parse(data);
-        // console.log("Parsed data is:", pData.user);
-        setChatUser(pData.user); // Assuming pData contains user details
+        setChatUser(pData.user);
       }
     };
-    fetchChatUserFromLocalStorage();
 
+    fetchChatUserFromLocalStorage();
     window.addEventListener("chatUserUpdated", fetchChatUserFromLocalStorage);
 
     return () => {
       window.removeEventListener("chatUserUpdated", fetchChatUserFromLocalStorage);
     };
   }, [group.id]);
-
-  useEffect(() => {
-    if (chatUser) {
-      // console.log("Chat user is:", chatUser.name);
-    }
-  }, [chatUser]);
 
   return (
     <>
@@ -53,7 +47,7 @@ const ChatBase: React.FC<Props> = ({ groupId, group, users, olderChats }: Props)
       <div className="flex flex-row w-screen bg-[#f2f2f2] dark:bg-[#1c1c1c]">
         <ChatSideBar users={users} />
         <div className="w-full mr-6">
-          <ChatNavTitle groupTitle={group.title} />
+          <ChatNavTitle groupImage={group.groupImage} groupTitle={group.title} />
           <Chat chatUser={chatUser} olderChats={olderChats} group={group} />
         </div>
       </div>

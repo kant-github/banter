@@ -19,8 +19,8 @@ export default function ({ label, input, setInput, type, value, placeholder }: T
         }
     };
     return (
-        <div className="flex flex-col space-y-[4px]">
-            <label htmlFor="input" className="text-xs font-mono text-gray-700 dark:text-gray-200">
+        <div className="flex flex-col space-y-[4px] w-full">
+            <label htmlFor="input" className="text-xs font-light tracking-wider text-gray-700 dark:text-gray-200">
                 {label}
             </label>
             <div className="relative">
@@ -30,7 +30,7 @@ export default function ({ label, input, setInput, type, value, placeholder }: T
                     placeholder={placeholder}
                     id="input"
                     type={type ? showPassword ? 'text' : 'password' : "text"}
-                    className="px-4 py-[9px] text-xs font-thin border border-gray-300 text-black shadow-sm focus:outline-none rounded-[4px] w-full pr-10 placeholder:text-black dark:bg-zinc-800 dark:text-gray-200 dark:placeholder:text-gray-200"
+                    className="px-4 py-[9px] text-xs font-thin border border-gray-300 dark:border-zinc-600 text-black shadow-sm focus:outline-none rounded-[4px] w-full pr-10 placeholder:text-black dark:bg-zinc-800 dark:text-gray-200 dark:placeholder:text-gray-200"
                 />{
                     type === "password" && (
                         <ShowPassword showPassword={showPassword} setShowPassword={setShowPassword} type={type} />

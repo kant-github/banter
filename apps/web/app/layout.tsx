@@ -26,10 +26,25 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <SessionProvider>
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-      </head>
-        <body className={`${geistSans.variable} ${geistMono.variable} bg-[#f2f2f2]`}>
+        <head>
+          <link rel="icon" href="/favicon.ico" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function() {
+                  const darkMode = localStorage.getItem('theme') === 'dark' ||
+                    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                  if (darkMode) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                })();
+              `,
+            }}
+          />
+        </head>
+        <body className={`${geistSans.variable} ${geistMono.variable} dark:bg-zinc-800 bg-[#f2f2f2]`}>
           {children}
           <Toaster position="bottom-right" closeButton duration={5000} />
         </body>

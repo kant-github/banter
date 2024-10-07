@@ -15,28 +15,40 @@ export default function CreateRoomComponent({ user }: { user: any }) {
     const [roomTitle, setRoomTitle] = useState<string>("");
     const [roomPasscode, setRoomPasscode] = useState<string>("");
     const [loading, setLoading] = useState(false);
+    const [groupPhoto, setGroupPhoto] = useState<File | null>(null);
+    console.log("Group photo is : ", groupPhoto);
 
     async function createChatHandler() {
         const payload = { title: roomTitle, passcode: roomPasscode };
         const result = createChatSchema.safeParse(payload);
-
+    
         if (!result.success) {
             const errorMessages = result.error.errors.map(err => err.message).join(", ");
             toast.error(`Error: ${errorMessages}`);
             return;
         }
-
+    
+        const finalPayload = new FormData();
+        finalPayload.append('title', result.data.title);
+        finalPayload.append('passcode', result.data.passcode);
+        if (groupPhoto) {
+            finalPayload.append('groupPhoto', groupPhoto);
+        }
+    
         try {
             setLoading(true);
-            const { data } = await axios.post("http://localhost:7001/api/chat-group", result.data, {
+            const { data } = await axios.post("http://localhost:7001/api/chat-group", finalPayload, {
                 headers: {
                     authorization: `Bearer ${user.token}`,
+                    'Content-Type': 'multipart/form-data',
                 },
             });
+    
             const formattedDate = moment().format('dddd, MMMM D, YYYY');
             toast.message(data.message, {
                 description: formattedDate
             });
+    
             setRoomTitle("");
             setRoomPasscode("");
             clearCache("dashboard");
@@ -48,6 +60,7 @@ export default function CreateRoomComponent({ user }: { user: any }) {
             setLoading(false);
         }
     }
+    
 
     function openModal() {
         setCreateRoomModal(true);
@@ -82,6 +95,8 @@ export default function CreateRoomComponent({ user }: { user: any }) {
                 setRoomPasscode={setRoomPasscode}
                 open={createRoomModal}
                 setOpen={setCreateRoomModal}
+                groupPhoto={groupPhoto}
+                setGroupPhoto={setGroupPhoto}
             />
         </>
     );

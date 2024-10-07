@@ -5,11 +5,20 @@ import { Server } from "socket.io";
 import { createAdapter } from "@socket.io/redis-streams-adapter";
 import Routes from "./routes/index";
 import { setupSocket } from "./socket";
-import redis from "./config/redis.config"; 
+import redis from "./config/redis.config";
+import { cloudinaryConnect } from "./config/cloudinary.config";
+import fileUpload from "express-fileupload"
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(
+    fileUpload({
+        useTempFiles: true,
+        tempFileDir: '/tmp'
+    })
+)
+cloudinaryConnect();
 
 const PORT = process.env.PORT || 7001;
 const server = createServer(app);

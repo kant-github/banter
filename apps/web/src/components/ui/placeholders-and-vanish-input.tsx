@@ -147,26 +147,6 @@ export function PlaceholdersAndVanishInput({
     animateFrame(start);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !animating) {
-      vanishAndSubmit();
-    }
-  };
-
-  const vanishAndSubmit = () => {
-    setAnimating(true);
-    draw();
-
-    const value = inputRef.current?.value || "";
-    if (value && inputRef.current) {
-      const maxX = newDataRef.current.reduce(
-        (prev, current) => (current.x > prev ? current.x : prev),
-        0
-      );
-      animate(maxX);
-    }
-  };
-
 
   return (
     <form
@@ -190,7 +170,6 @@ export function PlaceholdersAndVanishInput({
             onChange && onChange(e);
           }
         }}
-        onKeyDown={handleKeyDown}
         ref={inputRef}
         value={value}
         type="text"

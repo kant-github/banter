@@ -4,6 +4,7 @@ export type GroupChatType = {
   title: string;
   passcode: string;
   created_at: string;
+  groupImage: string;
 };
 
 export type GroupChatUserType = {

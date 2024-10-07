@@ -32,6 +32,7 @@ model ChatGroup {
   user_id    Int
   title      String       @db.VarChar(191)
   passcode   String       @db.VarChar(20)
+  groupImage String?
   created_at DateTime     @default(now())
   Chats      Chats[]
   GroupUsers GroupUsers[]

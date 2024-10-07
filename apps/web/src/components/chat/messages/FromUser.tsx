@@ -10,7 +10,7 @@ export default function Message({ msg }: { msg: MessageType }) {
             <div className="flex items-center gap-x-2">
                 <div className="text-sm font-light bg-gradient-to-r from-zinc-900 to-black text-white rounded-[5px] py-1.5 px-4">
                     <span className="block">{msg.message}</span>
-                    <span className="text-[8px] flex justify-end text-gray-400 mt-1">{formattedDate}</span>
+                    <span className="text-[8px] flex justify-end text-gray-400 ">{formattedDate}</span>
                 </div>
                 <Image alt="User Image" src={msg.user?.image!} width={32} height={32} className="rounded-full" />
             </div>
