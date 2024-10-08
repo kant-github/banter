@@ -5,10 +5,11 @@ import { getSocket } from "@/lib/socket.config";
 import { v4 as uuidv4 } from "uuid";
 import { EmptyConversation } from "./EmptyConversation";
 import Messages from "./messages/Messages";
+import ChatMessageInput from "./ChatMessageInput";
 
 interface Props {
     olderChats: MessageType[];
-    chatUser: UserType | null; // chatUser can be null initially
+    chatUser: UserType | null;
     group: GroupChatType;
 }
 
@@ -75,13 +76,7 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
                 className="mt-2 flex justify-between items-center gap-x-4 w-full"
                 onSubmit={handleSendMessage}
             >
-                <input
-                    type="text"
-                    placeholder="Type a message..."
-                    value={message}
-                    className="flex-1 p-2 pl-4 font-light text-sm border-[1px] border-gray-500 rounded-[4px] outline-none placeholder:text-black dark:bg-zinc-800 dark:text-gray-200 dark:placeholder:text-gray-200 placeholder:font-light"
-                    onChange={(e) => setMessage(e.target.value)}
-                />
+                <ChatMessageInput message={message} setMessage={setMessage}/>
                 <div className="ml-2 w-[120px]">
                     <BigBlackButton>Send</BigBlackButton>
                 </div>

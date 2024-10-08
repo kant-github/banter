@@ -30,7 +30,7 @@ export default function ({ isModalOpen, setIsModalOpen }: {
                             </button>
                             <h2 className="text-md font-bold mb-4">Getting Started ?</h2>
                             <div>
-                                <p className="mb-4 font-thin text-[12px]">To access all the exciting features of Banter and stay updated with the latest conversations. Log in now to connect with others and explore what's new!
+                                <p className="mb-4 font-thin text-xs">To access all the exciting features of Banter and stay updated with the latest conversations. Log in now to connect with others and explore what's new!
                                 </p>
                             </div>
                             <div className="w-full">

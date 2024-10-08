@@ -4,18 +4,27 @@ import { fileUploader } from "../utils/cloudinary/fileUploader";
 
 export default async function(req: Request, res: Response) {
     try {
-        const body = req.body;
+        const { title, passcode } = req.body;
+        if(!title || !passcode) {
+            return res.status(400).json({
+                message: "Title and Passcode is required"
+            })
+        }
         //@ts-ignore
         const groupPhoto  = req?.files?.groupPhoto?.tempFilePath;
-        const user = req.user;
-        const uploadedImage = await fileUploader(groupPhoto);
+        let uploadedImageUrl: string | null = null;
+        if (groupPhoto) {
+            const uploadedImage = await fileUploader(groupPhoto);
+            uploadedImageUrl = uploadedImage.secure_url;
+        }
+
 
         const chatGroup = await prisma.chatGroup.create({
             data: {
-                title: body.title,
-                passcode: body.passcode,
-                user_id: Number(user?.id),
-                groupImage: uploadedImage.secure_url,
+                title: title,
+                passcode: passcode,
+                user_id: Number(req.user?.id),
+                groupImage: uploadedImageUrl,
             },
         });
 

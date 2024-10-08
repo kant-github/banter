@@ -9,7 +9,8 @@ import { FRONTEND_BASE_URL } from "@/lib/apiAuthRoutes";
 import { OptionsMenu } from "./OptionsMenu";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
-
+import { IoIosCopy } from "react-icons/io";
+import { toast } from "sonner";
 
 interface Item {
     id: string;
@@ -152,11 +153,22 @@ function CardDescription({
     className?: string;
     children: React.ReactNode;
 }) {
-    const [showPasscode, setShowPasscode] = useState(false); // Default is hidden
+    const [showPasscode, setShowPasscode] = useState(false);
 
     const togglePasscodeVisibility = () => {
         setShowPasscode((prev) => !prev);
     };
+
+    async function handleCopy() {
+        const passcodeText: string = typeof children === 'string' ? children : String(children)
+
+        try {
+            await navigator.clipboard.writeText(passcodeText);
+            toast.success("Passcode copied to clipboard");
+        } catch(err) {
+            toast.error("Error in copying passcode");
+        }
+    }
 
     return (
         <div
@@ -170,6 +182,10 @@ function CardDescription({
             <button type="button" onClick={togglePasscodeVisibility} className="ml-2">
                 {showPasscode ? <IoEyeOff /> : <IoEye />}
             </button>
+            <button aria-label="button" type="button" className="ml-2" onClick={handleCopy}>
+                <IoIosCopy />
+            </button>
+
         </div>
     );
 }
