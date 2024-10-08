@@ -7,6 +7,9 @@ import EditDialogBox from "../utility/EditDialogBox";
 import { useRouter } from "next/navigation";
 import { FRONTEND_BASE_URL } from "@/lib/apiAuthRoutes";
 import { OptionsMenu } from "./OptionsMenu";
+import { IoEye } from "react-icons/io5";
+import { IoEyeOff } from "react-icons/io5";
+
 
 interface Item {
     id: string;
@@ -35,7 +38,7 @@ export default function CardList({
         <>
             <div className={cn("flex flex-wrap gap-x-4 justify-center", className)}>
                 {
-                    items.length === 0 && ( 
+                    items.length === 0 && (
                         <div className="p-16 text-white text-xs font-extralight tracking-wide">No rooms found, <i><u>Create a room</u></i> to chat with your peer groups</div>
                     )
                 }
@@ -119,7 +122,7 @@ function Card({
                 "sm:px-2 md:px-4 lg:px-6",
                 className
             )}
-            >
+        >
             <div className="relative z-50">
                 <div className="p-4 sm:p-2 md:p-4 lg:p-6">{children}</div>
             </div>
@@ -149,6 +152,12 @@ function CardDescription({
     className?: string;
     children: React.ReactNode;
 }) {
+    const [showPasscode, setShowPasscode] = useState(false); // Default is hidden
+
+    const togglePasscodeVisibility = () => {
+        setShowPasscode((prev) => !prev);
+    };
+
     return (
         <div
             className={cn(
@@ -157,10 +166,14 @@ function CardDescription({
             )}
         >
             <p>Passcode:</p>
-            <i className="font-thin ml-1">{children}</i>
+            <i className="font-thin ml-1">{showPasscode ? children : '••••••••'}</i>
+            <button type="button" onClick={togglePasscodeVisibility} className="ml-2">
+                {showPasscode ? <IoEyeOff /> : <IoEye />}
+            </button>
         </div>
     );
 }
+
 
 
 function CardDate({

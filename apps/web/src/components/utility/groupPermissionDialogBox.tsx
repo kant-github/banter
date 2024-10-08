@@ -20,13 +20,11 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
     const [loading, setLoading] = useState<boolean>(false);
     const params = useParams();
     const { data: session } = useSession();
-    // console.log("session is : ", session?.user?.id);
 
     useEffect(() => {
         const data = localStorage.getItem(params["id"] as string);
         if (data) {
             const jsonData = JSON.parse(data);
-            // console.log("local storage data is : ", jsonData);
             if (jsonData?.id && jsonData?.group_id) {
                 setPermissionDialogBox(false);
             }
@@ -62,7 +60,7 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-200 flex items-center justify-center z-50">
             <div className="bg-white dark:bg-[#262629] dark:text-gray-200 p-6 rounded-lg shadow-lg max-w-xl w-[400px] relative">
                 <div>
                     <p className="text-md font-bold mb-1">Joining Credentials</p>

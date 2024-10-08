@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 export default async function getChatGroupUserBySearch(req: Request, res: Response) {
     try {
         const group_id = req.query.group_id as string;
-        console.log(group_id);
         const groups = await prisma.chatGroup.findMany({
             where: {
                 title: {

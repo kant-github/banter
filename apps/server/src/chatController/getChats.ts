@@ -19,7 +19,6 @@ export default async function getChats(req: Request, res: Response) {
                 user: true
             }
         });
-        console.log("chats from backend are : ", chats);
 
         res.status(200).json({
             message: "Successfully fetched all chats",

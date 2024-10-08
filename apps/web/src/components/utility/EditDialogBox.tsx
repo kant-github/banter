@@ -47,7 +47,6 @@ export default function EditDialogBox({
             const finalPayload = new FormData();
             finalPayload.append('title', title);
             finalPayload.append('passcode', passcode);
-            console.log('groupphoto is : ', groupPhoto);
             if (groupPhoto) {
                 finalPayload.append('groupPhoto', groupPhoto);
             }

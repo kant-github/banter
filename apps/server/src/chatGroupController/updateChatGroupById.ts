@@ -5,10 +5,10 @@ import { fileUploader } from "../utils/cloudinary/fileUploader";
 export default async function updateChatGroup(req: Request, res: Response) {
     try {
         const groupId = req.params.id;
+        console.log("req body is : ", req.body);
 
         // @ts-ignore
         const groupPhoto = req?.files?.groupPhoto?.tempFilePath;
-        console.log("group photo form backend while uodating is : ", groupPhoto);
 
         if (!groupId) {
             return res.status(400).json({
@@ -16,20 +16,27 @@ export default async function updateChatGroup(req: Request, res: Response) {
             });
         }
 
-        const uploadedImage = await fileUploader(groupPhoto);
-        console.log("uploaded image while updating is : ", uploadedImage);
+        const updateData: {
+            title?: string;
+            passcode?: string;
+            groupImage?: string;
+        } = {
+            title: req.body.title,
+            passcode: req.body.passcode,
+        };
+
+
+        if (groupPhoto) {
+            const uploadedImage = await fileUploader(groupPhoto);
+            updateData.groupImage = uploadedImage.secure_url;
+        }
 
         const chatGroup = await prisma.chatGroup.update({
             where: {
                 id: groupId,
             },
-            data: {
-                title: req.body.title,
-                passcode: req.body.passcode,
-                groupImage: uploadedImage.secure_url,
-            },
+            data: updateData,
         });
-        console.log("chat group after getting updated is : ", chatGroup);
 
         if (chatGroup) {
             return res.status(200).json({
@@ -41,6 +48,7 @@ export default async function updateChatGroup(req: Request, res: Response) {
             });
         }
     } catch (err) {
+        console.error("Error in updating the chat group:", err);
         return res.status(500).json({
             message: "Error in updating the chat group",
         });

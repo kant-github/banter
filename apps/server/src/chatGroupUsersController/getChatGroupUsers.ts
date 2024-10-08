@@ -17,7 +17,6 @@ export async function getChatGroupUsers(req: Request, res: Response) {
                 user: true
             }
         })
-        console.log("chat group user in backend is : ",users);
 
         return res.json({
             message: "Successfully fetched all the chat group users",

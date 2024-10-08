@@ -37,9 +37,6 @@ export default function ({ params }: { params: { id: string } }) {
         fetchData();
     }, [router, params.id])
 
-    useEffect(() => {
-        console.log(group);
-    }, [])
 
     if (loading) {
         return <ChatSkeleton />

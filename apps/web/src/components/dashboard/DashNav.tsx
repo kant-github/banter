@@ -25,7 +25,6 @@ export default function NavBar({ groups }: props) {
     async function getSearchInputChatGroups() {
         try {
             const response = await axios.get(`${CHAT_GROUP}-by-search?group_id=${searchInput}`);
-            console.log("Search results:", response.data.data);
             setSearchResults(response.data.data);
         } catch (err) {
             console.error("Error in searching chat groups:", err);

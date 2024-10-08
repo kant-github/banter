@@ -5,7 +5,6 @@ import { Request, Response } from "express";
 export async function createChatGroupUser(req: Request, res: Response) {
     try {
         const { user_id, group_id } = req.body;
-        console.log(req.body);
         
         if (!user_id || !group_id) {
             return res.status(400).json({ message: "Missing required fields" });

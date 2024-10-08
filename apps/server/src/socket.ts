@@ -19,8 +19,6 @@ export function setupSocket(io: Server) {
 
     io.on("connection", (socket: customSocket) => {
             socket.join(socket.room!)
-            console.log("connecting to room is : ",socket.room)
-            console.log("Your socket is connected", socket.id);
 
             socket.on("message", async (data) => {
                                 
@@ -38,7 +36,6 @@ export function setupSocket(io: Server) {
 
                 if (socket.room) {
                     socket.to(socket.room).emit("message", data);
-                    console.log("emitted");
                 }
             });
             socket.on("disconnect", () => {

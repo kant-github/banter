@@ -5,7 +5,6 @@ export default async function fetchChats(group_id: string) {
         if (!group_id) {
             return [];
         }
-        // console.log("logging group id : ",group_id);
         const response = await fetch(`${CHATS_URL}/${group_id}`, {
             cache: "no-cache",
         });

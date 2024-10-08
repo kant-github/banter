@@ -28,10 +28,7 @@ export default function DeleteDialogBox({
             console.error("User is not authenticated.");
             return;
         }
-        console.log(session?.user?.token)
-
         setLoading(true);
-
         try {
             const { data } = await axios.delete(`http://localhost:7001/api/chat-group/${itemId}`, {
                 headers: {
