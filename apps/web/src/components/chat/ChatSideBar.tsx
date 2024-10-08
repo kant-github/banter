@@ -8,7 +8,7 @@ export default function UsersList({ users }: { users: Array<GroupChatUserType> |
     return (
         <div className="w-1/5 bg-[#f2f2f2] dark:bg-[#1c1c1c] dark:text-gray-300 h-[91.5vh] flex flex-col pb-[12px]">
 
-            <div className="text-xs font-mono ml-9 mt-14">{users.length} {participantLabel}</div>
+            <div className="text-xs font-mono ml-9 mt-[3.7rem]">{users.length} {participantLabel}</div>
             <div className="px-6 flex-grow overflow-y-auto space-y-4 mt-2">
                 {
                     users.length > 0 && users.map((item, index) => {

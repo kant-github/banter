@@ -8,7 +8,7 @@ export default async function(req: Request, res: Response) {
         console.log("body is : ", body);
         //@ts-ignore
         const groupPhoto  = req?.files?.groupPhoto?.tempFilePath;
-
+        console.log("group photo recieved : ", groupPhoto);
         
 
         const user = req.user;

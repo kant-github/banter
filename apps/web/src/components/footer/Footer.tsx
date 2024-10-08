@@ -5,7 +5,7 @@ import { FaRegCopyright } from "react-icons/fa";
 
 export default function Footer() {
     return (
-        <div className="bg-[#1f282e] dark:bg-[#1c1c1c] pt-10 pb-4 px-10 text-gray-300 font-thin text-xs border-t-[1px] border-gray-700">
+        <div className="bg-[#1f282e] dark:bg-[#1c1c1c] pt-10 pb-4 px-10 text-gray-300 font-thin text-xs border-t-[1px] border-zinc-700">
             <div className="flex flex-col md:flex-row justify-between items-start">
                 <div className="flex flex-col gap-4 w-full md:w-1/4">
                     <h4 className="text-lg font-semibold mb-3">About Us</h4>

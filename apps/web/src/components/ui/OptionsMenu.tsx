@@ -71,7 +71,7 @@ export function OptionsMenu({
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute rounded-[4px] right-0  w-28 bg-white dark:bg-[#666363] shadow-lg z-50"
+                        className="absolute rounded-[4px] right-0  w-28 bg-white dark:bg-zinc-700 shadow-lg z-50"
                     >
                         <div className="py-0.5 text-sm text-zinc-900 dark:text-zinc-100 ">
                             <div
@@ -81,14 +81,14 @@ export function OptionsMenu({
                                         setIsOpen(false);
                                     })
                                 }}
-                                className=" flex items-center justify-between px-4 py-2 dark:bg-[#666363] hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs">
+                                className=" flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs">
                                 <span>Copy</span>
                                 <IoIosCopy />
                             </div>
                             <div onClick={() => {
                                 setSelectedItemId(item.id);
                                 setEditDialogBox(true);
-                            }} className="flex items-center justify-between px-4 py-2 dark:bg-[#666363] hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs">
+                            }} className="flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs">
                                 <span>Edit</span>
                                 <LuPencilLine />
                             </div>

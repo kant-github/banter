@@ -45,9 +45,11 @@ export default function ChatNavTitle({ groupTitle, groupImage }: Props) {
 
     return (
         <div className="flex items-center justify-between bg-[#f2f2f2] dark:bg-[#1c1c1c] h-[82px] dark:text-gray-300">
-            <h1 className="flex flex-row items-center gap-x-2 font-bold text-2xl ml-8 py-6">
-                <Image src={groupImage} width={22} height={22} alt="logo" className="rounded-full" />
-                <p className="">{groupTitle}</p>
+            <h1 className="flex flex-row items-center gap-x-4 font-bold text-2xl ml-8 py-6">
+                {
+                    groupImage ? <Image src={groupImage} width={30} height={30} alt="logo" className="rounded-full" /> : <span>{groupTitle[0]}</span>
+                }
+                <p className="text-xl mt-1">{groupTitle}</p>
             </h1>
 
             <div className="mr-4 flex items-center justify-center gap-x-6 w-[250px] group">
