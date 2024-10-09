@@ -1,7 +1,6 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import InputBox from "../utility/InputBox";
 import BigBlackButton from "../buttons/BigBlackButton";
-import { MdAddAPhoto } from "react-icons/md";
 import PhotoUploadIcon from "../ui/PhotoUploadIcon";
 import CrossButton from "../utility/CrossButton";
 import Spinner from "../loaders/Spinner";

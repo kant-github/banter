@@ -1,11 +1,6 @@
 import { GiJigsawPiece } from "react-icons/gi";
 import { useRouter } from "next/navigation";
 
-import { Paytone_One } from "next/font/google";
-const font = Paytone_One({
-    weight:
-    "400"
-})
 
 export default function () {
     const router = useRouter();
@@ -20,7 +15,7 @@ export default function () {
                 className="transition-transform transform group-hover:-translate-x-[2px] text-black dark:text-gray-300"
             />
             <div
-                className={`text-xl md:text-2xl tracking-widest text-black dark:text-gray-300 ${font.className}`}>
+                className={`text-xl md:text-2xl tracking-widest text-black dark:text-gray-300`}>
                 Banter
             </div>
         </div>

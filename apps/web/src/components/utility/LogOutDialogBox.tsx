@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { RedBtn } from "../buttons/RedBtn";
-import { WhiteBtn } from "../buttons/WhiteBtn";
 import { signOut } from "next-auth/react";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
 
@@ -10,8 +8,7 @@ interface props {
 }
 
 
-export default function ({ logoutDropdown, setLogoutDropDown }: props) {
-    const [loading, setLoading] = useState<boolean>(false);
+export default function ({ setLogoutDropDown }: props) {
     const handleLogout = async () => {
         signOut({
             redirect: true,

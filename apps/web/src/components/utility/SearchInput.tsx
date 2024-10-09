@@ -8,7 +8,7 @@ interface SearchInputProps {
     setSearchResultDialogBox: (value: boolean) => void;
 }
 
-export default function({ input, setInput, setSearchResultDialogBox }: SearchInputProps)  {
+export default function({ setInput, setSearchResultDialogBox }: SearchInputProps)  {
 
   const placeholders = [
     "Search - Room404",

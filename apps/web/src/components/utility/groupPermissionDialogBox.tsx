@@ -15,7 +15,7 @@ interface Props {
     group: GroupChatType;
 }
 
-export default function ChatPermissionDialog({ permissionDialogBox, setPermissionDialogBox, group }: Props) {
+export default function ChatPermissionDialog({ setPermissionDialogBox, group }: Props) {
     const [passcode, setPasscode] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const params = useParams();
@@ -35,6 +35,7 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
         setLoading(true);
         if (group.passcode !== passcode) {
             toast.error("Enter the correct passcode");
+            setLoading(false); // Ensure loading state is reset
             return;
         }
 
@@ -44,7 +45,8 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
                 group_id: group.id,
             });
 
-            if (response.data.message === "User added to group successfully") {
+            // Handle the response based on the message
+            if (response.data.message === "User already in the group" || response.data.message === "User added to group successfully") {
                 clearCache("chat-group-users");
                 localStorage.setItem(params["id"] as string, JSON.stringify(response.data.data));
                 toast.success("You have joined the group successfully!");
@@ -52,12 +54,15 @@ export default function ChatPermissionDialog({ permissionDialogBox, setPermissio
                 setPermissionDialogBox(false);
             } else {
                 toast.error(response.data.message);
+                setLoading(false);
             }
         } catch (error) {
             console.error("Error joining the group:", error);
             toast.error("Something went wrong, please try again!");
+            setLoading(false);
         }
     };
+
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-200 flex items-center justify-center z-50">

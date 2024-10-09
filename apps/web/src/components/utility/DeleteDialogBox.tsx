@@ -2,7 +2,6 @@
 
 import { useSession } from "next-auth/react";
 import { RedBtn } from "../buttons/RedBtn";
-import { WhiteBtn } from "../buttons/WhiteBtn";
 import { useState } from "react";
 import axios from "axios";
 import { clearCache } from "actions/common";

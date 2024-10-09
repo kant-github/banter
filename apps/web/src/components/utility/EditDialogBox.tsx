@@ -5,7 +5,6 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { clearCache } from "actions/common";
 import { toast } from "sonner";
-import { RxCross2 } from "react-icons/rx";
 import PhotoUploadIcon from "../ui/PhotoUploadIcon";
 import CrossButton from "./CrossButton";
 import Spinner from "../loaders/Spinner";
