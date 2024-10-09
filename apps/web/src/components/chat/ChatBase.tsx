@@ -18,7 +18,7 @@ const ChatBase: React.FC<Props> = ({ groupId, group, users, olderChats }: Props)
   const [chatUser, setChatUser] = useState<UserType | null>(null);
 
   useEffect(() => {
-    
+
     const fetchChatUserFromLocalStorage = () => {
       const data = localStorage.getItem(group.id);
       if (data) {
@@ -28,11 +28,7 @@ const ChatBase: React.FC<Props> = ({ groupId, group, users, olderChats }: Props)
     };
 
     fetchChatUserFromLocalStorage();
-    window.addEventListener("chatUserUpdated", fetchChatUserFromLocalStorage);
 
-    return () => {
-      window.removeEventListener("chatUserUpdated", fetchChatUserFromLocalStorage);
-    };
   }, [group.id]);
 
   return (

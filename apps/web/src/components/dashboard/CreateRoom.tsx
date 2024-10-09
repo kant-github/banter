@@ -4,6 +4,7 @@ import BigBlackButton from "../buttons/BigBlackButton";
 import { MdAddAPhoto } from "react-icons/md";
 import PhotoUploadIcon from "../ui/PhotoUploadIcon";
 import CrossButton from "../utility/CrossButton";
+import Spinner from "../loaders/Spinner";
 
 interface CreateRoomProps {
     open: boolean;
@@ -66,7 +67,7 @@ export default function CreateRoom({
 
                         <div className="flex justify-end mt-6">
                             <BigBlackButton disabled={submitting}>
-                                {submitting ? "Creating..." : "Create Room"}
+                                {submitting ? <Spinner/> : "Create Room"}
                             </BigBlackButton>
                         </div>
                     </form>

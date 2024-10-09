@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { RxCross2 } from "react-icons/rx";
 import PhotoUploadIcon from "../ui/PhotoUploadIcon";
 import CrossButton from "./CrossButton";
+import Spinner from "../loaders/Spinner";
 
 interface Props {
     itemId: string;
@@ -90,7 +91,7 @@ export default function EditDialogBox({
                     <InputBox type="password" label="Passcode" input={passcode} setInput={setPasscode} />
                 </div>
                 <div className="w-full pt-4 flex items-center justify-center">
-                    <BigBlackButton disabled={loading} onClick={handleSaveChanges}>{loading ? "Saving..." : "Save Changes"}</BigBlackButton>
+                    <BigBlackButton disabled={loading} onClick={handleSaveChanges}>{loading ? <Spinner /> : "Save Changes"}</BigBlackButton>
                 </div>
             </div>
         </div>

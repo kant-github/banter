@@ -11,6 +11,8 @@ import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 import { IoIosCopy } from "react-icons/io";
 import { toast } from "sonner";
+import { GroupChatType } from "types";
+import Image from "next/image";
 
 interface Item {
     id: string;
@@ -21,7 +23,7 @@ interface Item {
 }
 
 interface CardListProps {
-    items: Item[];
+    items: GroupChatType[];
     className?: string;
 }
 
@@ -72,7 +74,7 @@ export default function CardList({
                         </AnimatePresence>
                         <Card>
                             <div className="flex justify-between items-start">
-                                <CardTitle>{item.title}</CardTitle>
+                                <CardTitle groupImage={item.groupImage} >{item.title}</CardTitle>
                                 <OptionsMenu
                                     setDeleteDialogBox={setDeleteDialogBox}
                                     setEditDialogBox={setEditDialogBox}
@@ -135,14 +137,21 @@ function Card({
 function CardTitle({
     className,
     children,
+    groupImage
 }: {
     className?: string;
     children: React.ReactNode;
+    groupImage?: string;
 }) {
     return (
-        <h4 className={cn("text-zinc-100 font-bold tracking-wide", className)}>
-            {children}
-        </h4>
+        <div className="flex flex-row gap-x-4 items-center">
+            {groupImage && (
+                <Image src={groupImage} width={32} height={32} alt="logo" className="rounded-[20px]" />
+            )}
+            <h4 className={cn("text-zinc-100 font-bold tracking-wide", className)}>
+                {children}
+            </h4>
+        </div>
     );
 }
 
@@ -165,7 +174,7 @@ function CardDescription({
         try {
             await navigator.clipboard.writeText(passcodeText);
             toast.success("Passcode copied to clipboard");
-        } catch(err) {
+        } catch (err) {
             toast.error("Error in copying passcode");
         }
     }
