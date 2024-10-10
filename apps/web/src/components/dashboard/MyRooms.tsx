@@ -44,7 +44,7 @@ export default function MyRoomDropdown({ myRoomDropdown, setMyRoomDropDown, grou
                             <div
                                 onDoubleClick={() => router.push(`/chat/${group.id}`)}
                                 key={group.id} // Use a unique key
-                                className="flex items-center justify-between py-[10px] pl-4 ml-2 hover:bg-gray-200 dark:hover:bg-[#262629] rounded-[2px] cursor-pointer select-none hide-scrollbar"
+                                className="flex items-center justify-between py-[10px] pl-4 ml-2 hover:bg-gray-200 dark:hover:bg-[#262629] dark:hover:border-[1px] dark:border-zinc-700 hover:border-[1px] border-zinc-200 rounded-[4px] cursor-pointer select-none hide-scrollbar"
                             >
                                 <div className="text-[11px] font-extralight">{group.title}</div>
                                 <div className="mr-4">

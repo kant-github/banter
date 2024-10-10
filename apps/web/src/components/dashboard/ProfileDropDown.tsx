@@ -7,9 +7,7 @@ import MyRooms from "./MyRooms";
 import { GroupChatType } from "types";
 import { FaGithub } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
-import { Cedarville_Cursive } from "next/font/google"
 
-const font = Cedarville_Cursive({ weight: '400', subsets: ['latin'] })
 
 interface props {
     groups?: GroupChatType[];

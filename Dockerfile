@@ -7,8 +7,8 @@ COPY package.json package-lock.json turbo.json ./
 COPY apps ./apps
 COPY packages ./packages
 
-RUN yarn install
-RUN yarn db:generate
-RUN yarn build
+RUN npm install
+RUN npm run db:generate
+RUN npm run build
 
 CMD ["yarn", "dev"]
