@@ -7,6 +7,7 @@ import axios from "axios";
 import { clearCache } from "actions/common";
 import { toast } from "sonner";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
+import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 
 interface Props {
     itemId: string;
@@ -29,7 +30,7 @@ export default function DeleteDialogBox({
         }
         setLoading(true);
         try {
-            const { data } = await axios.delete(`http://localhost:7001/api/chat-group/${itemId}`, {
+            const { data } = await axios.delete(`${CHAT_GROUP}/${itemId}`, {
                 headers: {
                     authorization: `Bearer ${session.user.token}`,
                 },

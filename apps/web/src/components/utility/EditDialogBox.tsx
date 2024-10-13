@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import PhotoUploadIcon from "../ui/PhotoUploadIcon";
 import CrossButton from "./CrossButton";
 import Spinner from "../loaders/Spinner";
+import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 
 interface Props {
     itemId: string;
@@ -50,7 +51,7 @@ export default function EditDialogBox({
             if (groupPhoto) {
                 finalPayload.append('groupPhoto', groupPhoto);
             }
-            const { data } = await axios.put(`http://localhost:7001/api/chat-group/${itemId}`, finalPayload, {
+            const { data } = await axios.put(`${CHAT_GROUP}/${itemId}`, finalPayload, {
                 headers: {
                     authorization: `Bearer ${session.user.token}`,
                 },

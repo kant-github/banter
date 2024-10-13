@@ -29,7 +29,7 @@ export async function fetchGroups(token: string | null) {
 }
 export async function fetchGroup(group_id: string | null) {
     try {
-        const res = await fetch(`http://localhost:7001/api/chat-group-check/${group_id}`,{
+        const res = await fetch(`${CHAT_GROUP}-check/${group_id}`,{
             cache: "no-cache"
         });
         if (!res.ok) {
