@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "npx esbuild ./src/index.ts --bundle --platform=node --external:redis --outfile=dist/index.js",
+    "build": "npx esbuild ./src/index.ts --bundle --platform=node --external:redis --external:@prisma/client --outfile=dist/index.js",
     "start": "node dist/index.js",
     "dev": "npm run build && npm run start"
   },
@@ -23,7 +23,8 @@
     "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.19.1",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "@repo/db": "*"
   },
   "devDependencies": {
     "@types/express-fileupload": "^1.5.1"

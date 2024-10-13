@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import moment from 'moment';
 import { createChatSchema } from "@/validations/createChatZod";
 import { clearCache } from "actions/common";
+import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 
 export default function CreateRoomComponent({ user }: { user: any }) {
     const [createRoomModal, setCreateRoomModal] = useState<boolean>(false);
@@ -38,7 +39,7 @@ export default function CreateRoomComponent({ user }: { user: any }) {
 
         try {
             setLoading(true);
-            const { data } = await axios.post("http://localhost:7001/api/chat-group", finalPayload, {
+            const { data } = await axios.post(`${CHAT_GROUP}`, finalPayload, {
                 headers: {
                     authorization: `Bearer ${user.token}`,
                     'Content-Type': 'multipart/form-data',
