@@ -1,81 +1,47 @@
-# Turborepo starter
+# Banter
 
-This is an official starter Turborepo.
+Banter is a chat application built using [Next.js](https://nextjs.org/) and [PostgreSQL](https://www.postgresql.org/). This guide will walk you through the local setup process.
 
-## Using this example
+## Table of Contents
 
-Run the following command:
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
 
-```sh
-npx create-turbo@latest
-```
+## Prerequisites
 
-## What's inside?
+Before setting up Banter locally, ensure you have the following tools installed:
 
-This Turborepo includes the following packages/apps:
+- **Node.js** (>= vXX.XX.XX)
+- **Yarn** (package manager)
+- **Docker** (for running PostgreSQL and Redis)
 
-### Apps and Packages
+## Installation
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/kant-github/banter.git
+2. **Install the dependencies:**
+   ```bash
+   yarn install
+3. **Setup Envs:**
+    ##### Copy the given lines in apps/web's .env file
+   ```code
+   GOOGLE_CLIENT_ID=
+   GOOGLE_CLIENT_SECRET=
+5. **Database Setup:**
+    ##### Run this in your terminal
+   ```bash
+   docker run -d -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres
+6. **Gnerate DB client:**
+   ```bash
+   cd packages/db && npx prisma generate && cd ../..
+7. **Start Redis locally:**
+   ```bash
+   docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+8. **Start the application locally:**
+   ```bash
+   yarn dev
+#### Go the browser at localhost:3000
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-### Utilities
 
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
