@@ -11,7 +11,7 @@ Banter is a chat application built using [Next.js](https://nextjs.org/) and [Pos
 
 Before setting up Banter locally, ensure you have the following tools installed:
 
-- **Node.js** (>= vXX.XX.XX)
+- **Node.js**
 - **Yarn** (package manager)
 - **Docker** (for running PostgreSQL and Redis)
 
