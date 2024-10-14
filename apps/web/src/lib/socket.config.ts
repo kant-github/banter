@@ -6,7 +6,9 @@ let socket: Socket;
 export const getSocket = (): Socket => {
     if (!socket) {
         socket = io(Env.BACKEND_URL, {
-            autoConnect: false
+            autoConnect: false,
+            transports: ["websocket"],
+            secure: true
         })
     }
     return socket;

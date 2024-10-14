@@ -29,15 +29,26 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
     }, [group.id]);
 
     useEffect(() => {
+        socket.on("connect", () => {
+            console.log("Socket connected:", socket.id);
+        });
+
         socket.on("message", (data: MessageType) => {
             setMessages((prevMessages) => [...prevMessages, data]);
             scrollToBottom();
         });
 
+        socket.on("disconnect", () => {
+            console.log("Socket disconnected:", socket.id);
+        });
+
         return () => {
             socket.off("message");
+            socket.off("connect");
+            socket.off("disconnect");
         };
     }, [socket]);
+
 
     const handleSendMessage = (e: React.FormEvent) => {
         e.preventDefault();
@@ -76,7 +87,7 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
                 className="mt-2 flex justify-between items-center gap-x-4 w-full"
                 onSubmit={handleSendMessage}
             >
-                <ChatMessageInput message={message} setMessage={setMessage}/>
+                <ChatMessageInput message={message} setMessage={setMessage} />
                 <div className="ml-2 w-[120px]">
                     <BigBlackButton>Send</BigBlackButton>
                 </div>
