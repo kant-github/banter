@@ -14,7 +14,7 @@ export default function () {
             onClick={() => {
                 router.push("/dashboard");
             }}
-            className="flex flex-row gap-x-5 items-center ml-2 cursor-pointer select-none group mt-1">
+            className="flex flex-row gap-x-5 items-center ml-2 cursor-pointer select-none group">
             <GiJigsawPiece
                 size={25}
                 className="transition-transform transform group-hover:-translate-x-[2px] text-[#f2a633] dark:text-[#f2a633]"

@@ -9,10 +9,10 @@ export default async function () {
     const session = await getServerSession(authOption);
     const groups = await fetchGroups(session?.user?.token || null);
     return (
-        <div className="">
-            <DashNav groups={groups} />
+        <div>
+            <DashNav groups={groups}/>
             <Dashboard groups={groups.slice(0, 6)} session={session} />
-            <Footer/>
+            <Footer />
         </div>
     )
 }

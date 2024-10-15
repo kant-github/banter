@@ -7,6 +7,7 @@ import MyRooms from "./MyRooms";
 import { GroupChatType } from "types";
 import { FaGithub } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
+import AccountInfoDropDown from "../utility/AccountInfoDropDown";
 
 
 interface props {
@@ -17,6 +18,7 @@ export default function UserMenu({ groups }: props) {
     const [dropDown, setDropDown] = useState<boolean>(false);
     const [logoutDropdown, setLogoutDropDown] = useState<boolean>(false);
     const [myRoomDropdown, setMyRoomDropDown] = useState<boolean>(false);
+    const [accountInfoDropDown, setAccountInfoDropDown] = useState(false);
     const { data: session } = useSession();
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -25,6 +27,11 @@ export default function UserMenu({ groups }: props) {
             setDropDown(false);
         }
     };
+
+    function accountInfoHandler() {
+        setAccountInfoDropDown(true);
+        setDropDown(false);
+    }
 
     function handleLogout() {
         setLogoutDropDown(true);
@@ -66,6 +73,8 @@ export default function UserMenu({ groups }: props) {
                             My rooms
                         </div>
                         <div className="px-4 py-2 text-xs font-extralight text-gray-700 dark:hover:bg-[#262629] hover:bg-gray-200 dark:text-gray-200">Docs</div>
+                        <div onClick={accountInfoHandler} className="px-4 py-2 text-xs font-extralight text-gray-700 dark:hover:bg-[#262629] hover:bg-gray-200 dark:text-gray-200">Accounts Info</div>
+                        <div className="px-4 py-2 text-xs font-extralight text-gray-700 dark:hover:bg-[#262629] hover:bg-gray-200 dark:text-gray-200">Global Room</div>
                         <a
                             href="https://github.com/kant-github/chat-app"
                             target="_blank"
@@ -96,6 +105,12 @@ export default function UserMenu({ groups }: props) {
                     setLogoutDropDown={setLogoutDropDown}
                 />
             )}
+
+            {
+                accountInfoDropDown && (
+                    <AccountInfoDropDown setAccountInfoDropDown={setAccountInfoDropDown} session={session} />
+                )
+            }
         </div>
     );
 }

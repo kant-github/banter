@@ -3,9 +3,10 @@ import BigBlackButton from "../buttons/BigBlackButton";
 import { GroupChatType, MessageType, UserType } from "types";
 import { getSocket } from "@/lib/socket.config";
 import { v4 as uuidv4 } from "uuid";
-import { EmptyConversation } from "./EmptyConversation";
+
 import Messages from "./messages/Messages";
 import ChatMessageInput from "./ChatMessageInput";
+import { EmptyConversation } from "./EmptyConversation";
 
 interface Props {
     olderChats: MessageType[];
