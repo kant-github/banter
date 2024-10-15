@@ -21,6 +21,8 @@ interface props {
     groups: any;
 }
 
+export const globalGroupId: string = "bd1a0a9f-dd78-4f18-b13b-d706df0ea3c3";
+
 export default function ({ groups }: props) {
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState<GroupChatType[] | []>([]);
@@ -42,13 +44,13 @@ export default function ({ groups }: props) {
         try {
             const response = await axios.post(`${CHAT_GROUP_USERS}`, {
                 user_id: session?.user?.id,
-                group_id: "bd1a0a9f-dd78-4f18-b13b-d706df0ea3c3",
+                group_id: globalGroupId,
             });
 
             if (response.data.message === "User already in the group" || response.data.message === "User added to group successfully") {
                 clearCache("chat-group-users");
-                localStorage.setItem("bd1a0a9f-dd78-4f18-b13b-d706df0ea3c3" as string, JSON.stringify(response.data.data));
-                router.push(`${FRONTEND_BASE_URL}/globalchat/bd1a0a9f-dd78-4f18-b13b-d706df0ea3c3`)
+                localStorage.setItem(globalGroupId as string, JSON.stringify(response.data.data));
+                router.push(`${FRONTEND_BASE_URL}/globalchat/${globalGroupId}`)
                 toast.success("You have joined the group successfully!");
             } else {
                 toast.error(response.data.message);

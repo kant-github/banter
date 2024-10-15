@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MessageType } from "types";
 import ChatSkeleton from "@/components/skeletons/ChatSkeleton";
-import ChatBase from "@/components/chat/ChatBase";
 import GlobalChatBase from "@/components/chat/globalchat/GlobalChatBase";
 
 interface props {

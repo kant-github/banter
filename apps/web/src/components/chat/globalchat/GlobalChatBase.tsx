@@ -3,6 +3,8 @@ import Chat from "../Chat";
 import ChatNavTitle from "../ChatNavTitle";
 import ChatSideBar from "../ChatSideBar";
 import { useEffect, useState } from "react";
+import GlobalChatNavTitle from "./GlobalChatNavTitle";
+import { globalGroupId } from "@/components/dashboard/DashNav";
 
 interface Props {
     groupId: string;
@@ -17,7 +19,7 @@ export default function ({ groupId, group, users, olderChats }: Props) {
     useEffect(() => {
 
         const fetchChatUserFromLocalStorage = () => {
-            const data = localStorage.getItem("bd1a0a9f-dd78-4f18-b13b-d706df0ea3c3");
+            const data = localStorage.getItem(globalGroupId);
             if (data) {
                 const pData = JSON.parse(data);
                 setChatUser(pData.user);
@@ -34,7 +36,7 @@ export default function ({ groupId, group, users, olderChats }: Props) {
             <div className="flex flex-row w-screen bg-[#f2f2f2] dark:bg-[#1c1c1c]">
                 <ChatSideBar users={users} />
                 <div className="w-full mr-6">
-                    <ChatNavTitle groupImage={group.groupImage} groupTitle={group.title} />
+                    <GlobalChatNavTitle groupImage={group.groupImage} groupTitle={group.title} />
                     <Chat chatUser={chatUser} olderChats={olderChats} group={group} />
                 </div>
             </div>

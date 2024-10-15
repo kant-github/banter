@@ -62,7 +62,7 @@ export function OptionsMenu({
         <div ref={menuRef} className={`relative ${className}`}>
             <SlOptionsVertical
                 size={12}
-                className="cursor-pointer dark:text-zinc-100 text-zinc-700"
+                className="cursor-pointer dark:text-zinc-100 text-zinc-100"
                 onClick={toggleMenu}
             />
             <AnimatePresence>
