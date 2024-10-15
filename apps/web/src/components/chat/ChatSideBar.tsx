@@ -2,7 +2,7 @@ import { GroupChatUserType } from "types";
 import { format, differenceInMinutes, differenceInHours } from "date-fns";
 import Image from "next/image";
 
-export default function UsersList({ users }: { users: Array<GroupChatUserType> | [] }) {
+export default function ({ users }: { users: Array<GroupChatUserType> | [] }) {
     const participantLabel = users.length === 1 ? "participant" : "participants";
 
     return (

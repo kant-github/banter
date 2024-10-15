@@ -143,13 +143,16 @@ function CardTitle({
     children: React.ReactNode;
     groupImage?: string;
 }) {
+
+    const title = typeof children === "string" ? children : String(children);
+    const truncatedTitle = title.slice(0, 16)
     return (
         <div className="flex flex-row gap-x-4 items-center">
             {groupImage && (
                 <Image src={groupImage} width={32} height={32} alt="logo" className="rounded-[20px]" />
             )}
             <h4 className={cn("text-zinc-100 font-bold tracking-wide", className)}>
-                {children}
+                {truncatedTitle}
             </h4>
         </div>
     );

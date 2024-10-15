@@ -10,11 +10,11 @@ import { EmptyConversation } from "./EmptyConversation";
 
 interface Props {
     olderChats: MessageType[];
-    chatUser: UserType | null;
+    chatUser?: UserType | null;
     group: GroupChatType;
 }
 
-const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) => {
+export default function ({ chatUser, olderChats, group }: Props) {
     const [message, setMessage] = useState<string>("");
     const [messages, setMessages] = useState<MessageType[]>(olderChats);
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -80,7 +80,7 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
                 <div ref={messagesEndRef} />
                 <div className="flex flex-col gap-2 px-2">
                     {messages.map((msg, index) => (
-                        <Messages key={index} msg={msg} chatUser={chatUser} />
+                        <Messages key={index} msg={msg} chatUser={chatUser!} />
                     ))}
                 </div>
             </div>
@@ -96,5 +96,3 @@ const ChatComponent: React.FC<Props> = ({ chatUser, olderChats, group }: Props) 
         </div>
     );
 };
-
-export default ChatComponent;

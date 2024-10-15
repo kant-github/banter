@@ -35,7 +35,7 @@ export default function ChatPermissionDialog({ setPermissionDialogBox, group }: 
         setLoading(true);
         if (group.passcode !== passcode) {
             toast.error("Enter the correct passcode");
-            setLoading(false); // Ensure loading state is reset
+            setLoading(false);
             return;
         }
 
@@ -45,7 +45,6 @@ export default function ChatPermissionDialog({ setPermissionDialogBox, group }: 
                 group_id: group.id,
             });
 
-            // Handle the response based on the message
             if (response.data.message === "User already in the group" || response.data.message === "User added to group successfully") {
                 clearCache("chat-group-users");
                 localStorage.setItem(params["id"] as string, JSON.stringify(response.data.data));
