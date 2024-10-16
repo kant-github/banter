@@ -47,7 +47,7 @@ export default function({ groupTitle, groupImage }: Props) {
         <div className="flex items-center justify-between bg-[#f2f2f2] dark:bg-[#1c1c1c] h-[82px] dark:text-gray-300">
             <h1 className="flex flex-row items-center gap-x-4 font-bold text-2xl ml-8 py-6">
                 {
-                    groupImage ? <Image src={groupImage} width={38} height={38} alt="logo" className="rounded-full" /> : <span>{groupTitle[0]}</span>
+                    groupImage ? <Image src="" width={38} height={38} alt="logo" className="rounded-full" /> : <span>{groupTitle[0]}</span>
                 }
                 <p className="text-xl">{groupTitle}</p>
             </h1>
