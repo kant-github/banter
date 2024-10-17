@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "npx esbuild ./src/index.ts --bundle --platform=node --external:redis --external:@prisma/client --outfile=dist/index.js",
+    "build": "npx esbuild ./src/index.ts --bundle --platform=node --external:redis --external:@prisma/client --outfile=dist/index.js --format=cjs",
     "start": "node dist/index.js",
     "dev": "npm run build && npm run start"
   },
@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@repo/db": "*",
     "@socket.io/redis-streams-adapter": "^0.2.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
@@ -23,10 +24,14 @@
     "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.19.1",
+    "redis": "^4.7.0",
     "socket.io": "^4.7.5",
-    "@repo/db": "*"
+    "ws": "^8.18.0"
   },
   "devDependencies": {
-    "@types/express-fileupload": "^1.5.1"
+    "@types/express-fileupload": "^1.5.1",
+    "@types/redis": "^4.0.11",
+    "@types/ws": "^8.5.12",
+    "esbuild": "^0.24.0"
   }
 }

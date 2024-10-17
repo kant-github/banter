@@ -1,27 +1,65 @@
-import prisma from "@repo/db/client";
-import { Server, Socket } from "socket.io";
+import { Server, WebSocket } from 'ws';
+import prisma from '@repo/db/client';
+import { createClient } from 'redis';
 
-
-interface customSocket extends Socket {
-    room?: string
+interface CustomWebSocket extends WebSocket {
+    room?: string;
 }
 
-export function setupSocket(io: Server) {
+export function setupWebSocket(wss: Server) {
+    const redisPublisher = createClient();
+    const redisSubscriber = createClient();
 
-    io.use((socket: customSocket, next) => {
-        const room = socket.handshake.auth.room || socket.handshake.headers.room;
+    // Connect to Redis
+    redisPublisher.connect().catch(err => console.error('Redis Publisher Connection Error:', err));
+    redisSubscriber.connect().catch(err => console.error('Redis Subscriber Connection Error:', err));
+
+    // Redis Subscriber: Listen for messages on the 'chat-messages' channel
+    redisSubscriber.subscribe("chat-messages", (message) => {
+        const parsedMessage = JSON.parse(message);
+        console.log('Received from Redis:', parsedMessage);
+        broadcastToRoom(parsedMessage.room, parsedMessage.data, wss, null);
+    });
+
+    const broadcastToRoom = (room: string, message: any, wss: Server) => {
+        console.log(`Broadcasting to room: ${room}`);
+        let sentCount = 0; // Count how many messages were sent
+        wss.clients.forEach((client) => {
+            const customClient = client as CustomWebSocket;
+            if (customClient.readyState === WebSocket.OPEN && customClient.room === room) {
+                // console.log("Sending message to client:", customClient);
+                customClient.send(JSON.stringify(message));
+                sentCount++;
+            }
+        });
+        console.log(`Message broadcasted to ${sentCount} clients in room: ${room}`);
+    };
+    
+
+    // WebSocket connection setup
+    // WebSocket connection setup
+    wss.on('connection', (ws: CustomWebSocket, req) => {
+        const params = new URLSearchParams(req.url?.replace('/?', ''));
+        const room = params.get('room') || '';
+
+        // Close connection if room is invalid
         if (!room) {
-            return next(new Error("Invalid room"));
+            ws.send(JSON.stringify({ error: 'Invalid room' }));
+            ws.close();
+            return;
         }
-        socket.room = room
-        next();
-    })
 
-    io.on("connection", (socket: customSocket) => {
-            socket.join(socket.room!)
+        // Assign room to the WebSocket connection
+        ws.room = room;
 
-            socket.on("message", async (data) => {
-                                
+        console.log(`Client connected to room: ${room}. Total clients in room: ${wss.clients.size}`);
+
+        // Handle incoming messages
+        ws.on('message', async (message: string) => {
+            const data = JSON.parse(message);
+
+            // Store the message in the database
+            try {
                 await prisma.chats.create({
                     data: {
                         id: data.id,
@@ -29,17 +67,24 @@ export function setupSocket(io: Server) {
                         name: data.name,
                         group_id: data.group_id,
                         user_id: data.user_id,
-                        created_at: data.created_at
-                    }
+                        created_at: data.created_at,
+                    },
                 });
-                
+            } catch (error) {
+                console.error('Error saving message to database:', error);
+            }
 
-                if (socket.room) {
-                    socket.to(socket.room).emit("message", data);
-                }
-            });
-            socket.on("disconnect", () => {
-                console.log("The socket is disconnected", socket.id);
-            });
+            // Publish the message to Redis
+            redisPublisher.publish('chat-messages', JSON.stringify({ room: ws.room, data }));
+
+            // Temporarily comment this out to see if it prevents duplicates
+            // broadcastToRoom(ws.room!, data, wss, ws);  // Uncomment if you want local feedback
+        });
+
+        // Handle WebSocket disconnection
+        ws.on('close', () => {
+            console.log(`Client disconnected from room ${ws.room}`);
+        });
     });
+
 }

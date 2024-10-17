@@ -4,6 +4,7 @@ import { formatDistanceToNowStrict } from "date-fns";
 
 export default function Message({ msg }: { msg: MessageType }) {
     const formattedDate = formatDistanceToNowStrict(new Date(msg.created_at), { addSuffix: true });
+    console.log("message created at is : ", msg.created_at);
 
     return (
         <div className="flex items-start gap-2 max-w-sm self-end mb-2">

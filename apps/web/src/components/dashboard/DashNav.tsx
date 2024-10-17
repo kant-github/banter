@@ -21,7 +21,7 @@ interface props {
     groups: any;
 }
 
-export const globalGroupId: string = "bd1a0a9f-dd78-4f18-b13b-d706df0ea3c3";
+export const globalGroupId: string = "ede70d71-4004-4ea4-a3a6-7913376dbb63";
 
 export default function ({ groups }: props) {
     const [searchInput, setSearchInput] = useState("");

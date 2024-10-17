@@ -1,9 +1,8 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
 import BigBlackButton from "../buttons/BigBlackButton";
 import { GroupChatType, MessageType, UserType } from "types";
-import { getSocket } from "@/lib/socket.config";
+import { getSocket, sendMessage } from "@/lib/socket.config";
 import { v4 as uuidv4 } from "uuid";
-
 import Messages from "./messages/Messages";
 import ChatMessageInput from "./ChatMessageInput";
 import { EmptyConversation } from "./EmptyConversation";
@@ -14,7 +13,7 @@ interface Props {
     group: GroupChatType;
 }
 
-export default function ({ chatUser, olderChats, group }: Props) {
+export default function ChatComponent({ chatUser, olderChats, group }: Props) {
     const [message, setMessage] = useState<string>("");
     const [messages, setMessages] = useState<MessageType[]>(olderChats);
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -23,33 +22,29 @@ export default function ({ chatUser, olderChats, group }: Props) {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    const socket = useMemo(() => {
-        const socketInstance = getSocket();
-        socketInstance.auth = { room: group.id };
-        return socketInstance.connect();
-    }, [group.id]);
+    const socket = useMemo(() => getSocket(group.id), [group.id]);
 
     useEffect(() => {
-        socket.on("connect", () => {
-            console.log("Socket connected:", socket.id);
-        });
+        const handleMessage = (event: MessageEvent) => {
+            const data: MessageType = JSON.parse(event.data);
 
-        socket.on("message", (data: MessageType) => {
-            setMessages((prevMessages) => [...prevMessages, data]);
-            scrollToBottom();
-        });
+            // Check if the message already exists to avoid duplicates
+            const messageExists = messages.some(msg => msg.id === data.id);
 
-        socket.on("disconnect", () => {
-            console.log("Socket disconnected:", socket.id);
-        });
+            if (!messageExists) {
+                setMessages((prevMessages) => [...prevMessages, data]);
+                scrollToBottom();
+            } else {
+                console.warn('Duplicate message received:', data);
+            }
+        };
+
+        socket.addEventListener("message", handleMessage);
 
         return () => {
-            socket.off("message");
-            socket.off("connect");
-            socket.off("disconnect");
+            socket.removeEventListener("message", handleMessage);
         };
-    }, [socket]);
-
+    }, [socket, messages]); // Added messages to dependency array for updated state
 
     const handleSendMessage = (e: React.FormEvent) => {
         e.preventDefault();
@@ -66,9 +61,12 @@ export default function ({ chatUser, olderChats, group }: Props) {
             user: chatUser,
         };
 
-        socket.emit("message", newMessage);
+        // Send the message and update state
+        console.log("Sending new message:", newMessage);
+        sendMessage(newMessage);
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         setMessage("");
+        scrollToBottom(); // Scroll to the bottom after sending
     };
 
     return (
@@ -80,7 +78,7 @@ export default function ({ chatUser, olderChats, group }: Props) {
                 <div ref={messagesEndRef} />
                 <div className="flex flex-col gap-2 px-2">
                     {messages.map((msg, index) => (
-                        <Messages key={index} msg={msg} chatUser={chatUser!} />
+                        <Messages key={msg.id} msg={msg} chatUser={chatUser!} />
                     ))}
                 </div>
             </div>
@@ -95,4 +93,4 @@ export default function ({ chatUser, olderChats, group }: Props) {
             </form>
         </div>
     );
-};
+}
