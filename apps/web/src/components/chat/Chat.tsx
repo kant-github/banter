@@ -86,7 +86,7 @@ export default function ChatComponent({ chatUser, olderChats, group }: Props) {
                 className="mt-2 flex justify-between items-center gap-x-4 w-full"
                 onSubmit={handleSendMessage}
             >
-                <div className="ml-2 gap-x-6 flex items-center w-full mb-3">
+                <div className="ml-2 gap-x-6 flex items-center w-full mb-2">
                     <ChatMessageInput message={message} setMessage={setMessage} />
                     <BigBlackButton>Send</BigBlackButton>
                 </div>
