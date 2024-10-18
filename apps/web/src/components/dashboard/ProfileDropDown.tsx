@@ -121,7 +121,7 @@ export default function UserMenu({ groups }: props) {
 
             {
                 accountInfoDropDown && (
-                    <AccountInfoDropDown setAccountInfoDropDown={setAccountInfoDropDown} session={session} />
+                    <AccountInfoDropDown setAccountInfoDropDown={setAccountInfoDropDown} session={session!} />
                 )
             }
         </div>

@@ -66,7 +66,7 @@ export default function ChatComponent({ chatUser, olderChats, group }: Props) {
         sendMessage(newMessage);
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         setMessage("");
-        scrollToBottom(); // Scroll to the bottom after sending
+        scrollToBottom();
     };
 
     return (
@@ -86,8 +86,8 @@ export default function ChatComponent({ chatUser, olderChats, group }: Props) {
                 className="mt-2 flex justify-between items-center gap-x-4 w-full"
                 onSubmit={handleSendMessage}
             >
-                <ChatMessageInput message={message} setMessage={setMessage} />
-                <div className="ml-2 w-[120px]">
+                <div className="ml-2 gap-x-6 flex items-center w-full mb-3">
+                    <ChatMessageInput message={message} setMessage={setMessage} />
                     <BigBlackButton>Send</BigBlackButton>
                 </div>
             </form>

@@ -36,17 +36,17 @@ export default function MyRoomDropdown({ myRoomDropdown, setMyRoomDropDown, grou
                         Browse through the complete collection of rooms you've created, and take control of their customization and management.
                     </p>
                 </div>
-                <div 
-                    className="flex mt-4 flex-col justify-start mx-4 h-[520px] overflow-y-auto" // Use column-reverse to keep adding at the top
+                <div
+                    className="flex mt-4 flex-col justify-start mx-4 h-[500px] overflow-y-auto" // Use column-reverse to keep adding at the top
                 >
                     {groups.length > 0 ? (
                         groups.map((group) => (
                             <div
                                 onDoubleClick={() => router.push(`/chat/${group.id}`)}
                                 key={group.id} // Use a unique key
-                                className="flex items-center justify-between py-[10px] pl-4 ml-2 hover:bg-gray-200 dark:hover:bg-[#262629] dark:hover:border-[1px] dark:border-zinc-700 hover:border-[1px] border-zinc-200 rounded-[4px] cursor-pointer select-none hide-scrollbar"
+                                className="flex items-center justify-between py-[12px] pl-4 ml-2 hover:bg-gray-200 dark:hover:bg-[#262629] rounded-[4px] cursor-pointer select-none hide-scrollbar"
                             >
-                                <div className="text-[11px] font-extralight">{group.title}</div>
+                                <div className="text-[12px] font-extralight">{group.title}</div>
                                 <div className="mr-4">
                                     <OptionsMenu item={group} setSelectedItemId={setSelectedItemId} setEditDialogBox={setEditDialogBox} setDeleteDialogBox={setDeleteDialogBox} color={"black"} />
                                 </div>
@@ -56,7 +56,7 @@ export default function MyRoomDropdown({ myRoomDropdown, setMyRoomDropDown, grou
                         <p className="text-center text-gray-500 text-xs">No rooms available</p>
                     )}
                 </div>
-                <div className="mt-2 mx-4">
+                <div className="mt-2  mx-4">
                     <AppLogo />
                     <p className="text-[11px] font-thin mx-3 my-2 mb-4 italic">
                         Banter is the go-to solution for managing group chats and rooms. Customize, organize, and stay connected with ease.

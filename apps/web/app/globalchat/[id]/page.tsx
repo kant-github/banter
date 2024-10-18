@@ -48,7 +48,7 @@ export default function ({ params }: props) {
     }
 
     return (
-        <div className="fixed">
+        <div className="">
             <ChatNav />
             <GlobalChatBase users={chatGroupUsers} group={group} groupId={params.id} olderChats={chats} />
         </div>

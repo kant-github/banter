@@ -43,7 +43,7 @@ export default function ({ params }: { params: { id: string } }) {
     }
 
     return (
-        <div className="fixed">
+        <div className="">
             <ChatNav />
             <ChatBase users={chatGroupUsers} group={group} groupId={params.id} olderChats={chats} />
         </div>
