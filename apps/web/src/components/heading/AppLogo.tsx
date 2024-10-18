@@ -16,7 +16,7 @@ export default function () {
             }}
             className="flex flex-row gap-x-5 items-center ml-2 cursor-pointer select-none group">
             <GiJigsawPiece
-                size={25}
+                size={30}
                 className="transition-transform transform group-hover:-translate-x-[2px] text-[#f2a633] dark:text-[#f2a633]"
             />
             <div

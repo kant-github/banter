@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import Image from "next/image";
 import BigWhiteBtn from "@/components/buttons/BigWhiteBtn";
 import { WhiteBtn } from "@/components/buttons/WhiteBtn";
+import { GiJigsawPiece } from "react-icons/gi";
 
 interface Props {
     groupTitle: string;
@@ -47,7 +48,10 @@ export default function({ groupTitle, groupImage }: Props) {
         <div className="flex items-center justify-between bg-[#f2f2f2] dark:bg-[#1c1c1c] h-[82px] dark:text-gray-300">
             <h1 className="flex flex-row items-center gap-x-4 font-bold text-2xl ml-8 py-6">
                 
-                    <Image src={"/images/globalchatimage.png"} width={38} height={38} alt="logo" />
+            <GiJigsawPiece
+                size={34}
+                className="transition-transform transform group-hover:-translate-x-[2px] text-[#f2a633] dark:text-[#f2a633]"
+            />
                 
                 <p className="text-xl">{groupTitle}</p>
             </h1>
