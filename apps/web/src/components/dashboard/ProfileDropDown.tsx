@@ -8,6 +8,10 @@ import { GroupChatType } from "types";
 import { FaGithub } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import AccountInfoDropDown from "../utility/AccountInfoDropDown";
+import { toast } from "sonner";
+import { globalRoomHandler } from "@/lib/globalRoomHandler";
+import { globalGroupId } from "./DashNav";
+import { useRouter } from "next/navigation";
 
 
 interface props {
@@ -20,6 +24,7 @@ export default function UserMenu({ groups }: props) {
     const [myRoomDropdown, setMyRoomDropDown] = useState<boolean>(false);
     const [accountInfoDropDown, setAccountInfoDropDown] = useState(false);
     const { data: session } = useSession();
+    const router = useRouter();
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -31,6 +36,14 @@ export default function UserMenu({ groups }: props) {
     function accountInfoHandler() {
         setAccountInfoDropDown(true);
         setDropDown(false);
+    }
+    async function globalRoomButtonHandler() {
+        
+        if(!session?.user?.id){
+            toast.error("User not authenticated");
+            return;
+        }
+        await globalRoomHandler(globalGroupId, session.user.id, router);
     }
 
     function handleLogout() {
@@ -74,7 +87,7 @@ export default function UserMenu({ groups }: props) {
                         </div>
                         <div className="px-4 py-2 text-xs font-extralight text-gray-700 dark:hover:bg-[#262629] hover:bg-gray-200 dark:text-gray-200">Docs</div>
                         <div onClick={accountInfoHandler} className="px-4 py-2 text-xs font-extralight text-gray-700 dark:hover:bg-[#262629] hover:bg-gray-200 dark:text-gray-200">Accounts Info</div>
-                        <div className="px-4 py-2 text-xs font-extralight text-gray-700 dark:hover:bg-[#262629] hover:bg-gray-200 dark:text-gray-200">Global Room</div>
+                        <div onClick={globalRoomButtonHandler} className="px-4 py-2 text-xs font-extralight text-gray-700 dark:hover:bg-[#262629] hover:bg-gray-200 dark:text-gray-200">Global Room</div>
                         <a
                             href="https://github.com/kant-github/chat-app"
                             target="_blank"

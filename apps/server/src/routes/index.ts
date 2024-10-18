@@ -10,7 +10,11 @@ import { createChatGroupUser } from "../chatGroupUsersController/createChatGroup
 import { deleteChatGroupUser } from "../chatGroupUsersController/deleteChatGroupUserController";
 import getChatGroupUserBySearch from "../chatGroupController/getChatGroupBySearch";
 import getChats from "../chatController/getChats";
+import { getUserDetails } from "../userController/getUserDetails";
 const router = Router();
+
+// user_controller
+router.get("/user/:id", authmiddleware, getUserDetails);
 
 //chat-group-controller
 router.get("/chat-group", authmiddleware, getChatGroups);
@@ -20,7 +24,7 @@ router.put("/chat-group/:id", authmiddleware, updateChatGroupById);
 router.delete("/chat-group/:id", authmiddleware, DeleteChatGroupById);
 router.get("/chat-group-by-search", getChatGroupUserBySearch);
 
-//chat-group-user-controller
+// chat-group-user-controller
 router.get("/chat-group-user", getChatGroupUsers);
 router.post("/chat-group-user", createChatGroupUser);
 router.delete("/chat-group-user", deleteChatGroupUser);

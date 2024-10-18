@@ -15,20 +15,22 @@ import Version from "../buttons/Version";
 import { useRouter } from "next/navigation";
 import { clearCache } from "actions/common";
 import { toast } from "sonner";
+import { globalRoomHandler } from "@/lib/globalRoomHandler";
 
-const font = Cedarville_Cursive({ weight: '400', subsets: ['latin'] })
-interface props {
+const font = Cedarville_Cursive({ weight: '400', subsets: ['latin'] });
+
+interface Props {
     groups: any;
 }
 
 export const globalGroupId: string = "ede70d71-4004-4ea4-a3a6-7913376dbb63";
 
-export default function ({ groups }: props) {
+export default function Header({ groups }: Props) {
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState<GroupChatType[] | []>([]);
     const [searchResultDialogBox, setSearchResultDialogBox] = useState<boolean>(false);
-    const router = useRouter();
     const { data: session } = useSession();
+    const router = useRouter(); // Move useRouter inside the component
 
     async function getSearchInputChatGroups() {
         try {
@@ -39,26 +41,12 @@ export default function ({ groups }: props) {
         }
     }
 
-    async function globalRoomHandler() {
-
-        try {
-            const response = await axios.post(`${CHAT_GROUP_USERS}`, {
-                user_id: session?.user?.id,
-                group_id: globalGroupId,
-            });
-
-            if (response.data.message === "User already in the group" || response.data.message === "User added to group successfully") {
-                clearCache("chat-group-users");
-                localStorage.setItem(globalGroupId as string, JSON.stringify(response.data.data));
-                router.push(`${FRONTEND_BASE_URL}/globalchat/${globalGroupId}`)
-                toast.success("You have joined the group successfully!");
-            } else {
-                toast.error(response.data.message);
-            }
-        } catch (error) {
-            console.error("Error joining the group:", error);
-            toast.error("Something went wrong, please try again!");
+    async function globalRoomButtonHandler() {
+        if (!session?.user.id) {
+            toast.error("User not authenticated");
+            return;
         }
+        await globalRoomHandler(globalGroupId, session.user.id, router);
     }
 
     useEffect(() => {
@@ -80,8 +68,8 @@ export default function ({ groups }: props) {
                 <Version />
             </div>
             <div className="flex flex-row justify-center items-center gap-x-4">
-                <span className={`text-center dark:text-gray-200 text-[17px] ${font.className}`}>Hey {session?.user.name?.split(" ")[0]}</span>
-                <WhiteBtn onClick={globalRoomHandler}>Global room</WhiteBtn>
+                <span className={`mr-4 text-center dark:text-gray-200 text-[17px] ${font.className}`}>Hey {session?.user.name?.split(" ")[0]}</span>
+                <WhiteBtn onClick={globalRoomButtonHandler}>Global room</WhiteBtn>
                 <DarkMode />
                 <div className="w-[340px]">
                     <SearchInput setSearchResultDialogBox={setSearchResultDialogBox} input={searchInput} setInput={setSearchInput} />

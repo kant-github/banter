@@ -26,6 +26,7 @@ export const authOption: AuthOptions = {
         async signIn({ user, account }: { user: UserType; account: Account | null }) {
             try {
                 if (account?.provider === "google") {
+                    
                     const existingUser = await prisma.users.findFirst({
                         where: {
                             email: user.email!,

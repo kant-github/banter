@@ -7,8 +7,8 @@ interface CustomWebSocket extends WebSocket {
 }
 
 export function setupWebSocket(wss: Server) {
-    const redisPublisher = createClient();
-    const redisSubscriber = createClient();
+    const redisPublisher = createClient({url: "rediss://default:AZ0pAAIjcDFiNjIyZmViODQ3NWY0N2NiODNlNjEwN2EzMTE4ZTY2N3AxMA@famous-sloth-40233.upstash.io:6379"});
+    const redisSubscriber = createClient({url: "rediss://default:AZ0pAAIjcDFiNjIyZmViODQ3NWY0N2NiODNlNjEwN2EzMTE4ZTY2N3AxMA@famous-sloth-40233.upstash.io:6379"});
 
     // Connect to Redis
     redisPublisher.connect().catch(err => console.error('Redis Publisher Connection Error:', err));
@@ -18,7 +18,7 @@ export function setupWebSocket(wss: Server) {
     redisSubscriber.subscribe("chat-messages", (message) => {
         const parsedMessage = JSON.parse(message);
         console.log('Received from Redis:', parsedMessage);
-        broadcastToRoom(parsedMessage.room, parsedMessage.data, wss, null);
+        broadcastToRoom(parsedMessage.room, parsedMessage.data, wss);
     });
 
     const broadcastToRoom = (room: string, message: any, wss: Server) => {
@@ -77,7 +77,6 @@ export function setupWebSocket(wss: Server) {
             // Publish the message to Redis
             redisPublisher.publish('chat-messages', JSON.stringify({ room: ws.room, data }));
 
-            // Temporarily comment this out to see if it prevents duplicates
             // broadcastToRoom(ws.room!, data, wss, ws);  // Uncomment if you want local feedback
         });
 
