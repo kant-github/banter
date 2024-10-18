@@ -1,27 +1,34 @@
 import Env from "./env";
 
-let socket: WebSocket;
+let socket: WebSocket | null = null;
 
 export const getSocket = (roomId: string): WebSocket => {
     if (!socket || socket.readyState !== WebSocket.OPEN) {
-        socket = new WebSocket(`${Env.BACKEND_URL}?room=${roomId}`);
+        if (socket) {
+            socket.close();
+        }
 
-        // Event listener for when the socket opens
+        // change this in production, use wss instead of ws
+        socket = new WebSocket(`ws://localhost:7001/api?room=${roomId}`);
+
         socket.onopen = () => {
             console.log('WebSocket connection opened');
         };
 
         socket.onmessage = (event) => {
-            const messageData = JSON.parse(event.data);
-            console.log('Received message:', messageData);
+            try {
+                const messageData = JSON.parse(event.data);
+                console.log('Received message:', messageData);
+            } catch (error) {
+                console.error('Failed to parse message:', error);
+            }
         };
 
-        // Event listener for when the socket closes
         socket.onclose = () => {
             console.log('WebSocket connection closed');
+            socket = null; // Reset socket on close
         };
 
-        // Event listener for errors
         socket.onerror = (error) => {
             console.error('WebSocket error:', error);
         };
@@ -30,9 +37,9 @@ export const getSocket = (roomId: string): WebSocket => {
 };
 
 // Function to send messages through the WebSocket connection
-export const sendMessage = (message: any) => {
+export const sendMessage = (message: Record<string, any>) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
-        console.log("The message is : ", message);
+        console.log("The message is: ", message);
         socket.send(JSON.stringify(message));
     } else {
         console.error('WebSocket is not open. Unable to send message.');
