@@ -24,7 +24,6 @@ interface Props {
 }
 
 export const globalGroupId: string = "ede70d71-4004-4ea4-a3a6-7913376dbb63";
-
 export default function Header({ groups }: Props) {
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState<GroupChatType[] | []>([]);
