@@ -7,7 +7,7 @@ import { GroupChatType, GroupChatUserType, MessageType, UserType } from "types";
 
 interface Props {
   groupId: string;
-  group: GroupChatType | null; // Allow group to be null initially
+  group: GroupChatType | null;
   users: GroupChatUserType[];
   olderChats: MessageType[];
 }
@@ -27,13 +27,13 @@ export default function ({ groupId, group, users, olderChats }: Props) {
     };
 
     fetchChatUserFromLocalStorage();
-  }, [group?.id, chatUser]); // Add chatUser to dependencies to prevent infinite re-renders
+  }, [group?.id, chatUser]);
 
   return (
     <div className="flex flex-row w-screen bg-[#f2f2f2] dark:bg-[#1c1c1c]">
       <ChatSideBar users={users} />
       <div className="w-full mr-6">
-        <ChatNavTitle groupImage={group?.groupImage!} groupTitle={group?.title!} />
+        <ChatNavTitle groupId={groupId} groupImage={group?.groupImage!} groupTitle={group?.title!} />
         <Chat chatUser={chatUser} olderChats={olderChats} group={group!} />
       </div>
     </div>

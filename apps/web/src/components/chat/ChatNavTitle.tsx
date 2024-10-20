@@ -7,18 +7,22 @@ import { CHAT_GROUP_USERS } from "@/lib/apiAuthRoutes";
 import { toast } from "sonner";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
 import Image from "next/image";
+import { useState } from "react";
+import ExitRoomDialogBox from "../utility/ExitRoomDialogBox";
 
 interface Props {
     groupTitle: string | null;
     groupImage: string | null;
+    groupId: string | null;
 }
 
-export default function ChatNavTitle({ groupTitle, groupImage }: Props) {
+export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props) {
+    const [exitRoomDialogBox, setExitRoomDialogBox] = useState(false);
     const router = useRouter();
     const params = useParams();
-    const data = localStorage.getItem(params["id"] as string);
-
     let user_id: string | null = null;
+
+    const data = localStorage.getItem(params["id"] as string);
     if (data) {
         try {
             const parsedData = JSON.parse(data);
@@ -28,20 +32,7 @@ export default function ChatNavTitle({ groupTitle, groupImage }: Props) {
         }
     }
 
-    async function exitRoomHandler() {
-        if (!user_id) {
-            console.error("No user_id found in localStorage.");
-            return;
-        }
-        try {
-            await axios.delete(`${CHAT_GROUP_USERS}?user_id=${user_id}`)
-            localStorage.clear();
-            router.push("/dashboard");
-            toast.success("Exitted room successfully");
-        } catch (err) {
-            console.error("Error exiting the room:", err);
-        }
-    }
+
 
     return (
         <div className="flex items-center justify-between bg-[#f2f2f2] dark:bg-[#1c1c1c] h-[82px] dark:text-gray-300">
@@ -57,8 +48,12 @@ export default function ChatNavTitle({ groupTitle, groupImage }: Props) {
                     <IoIosArrowBack size={18} className="stroke-[2px] transition-transform transform group-hover:-translate-x-[1px]" />
                     <span>Dashboard</span>
                 </BigWhiteBtn>
-                <RedBtn onClick={exitRoomHandler}>Exit Room</RedBtn>
+                <RedBtn onClick={() => setExitRoomDialogBox(true)}>Exit Room</RedBtn>
             </div>
+            {
+                exitRoomDialogBox && <ExitRoomDialogBox groupId={groupId!} user_id={user_id} setExitRoomDialogBox={setExitRoomDialogBox} exitRoomDialogBox={exitRoomDialogBox} />
+            }
+
         </div>
     );
 }
