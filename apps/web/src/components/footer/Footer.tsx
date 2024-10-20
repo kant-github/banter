@@ -1,5 +1,5 @@
 "use client";
-import BigBlackButton from "../buttons/BigBlackButton";
+import BlackBtn from "../buttons/BlackBtn";
 import InputBox from "../utility/InputBox";
 import { FaRegCopyright } from "react-icons/fa";
 
@@ -25,7 +25,7 @@ export default function Footer() {
                     <div className="flex items-center gap-x-4">
                         <InputBox placeholder="Your e-mail" />
                         <div className="mt-1">
-                            <BigBlackButton>Subscribe</BigBlackButton>
+                            <BlackBtn>Subscribe</BlackBtn>
                         </div>
                     </div>
 

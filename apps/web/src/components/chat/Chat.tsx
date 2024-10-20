@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import Messages from "./messages/Messages";
 import ChatMessageInput from "./ChatMessageInput";
 import { EmptyConversation } from "./EmptyConversation";
+import BlackBtn from "../buttons/BlackBtn";
 
 interface Props {
     olderChats: MessageType[];
@@ -88,7 +89,7 @@ export default function ChatComponent({ chatUser, olderChats, group }: Props) {
             >
                 <div className="ml-2 gap-x-6 flex items-center w-full mb-2">
                     <ChatMessageInput message={message} setMessage={setMessage} />
-                    <BigBlackButton>Send</BigBlackButton>
+                    <BlackBtn>Send</BlackBtn>
                 </div>
             </form>
         </div>

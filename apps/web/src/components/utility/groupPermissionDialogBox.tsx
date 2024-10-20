@@ -10,34 +10,41 @@ import { clearCache } from "actions/common";
 import { useSession } from "next-auth/react";
 
 interface Props {
-    permissionDialogBox: boolean;
-    setPermissionDialogBox: (value: boolean) => void;
     group: GroupChatType;
+    setPermissionDialogBox: (value: boolean) => void;
 }
 
-export default function ChatPermissionDialog({ setPermissionDialogBox, group }: Props) {
+export default function ({ setPermissionDialogBox, group }: Props) {
     const [passcode, setPasscode] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const params = useParams();
     const { data: session } = useSession();
 
+
     useEffect(() => {
         const data = localStorage.getItem(params["id"] as string);
+        console.log("data is this : ", data);
         if (data) {
             const jsonData = JSON.parse(data);
             if (jsonData?.id && jsonData?.group_id) {
-                setPermissionDialogBox(false);
+                console.log("local storage data fround : ");
+                setPermissionDialogBox(true);
             }
         }
     }, [params, setPermissionDialogBox]);
 
+
     const joinRoomHandler = async () => {
         setLoading(true);
+        console.log("group passcode is : ", group.passcode);
         if (group.passcode !== passcode) {
-            toast.error("Enter the correct passcode");
+            console.log("checking passcode match");
+            console.log("group passcode is : ", group.passcode);
+            toast.error("Incorrect passcode");
             setLoading(false);
             return;
         }
+        console.log("Password is correct");
 
         try {
             const response = await axios.post(`${CHAT_GROUP_USERS}`, {
@@ -48,32 +55,30 @@ export default function ChatPermissionDialog({ setPermissionDialogBox, group }: 
             if (response.data.message === "User already in the group" || response.data.message === "User added to group successfully") {
                 clearCache("chat-group-users");
                 localStorage.setItem(params["id"] as string, JSON.stringify(response.data.data));
-                toast.success("You have joined the group successfully!");
-                setLoading(false);
-                setPermissionDialogBox(false);
+                toast.success("Successfully joined the group!");
+                setPermissionDialogBox(true);
             } else {
                 toast.error(response.data.message);
-                setLoading(false);
             }
         } catch (error) {
-            console.error("Error joining the group:", error);
-            toast.error("Something went wrong, please try again!");
+            console.error("Error joining group:", error);
+            toast.error("Something went wrong. Please try again!");
+        } finally {
             setLoading(false);
         }
     };
 
-
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-200 flex items-center justify-center z-50">
+        <div className="fixed inset-0 dark:bg-black bg-zinc-300 bg-opacity-200 flex items-center justify-center z-50">
             <div className="bg-white dark:bg-[#262629] dark:text-gray-200 p-6 rounded-lg shadow-lg max-w-xl w-[400px] relative">
-                <div>
-                    <p className="text-md font-bold mb-1">Joining Credentials</p>
-                    <div className="mt-4">
-                        <InputBox type="password" label="Room's Passcode" input={passcode} setInput={setPasscode} />
-                    </div>
-                    <div className="mt-4">
-                        <BigBlackButton disabled={loading} onClick={joinRoomHandler}>{loading ? "Joining" : "Join"}</BigBlackButton>
-                    </div>
+                <p className="text-md font-bold mb-1">Enter Room's Passcode</p>
+                <div className="mt-2">
+                    <InputBox type="password" label="Passcode" input={passcode} setInput={setPasscode} />
+                </div>
+                <div className="mt-4">
+                    <BigBlackButton disabled={loading} onClick={joinRoomHandler}>
+                        {loading ? "Joining..." : "Join"}
+                    </BigBlackButton>
                 </div>
             </div>
         </div>
