@@ -9,8 +9,6 @@ export async function createChatGroupUser(req: Request, res: Response) {
         if (!user_id || !group_id) {
             return res.status(400).json({ message: "Missing required fields" });
         }
-        console.log("printing");
-        console.log(user_id, group_id);
         const existingUser = await prisma.groupUsers.findFirst({
             where: {
                 user_id: Number(user_id),

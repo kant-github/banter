@@ -34,7 +34,7 @@ export default function ({ groupId, group, users, olderChats }: Props) {
       <ChatSideBar users={users} />
       <div className="w-full mr-6">
         <ChatNavTitle groupId={groupId} groupImage={group?.groupImage!} groupTitle={group?.title!} />
-        <Chat chatUser={chatUser} olderChats={olderChats} group={group!} />
+        <Chat users={users} chatUser={chatUser} olderChats={olderChats} group={group!} />
       </div>
     </div>
   );

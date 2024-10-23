@@ -1,32 +1,40 @@
-import Env from "./env";
-
 let socket: WebSocket | null = null;
+interface TypingEvent {
+    type: string;
+    userId: string;
+}
 
-export const getSocket = (roomId: string): WebSocket => {
+const handleTypingEvents = (event: MessageEvent) => {
+    try {
+        const typingData: TypingEvent = JSON.parse(event.data);
+        // Here, you could update the UI to show who is typing
+    } catch (error) {
+        console.error('Failed to parse typing event:', error);
+    }
+};
+
+export const getSocket = (roomId: string, userId: number): WebSocket => {
     if (!socket || socket.readyState !== WebSocket.OPEN) {
         if (socket) {
             socket.close();
         }
-
-        // change this in production, use wss instead of ws
-        socket = new WebSocket(`ws://localhost:7001/api?room=${roomId}`);
+        socket = new WebSocket(`ws://localhost:7001/api?userId=${userId}&room=${roomId}`);
 
         socket.onopen = () => {
             console.log('WebSocket connection opened');
         };
 
         socket.onmessage = (event) => {
-            try {
-                const messageData = JSON.parse(event.data);
-                console.log('Received message:', messageData);
-            } catch (error) {
-                console.error('Failed to parse message:', error);
+            const messageData = JSON.parse(event.data);
+            // Check if the message is a typing event
+            if (messageData.type === 'typing-start' || messageData.type === 'typing-stop') {
+                handleTypingEvents(event);
             }
         };
 
         socket.onclose = () => {
             console.log('WebSocket connection closed');
-            socket = null; // Reset socket on close
+            socket = null;
         };
 
         socket.onerror = (error) => {
@@ -36,12 +44,20 @@ export const getSocket = (roomId: string): WebSocket => {
     return socket;
 };
 
-// Function to send messages through the WebSocket connection
+
 export const sendMessage = (message: Record<string, any>) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
-        console.log("The message is: ", message);
         socket.send(JSON.stringify(message));
     } else {
         console.error('WebSocket is not open. Unable to send message.');
+    }
+};
+
+export const sendTypingEvent = (userId: string, type: 'typing-start' | 'typing-stop') => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        const typingData = { type, userId };
+        socket.send(JSON.stringify(typingData));
+    } else {
+        console.error('WebSocket is not open. Unable to send typing event.');
     }
 };
