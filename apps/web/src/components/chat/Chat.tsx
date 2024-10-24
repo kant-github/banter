@@ -43,7 +43,7 @@ export default function ChatComponent({ chatUser, olderChats, group, users }: Pr
                 // Ensure the message is not empty before processing it
                 if (!data.message.trim()) {
                     console.warn('Received an empty message:', data);
-                    return; // Ignore empty messages
+                    return;
                 }
 
                 const messageExists = messages.some(msg => msg.id === data.id);
@@ -54,7 +54,6 @@ export default function ChatComponent({ chatUser, olderChats, group, users }: Pr
                     console.warn('Duplicate message received:', data);
                 }
             } else if (data.type === 'typing') {
-                // Handle typing events here
                 handleTypingEvent(data);
             }
         };

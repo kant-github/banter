@@ -16,6 +16,9 @@ export async function getUserDetails(req: Request, res: Response) {
             where: {
                 id: Number(id)
             },
+            include: {
+                ChatGroup: true
+            }
         });
 
         console.log("User from backend is : ", user);
