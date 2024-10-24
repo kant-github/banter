@@ -1,3 +1,30 @@
+/* In your global CSS file or a specific component CSS file */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+
+.dot {
+    animation: bounce 1s infinite;
+}
+
+/* Delay for the other dots */
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-400 {
+    animation-delay: 0.4s;
+}

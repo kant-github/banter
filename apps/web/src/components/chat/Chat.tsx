@@ -6,6 +6,7 @@ import Messages from "./messages/Messages";
 import ChatMessageInput from "./ChatMessageInput";
 import { EmptyConversation } from "./EmptyConversation";
 import BlackBtn from "../buttons/BlackBtn";
+import TypingDots from "../loaders/TypingDots";
 
 interface Props {
     olderChats: MessageType[];
@@ -136,21 +137,22 @@ export default function ChatComponent({ chatUser, olderChats, group, users }: Pr
                     ))}
                 </div>
             </div>
-
-            {/* Display who is typing */}
-            {typingUsers.length > 0 && (
-                <div className="text-xs text-yellow-500 font-thin">
-                    {typingUsers.length > 3 ? (
-                        <>
-                            {typingUsers.slice(0, 3).join(", ")} and {typingUsers.length - 3} others are typing...
-                        </>
-                    ) : (
-                        <>
-                            {typingUsers.join(", ")} {typingUsers.length > 1 ? "are" : "is"} typing...
-                        </>
-                    )}
-                </div>
-            )}
+            <div>
+                {typingUsers.length > 0 && (
+                    <div className="text-xs text-yellow-500 flex flex-row items-center gap-x-2 font-light ml-4">
+                        <TypingDots/>
+                        {typingUsers.length > 3 ? (
+                            <>
+                                {typingUsers.slice(0, 3).join(", ")} and {typingUsers.length - 3} others are typing...
+                            </>
+                        ) : (
+                            <>
+                                {typingUsers.join(", ")} {typingUsers.length > 1 ? "are" : "is"} typing...
+                            </>
+                        )}
+                    </div>
+                )}
+            </div>
 
             <form
                 className="mt-2 flex justify-between items-center gap-x-4 w-full"
