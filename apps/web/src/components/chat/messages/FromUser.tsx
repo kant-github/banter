@@ -10,7 +10,8 @@ export default function Message({ msg }: { msg: MessageType }) {
             <div className="flex items-center gap-x-2">
 
                 <div className="text-sm font-light bg-gradient-to-r from-zinc-900 to-black text-white rounded-[5px] py-1.5 px-4">
-                    <span className="text-green-600 text-xs font-medium">You</span>
+
+                    <span className="text-green-600 flex justify-start text-xs font-medium">You</span>
                     <span className="block">{msg.message}</span>
                     <span className="text-[8px] flex justify-end text-gray-400 ">{formattedDate}</span>
                 </div>

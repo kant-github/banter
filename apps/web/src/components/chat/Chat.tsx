@@ -20,7 +20,6 @@ export default function ChatComponent({ chatUser, olderChats, group, users }: Pr
     const [messages, setMessages] = useState<MessageType[]>(olderChats);
     const [typingUsers, setTypingUsers] = useState<string[]>([]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    let typingTimeout: NodeJS.Timeout;
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -39,23 +38,17 @@ export default function ChatComponent({ chatUser, olderChats, group, users }: Pr
         const handleMessage = (event: MessageEvent) => {
             const data = JSON.parse(event.data);
 
-            // Check if the incoming data is actually a message, not a typing event
-            if (data.type === 'message') {
-                // Ensure the message is not empty before processing it
-                if (!data.message.trim()) {
-                    console.warn('Received an empty message:', data);
-                    return;
-                }
+            if (!data?.message?.trim()) {
+                console.warn('Received an empty message:', data);
+                return;
+            }
 
-                const messageExists = messages.some(msg => msg.id === data.id);
-                if (!messageExists) {
-                    setMessages(prevMessages => [...prevMessages, data]);
-                    scrollToBottom();
-                } else {
-                    console.warn('Duplicate message received:', data);
-                }
-            } else if (data.type === 'typing') {
-                handleTypingEvent(data);
+            const messageExists = messages.some(msg => msg.id === data.id);
+            if (!messageExists) {
+                setMessages(prevMessages => [...prevMessages, data]);
+                scrollToBottom();
+            } else {
+                console.warn('Duplicate message received:', data);
             }
         };
 
@@ -95,7 +88,6 @@ export default function ChatComponent({ chatUser, olderChats, group, users }: Pr
         e.preventDefault();
 
         if (!message.trim() || !chatUser) return;
-        console.log("message sent bro");
 
         const newMessage: MessageType = {
             id: uuidv4(),
@@ -114,16 +106,35 @@ export default function ChatComponent({ chatUser, olderChats, group, users }: Pr
         sendTypingEvent(chatUser?.id.toString(), 'typing-stop');
     };
 
+    const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const typingStartSentRef = useRef(false);
+
     const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(e.target.value);
 
-        sendTypingEvent(chatUser?.id.toString()!, 'typing-start');
+        if (!typingStartSentRef.current) {
+            sendTypingEvent(chatUser?.id.toString()!, 'typing-start');
+            console.log("typing started");
+            typingStartSentRef.current = true;
+            console.log("sent ref is : true");
+        }
 
-        clearTimeout(typingTimeout);
-        typingTimeout = setTimeout(() => {
+        // Clear any existing timeout
+        if (typingTimeoutRef.current) {
+            console.log("timeout removed");
+            clearTimeout(typingTimeoutRef.current);
+        }
+
+        // Set a new timeout to send typing-stop after 3 seconds of no input
+        typingTimeoutRef.current = setTimeout(() => {
+
             sendTypingEvent(chatUser?.id.toString()!, 'typing-stop');
-        }, 3000);
+            console.log("typing stopped");
+            typingStartSentRef.current = false; // Reset typing start flag
+            console.log("sent ref is : false");
+        }, 1500);
     };
+
 
     return (
         <div className="flex flex-col h-[82vh] p-4 bg-white dark:bg-[#262629] rounded-[6px]">
@@ -139,8 +150,11 @@ export default function ChatComponent({ chatUser, olderChats, group, users }: Pr
             </div>
             <div>
                 {typingUsers.length > 0 && (
-                    <div className="text-xs text-yellow-500 flex flex-row items-center gap-x-2 font-light ml-4">
-                        <TypingDots/>
+                    <div
+                        className={`text-xs text-yellow-500 flex flex-row items-center gap-x-2 font-light ml-4 transition-opacity duration-300 ease-in-out ${typingUsers.length > 0 ? "opacity-100" : "opacity-0"
+                            }`}
+                    >
+                        <TypingDots />
                         {typingUsers.length > 3 ? (
                             <>
                                 {typingUsers.slice(0, 3).join(", ")} and {typingUsers.length - 3} others are typing...
@@ -153,6 +167,7 @@ export default function ChatComponent({ chatUser, olderChats, group, users }: Pr
                     </div>
                 )}
             </div>
+
 
             <form
                 className="mt-2 flex justify-between items-center gap-x-4 w-full"

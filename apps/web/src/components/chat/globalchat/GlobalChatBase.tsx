@@ -1,6 +1,5 @@
 import { GroupChatType, GroupChatUserType, MessageType, UserType } from "types";
 import Chat from "../Chat";
-import ChatNavTitle from "../ChatNavTitle";
 import ChatSideBar from "../ChatSideBar";
 import { useEffect, useState } from "react";
 import GlobalChatNavTitle from "./GlobalChatNavTitle";
@@ -37,7 +36,7 @@ export default function ({ groupId, group, users, olderChats }: Props) {
                 <ChatSideBar users={users} />
                 <div className="w-full mr-6">
                     <GlobalChatNavTitle groupImage={group.groupImage} groupTitle={group.title} />
-                    <Chat chatUser={chatUser} olderChats={olderChats} group={group} />
+                    <Chat users={users} chatUser={chatUser} olderChats={olderChats} group={group} />
                 </div>
             </div>
         </div>
