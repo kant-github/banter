@@ -5,20 +5,32 @@ import { createClient } from 'redis';
 interface CustomWebSocket extends WebSocket {
     room?: string;
     userId?: string;
+    isAlive?: boolean;  // Track if connection is alive
 }
 
 export function setupWebSocket(wss: Server) {
     const redisPublisher = createClient({ url: "rediss://default:AZ0pAAIjcDFiNjIyZmViODQ3NWY0N2NiODNlNjEwN2EzMTE4ZTY2N3AxMA@famous-sloth-40233.upstash.io:6379" });
     const redisSubscriber = createClient({ url: "rediss://default:AZ0pAAIjcDFiNjIyZmViODQ3NWY0N2NiODNlNjEwN2EzMTE4ZTY2N3AxMA@famous-sloth-40233.upstash.io:6379" });
 
-
+    // Connect Redis clients with error handling
     redisPublisher.connect().catch(err => console.error('Redis Publisher Connection Error:', err));
     redisSubscriber.connect().catch(err => console.error('Redis Subscriber Connection Error:', err));
+
+    redisPublisher.on('error', (err) => {
+        console.error('Redis Publisher Error:', err);
+        redisPublisher.connect(); // Reconnect on error
+    });
+
+    redisSubscriber.on('error', (err) => {
+        console.error('Redis Subscriber Error:', err);
+        redisSubscriber.connect(); // Reconnect on error
+    });
 
     redisSubscriber.subscribe("chat-messages", (message) => {
         const parsedMessage = JSON.parse(message);
         broadcastToRoom(parsedMessage.room, parsedMessage.data, wss);
     });
+
     redisSubscriber.subscribe("typing-events", (message) => {
         const parsedEvents = JSON.parse(message);
         broadcastToRoom(parsedEvents.room, parsedEvents.data, wss);
@@ -37,11 +49,10 @@ export function setupWebSocket(wss: Server) {
     };
 
     wss.on('connection', (ws: CustomWebSocket, req) => {
+        // Set up initial values and handle room assignment
         const params = new URLSearchParams(req.url?.split('?')[1]);
         const room = params.get('room') || '';
         const userId = params.get('userId') || '';
-        console.log("user id is : ", userId);
-        console.log("room is : ", room);
 
         if (!room) {
             ws.send(JSON.stringify({ error: 'Invalid room' }));
@@ -51,16 +62,18 @@ export function setupWebSocket(wss: Server) {
 
         ws.room = room;
         ws.userId = userId;
+        ws.isAlive = true;
 
-        // console.log(`Client connected to room: ${room}. Total clients in room: ${wss.clients.size}`);
+        // Set up ping/pong heartbeat
+        ws.on('pong', () => {
+            ws.isAlive = true;
+        });
 
         ws.on('message', async (message: string) => {
             try {
                 const data = JSON.parse(message);
-                console.log('Incoming message data:', data);
 
-                if (data.type === 'chat-message' || !data.type) {  // Fallback to handle missing `type`
-                    console.log('Processing chat message...');
+                if (data.type === 'chat-message' || !data.type) {
                     await prisma.chats.create({
                         data: {
                             id: data.id,
@@ -71,10 +84,8 @@ export function setupWebSocket(wss: Server) {
                             created_at: data.created_at,
                         },
                     });
-
                     redisPublisher.publish('chat-messages', JSON.stringify({ room: ws.room, data }));
                 } else if (data.type === 'typing-start' || data.type === 'typing-stop') {
-                    console.log(`Handling typing event: ${data.type}`);
                     redisPublisher.publish('typing-events', JSON.stringify({ room: ws.room, data }));
                 } else {
                     console.log('Unknown message type:', data.type);
@@ -84,12 +95,28 @@ export function setupWebSocket(wss: Server) {
             }
         });
 
-
-
         // Handle WebSocket disconnection
         ws.on('close', () => {
             console.log(`Client disconnected from room ${ws.room}`);
         });
     });
 
+    // Periodically check if clients are alive
+    const interval = setInterval(() => {
+        wss.clients.forEach((client) => {
+            const customClient = client as CustomWebSocket;
+            if (customClient.isAlive === false) {
+                console.log(`Terminating inactive client in room ${customClient.room}`);
+                return customClient.terminate();
+            }
+
+            customClient.isAlive = false;
+            customClient.ping(); // Send ping to clients to check if they respond with pong
+        });
+    }, 30000); // 30 seconds
+
+    // Clean up interval on server shutdown
+    wss.on('close', () => {
+        clearInterval(interval);
+    });
 }

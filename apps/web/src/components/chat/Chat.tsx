@@ -132,7 +132,7 @@ export default function ChatComponent({ chatUser, olderChats, group, users }: Pr
             console.log("typing stopped");
             typingStartSentRef.current = false; // Reset typing start flag
             console.log("sent ref is : false");
-        }, 1500);
+        }, 2000);
     };
 
 

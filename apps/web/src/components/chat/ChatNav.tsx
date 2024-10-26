@@ -18,7 +18,7 @@ export default function () {
                 <Version />
             </div>
             <div className="flex flex-row justify-center items-center gap-x-6">
-                <span className={`text-center mr-6 dark:text-gray-200 text-[17px] ${font.className}`}>Hey {session?.user.name?.split(" ")[0]}</span>
+                <span className={`text-center mr-6 dark:text-gray-200 text-[17px] select-none ${font.className}`}>Hey {session?.user.name?.split(" ")[0]}</span>
                 <DarkMode />
                 <ProfileDropDown />
             </div>
