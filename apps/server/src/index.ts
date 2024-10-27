@@ -20,12 +20,12 @@ app.use(
 
 const PORT = process.env.PORT || 7001;
 
-const server = createServer(app); // Create HTTP server
+const server = createServer(app);
 
-// Initialize WebSocket server
+
 const wss = new WebSocketServer({ server });
 
-// Setup WebSocket connections
+
 setupWebSocket(wss);
 
 app.get("/", (req, res) => {
