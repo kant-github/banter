@@ -9,7 +9,6 @@ export async function getUserDetails(req: Request, res: Response) {
                 message: "User ID is required",
             });
         }
-        console.log("User ID from backend is: ", id);
 
 
         const user = await prisma.users.findFirst({
@@ -21,7 +20,6 @@ export async function getUserDetails(req: Request, res: Response) {
             }
         });
 
-        console.log("User from backend is : ", user);
 
         if (!user) {
             return res.status(404).json({

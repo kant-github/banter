@@ -488,22 +488,22 @@
   resolved "https://registry.npmjs.org/@redis/time-series/-/time-series-1.1.0.tgz"
   integrity sha512-c1Q99M5ljsIuc4YdaCwfUEXsofakb9c8+Zse2qxTadu8TalLXuAESzLvFAvNVbkmSlvlzIQOLpBCmWI9wTOt+g==
 
-"@repo/db@*", "@repo/db@file:/Users/khairrishi/Utility/banter/packages/db":
+"@repo/db@*", "@repo/db@file:/Users/somyakumari/Desktop/banter/packages/db":
   version "1.0.0"
   resolved "file:packages/db"
   dependencies:
     "@prisma/client" "^5.19.1"
     prisma "^5.19.1"
 
-"@repo/eslint-config@*", "@repo/eslint-config@file:/Users/khairrishi/Utility/banter/packages/eslint-config":
+"@repo/eslint-config@*", "@repo/eslint-config@file:/Users/somyakumari/Desktop/banter/packages/eslint-config":
   version "0.0.0"
   resolved "file:packages/eslint-config"
 
-"@repo/typescript-config@*", "@repo/typescript-config@file:/Users/khairrishi/Utility/banter/packages/typescript-config":
+"@repo/typescript-config@*", "@repo/typescript-config@file:/Users/somyakumari/Desktop/banter/packages/typescript-config":
   version "0.0.0"
   resolved "file:packages/typescript-config"
 
-"@repo/ui@*", "@repo/ui@file:/Users/khairrishi/Utility/banter/packages/ui":
+"@repo/ui@*", "@repo/ui@file:/Users/somyakumari/Desktop/banter/packages/ui":
   version "0.0.0"
   resolved "file:packages/ui"
   dependencies:
@@ -5055,7 +5055,7 @@ serve-static@1.15.0:
     parseurl "~1.3.3"
     send "0.18.0"
 
-"server@file:/Users/khairrishi/Utility/banter/apps/server":
+"server@file:/Users/somyakumari/Desktop/banter/apps/server":
   version "1.0.0"
   resolved "file:apps/server"
   dependencies:
@@ -5887,7 +5887,7 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-"web@file:/Users/khairrishi/Utility/banter/apps/web":
+"web@file:/Users/somyakumari/Desktop/banter/apps/web":
   version "0.1.0"
   resolved "file:apps/web"
   dependencies:

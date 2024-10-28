@@ -45,7 +45,6 @@ export function setupWebSocket(wss: Server) {
                 sentCount++;
             }
         });
-        console.log(`Message broadcasted to ${sentCount} clients in room: ${room}`);
     };
 
     wss.on('connection', (ws: CustomWebSocket, req) => {
@@ -97,7 +96,6 @@ export function setupWebSocket(wss: Server) {
 
         // Handle WebSocket disconnection
         ws.on('close', () => {
-            console.log(`Client disconnected from room ${ws.room}`);
         });
     });
 
@@ -106,7 +104,6 @@ export function setupWebSocket(wss: Server) {
         wss.clients.forEach((client) => {
             const customClient = client as CustomWebSocket;
             if (customClient.isAlive === false) {
-                console.log(`Terminating inactive client in room ${customClient.room}`);
                 return customClient.terminate();
             }
 

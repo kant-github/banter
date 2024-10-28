@@ -19,7 +19,6 @@ export async function createChatGroupUser(req: Request, res: Response) {
             }
         });
 
-        console.log("existing user is : ", existingUser);
         if (existingUser) {
             return res.status(200).json({ message: "User already in the group", data: existingUser });
         }
@@ -34,7 +33,6 @@ export async function createChatGroupUser(req: Request, res: Response) {
             }
         });
 
-        console.log("new user is : ", newUser);
         return res.status(200).json({ message: "User added to group successfully", data: newUser });
     } catch (err) {
         console.error("Error creating group user:", err);

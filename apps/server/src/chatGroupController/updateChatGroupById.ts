@@ -5,7 +5,6 @@ import { fileUploader } from "../utils/cloudinary/fileUploader";
 export default async function updateChatGroup(req: Request, res: Response) {
     try {
         const groupId = req.params.id;
-        console.log("req body is : ", req.body);
 
         // @ts-ignore
         const groupPhoto = req?.files?.groupPhoto?.tempFilePath;
