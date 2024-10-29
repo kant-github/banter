@@ -23,7 +23,7 @@ interface Props {
     groups: any;
 }
 
-export const globalGroupId: string = "fa533fee-ad6e-48d8-b5e1-596e2a286d61";
+export const globalGroupId: string = "0564c5cf-dc7b-4d9d-83e2-5b9b8a492c0c";
 export default function Header({ groups }: Props) {
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState<GroupChatType[] | []>([]);

@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,54 +8,67 @@ datasource db {
 }
 
 model Users {
-  id         Int          @id @default(autoincrement())
-  name       String
-  email      String       @unique
-  provider   String
-  oauth_id   String
-  image      String?
-  created_at DateTime     @default(now())
-  ChatGroup  ChatGroup[] // One-to-many relationship with ChatGroup
-  GroupUsers GroupUsers[] // One-to-many relationship with GroupUsers
-  Chats      Chats[] // One-to-many relationship with Chats
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  email                String                  @unique
+  provider             String
+  oauth_id             String
+  image                String?
+  created_at          DateTime               @default(now())
+  ChatGroup            ChatGroup[]
+  GroupUsers           GroupUsers[]
+  Chats                Chats[]
+  RecentlyJoinedGroups RecentlyJoinedGroups[]
 }
 
 model ChatGroup {
-  id         String       @id @default(uuid()) @db.Uuid
-  user       Users        @relation(fields: [user_id], references: [id])
-  user_id    Int
-  title      String       @db.VarChar(191)
-  passcode   String       @db.VarChar(20)
-  groupImage String?
-  created_at DateTime     @default(now())
-  Chats      Chats[]
-  GroupUsers GroupUsers[]
+  id                   String                  @id @default(uuid()) @db.Uuid
+  user                 Users                   @relation(fields: [user_id], references: [id])
+  user_id              Int
+  title                String                   @db.VarChar(191)
+  passcode             String                   @db.VarChar(20)
+  groupImage           String?
+  created_at          DateTime               @default(now())
+  Chats                Chats[]
+  GroupUsers           GroupUsers[]
+  RecentlyJoinedGroups RecentlyJoinedGroups[]   // Add this line
 
   @@index([user_id, created_at])
   @@map("chat_groups")
 }
 
 model GroupUsers {
-  id        Int       @id @default(autoincrement())
-  group     ChatGroup @relation(fields: [group_id], references: [id], onDelete: Cascade)
-  group_id  String    @db.Uuid
-  user      Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id   Int
-  joined_at DateTime  @default(now())
+  id                   Int                    @id @default(autoincrement())
+  group                ChatGroup              @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  group_id            String                  @db.Uuid
+  user                 Users                   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id              Int
+  joined_at           DateTime               @default(now())
 
   @@map("group_users")
 }
 
 model Chats {
-  id         String    @id @default(uuid())
-  group      ChatGroup @relation(fields: [group_id], references: [id], onDelete: Cascade)
-  group_id   String    @db.Uuid
-  user       Users     @relation(fields: [user_id], references: [id], onDelete: Cascade) // Add this line
-  user_id    Int
-  message    String?
-  name       String
-  created_at DateTime  @default(now())
+  id                   String                  @id @default(uuid())
+  group                ChatGroup              @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  group_id            String                  @db.Uuid
+  user                 Users                   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id              Int
+  message              String?
+  name                 String
+  created_at          DateTime               @default(now())
 
   @@index([created_at])
   @@map("chats")
+}
+
+model RecentlyJoinedGroups {
+  id                   Int                    @id @default(autoincrement())
+  user                 Users                   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id              Int
+  group                ChatGroup              @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  group_id            String                  @db.Uuid
+  joined_at           DateTime               @default(now())
+
+  @@map("recently_joined_groups")
 }
