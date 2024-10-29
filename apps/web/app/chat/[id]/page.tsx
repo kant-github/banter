@@ -44,7 +44,7 @@ export default function ChatComponent({ params }: { params: { id: string } }) {
                 setChatGroupUsers(chatGroupUsers);
                 setChats(chats);
             } catch (err) {
-                console.log("Error in fetching data:", err);
+                // console.log("Error in fetching data:", err);
             } finally {
                 setLoading(false);
             }

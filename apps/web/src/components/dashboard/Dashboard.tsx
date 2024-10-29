@@ -4,10 +4,11 @@ import CreateChatCard from "./CreateChatCard";
 import { GroupChatType } from "types";
 interface props {
     groups: GroupChatType[];
-    session: any
+    session: any;
+    recentGroups?: any
 }
 
-export default async function ({ groups, session }: props) {
+export default async function ({ groups, session, recentGroups }: props) {
     return (
         <div className="w-full bg-[#f2f2f2] dark:bg-[#1c1c1c]">
             <div className="md:pl-12 w-full flex flex-row justify-center gap-x-40 items-center">
@@ -17,7 +18,7 @@ export default async function ({ groups, session }: props) {
                 </div>
             </div>
             <div>
-                <ChatCards groups={groups} />
+                <ChatCards recentGroups={recentGroups} groups={groups} />
             </div>
         </div>
     );

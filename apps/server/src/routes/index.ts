@@ -11,6 +11,7 @@ import { deleteChatGroupUser } from "../chatGroupUsersController/deleteChatGroup
 import getChatGroupUserBySearch from "../chatGroupController/getChatGroupBySearch";
 import getChats from "../chatController/getChats";
 import { getUserDetails } from "../userController/getUserDetails";
+import { getRecentJoinedChatGroup } from "../chatGroupController/getRecentJoinedChatGroup";
 const router = Router();
 
 // user_controller
@@ -23,6 +24,7 @@ router.get("/chat-group-check/:id", getChatGroupsById);
 router.put("/chat-group/:id", authmiddleware, updateChatGroupById);
 router.delete("/chat-group/:id", authmiddleware, DeleteChatGroupById);
 router.get("/chat-group-by-search", getChatGroupUserBySearch);
+router.get("/recent-chat-group-join", authmiddleware, getRecentJoinedChatGroup);
 
 // chat-group-user-controller
 router.get("/chat-group-user", getChatGroupUsers);

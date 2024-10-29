@@ -63,12 +63,13 @@ model Chats {
 }
 
 model RecentlyJoinedGroups {
-  id                   Int                    @id @default(autoincrement())
-  user                 Users                   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id              Int
-  group                ChatGroup              @relation(fields: [group_id], references: [id], onDelete: Cascade)
-  group_id            String                  @db.Uuid
-  joined_at           DateTime               @default(now())
+  id        Int       @id @default(autoincrement())
+  user      Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id   Int
+  group     ChatGroup @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  group_id  String    @db.Uuid
+  joined_at DateTime  @default(now())
 
+  @@unique([user_id, group_id])
   @@map("recently_joined_groups")
 }
