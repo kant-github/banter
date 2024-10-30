@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CardHoverChatCards from "../ui/CardHoverChatCards";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -11,15 +11,22 @@ export default function ({
   recentGroups: any;
 }) {
   const [roomType, setRoomType] = useState("created by you");
+  const [displayGroups, setDisplayGroups] = useState(groups);
+  const [fade, setFade] = useState(false);
 
   function toggleRoomType() {
-    setRoomType((prev) =>
-      prev === "recent joined rooms" ? "created by you" : "recent joined rooms"
-    );
+    setFade(true); // Start fading out
+    setTimeout(() => {
+      setRoomType((prev) =>
+        prev === "recent joined rooms" ? "created by you" : "recent joined rooms"
+      );
+    }, 150); // Delay slightly to allow fade-out before changing content
   }
 
-  // Determine which groups to display based on roomType
-  const displayGroups = roomType === "recent joined rooms" ? recentGroups : groups;
+  useEffect(() => {
+    setDisplayGroups(roomType === "recent joined rooms" ? recentGroups : groups);
+    setFade(false); // Start fading in
+  }, [roomType, groups, recentGroups]);
 
   return (
     <div className="bg-[#37474f] dark:bg-[#141313] pt-6 pb-16">
@@ -32,7 +39,11 @@ export default function ({
           <IoIosArrowForward className="mt-[2px] transition-transform transform group-hover:translate-x-[2px]" />
         </span>
       )}
-      <CardHoverChatCards items={displayGroups} />
+      <div
+        className={`transition-opacity duration-300 ${fade ? "opacity-0" : "opacity-100"}`}
+      >
+        <CardHoverChatCards items={displayGroups} />
+      </div>
     </div>
   );
 }
