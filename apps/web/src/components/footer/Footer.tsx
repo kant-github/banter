@@ -21,7 +21,7 @@ export default function Footer() {
                 </div>
                 <div className="flex flex-col gap-2 w-full md:w-1/4 mt-4 md:mt-0">
                     <h4 className="text-lg font-semibold mb-3">Newsletter</h4>
-                    <p className="text-sm">Stay updated with our latest features</p>
+                    <p className="text-xs">Stay updated with our latest features</p>
                     <div className="flex items-center gap-x-4">
                         <InputBox placeholder="Your e-mail" />
                         <div className="mt-1">

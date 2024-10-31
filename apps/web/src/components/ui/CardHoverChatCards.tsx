@@ -33,6 +33,8 @@ export default function CardList({ items, className }: CardListProps) {
   const [deleteDialogBox, setDeleteDialogBox] = useState<boolean>(false);
   const [editDialogBox, setEditDialogBox] = useState<boolean>(false);
   const router = useRouter();
+  console.log("kela")
+  console.log("items is : ", items);
 
   return (
     <>

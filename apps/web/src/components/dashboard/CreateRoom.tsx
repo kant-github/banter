@@ -59,7 +59,7 @@ export default function CreateRoom({
 
                             <InputBox input={roomTitle} setInput={setRoomTitle} label="Room Title" />
                         </div>
-                        <div className="text-gray-600 text-sm ml-0.5">{groupPhoto ? <span className="text-[1px] text-yellow-500 font-medium max-w-4 overflow-hidden">{groupPhoto.name.slice(0, 6)}...</span> : <span className="text-[4px] text-gray-500">Select file</span>}</div>
+                        <div className="text-gray-600 text-sm ml-0.5">{groupPhoto ? <span className="text-[10px] text-yellow-500 font-medium max-w-4 overflow-hidden">{groupPhoto.name.slice(0, 6)}...</span> : <span className="text-[10px] text-gray-500">Select file</span>}</div>
                         <div className="mt-2">
                             <InputBox type="password" input={roomPasscode} setInput={setRoomPasscode} label="Create Passcode" />
                         </div>

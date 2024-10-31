@@ -6,6 +6,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
 import { FRONTEND_BASE_URL } from "@/lib/apiAuthRoutes";
+import { useSession } from "next-auth/react";
 
 
 interface OptionsMenuProps {
@@ -35,6 +36,8 @@ export function OptionsMenu({
 }: OptionsMenuProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const { data: session } = useSession();
+    const userCheck = Number(session?.user?.id) === item.user_id;
 
     const toggleMenu = () => {
         setIsOpen((prev) => !prev);
@@ -77,7 +80,7 @@ export function OptionsMenu({
                             <div
                                 onClick={() => {
                                     navigator.clipboard.writeText(`${FRONTEND_BASE_URL}/chat/${item.id}`).then(() => {
-                                        toast.success("Copied link to clipboard");
+                                        toast.success("Room link copied to clipboard");
                                         setIsOpen(false);
                                     })
                                 }}
@@ -85,13 +88,13 @@ export function OptionsMenu({
                                 <span>Copy</span>
                                 <IoIosCopy />
                             </div>
-                            <div onClick={() => {
+                            <button type="button" disabled={!userCheck} onClick={() => {
                                 setSelectedItemId(item.id);
                                 setEditDialogBox(true);
-                            }} className="flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs">
-                                <span>Edit</span>
+                            }} className={`flex items-center justify-between w-full px-4 py-2 dark:bg-zinc-700 cursor-pointer text-xs ${!userCheck ? "cursor-not-allowed" : "hover:bg-gray-200 dark:hover:bg-[#262629]"} `}>
+                                <span className={`${!userCheck && "text-zinc-400"}`}>Edit</span>
                                 <LuPencilLine />
-                            </div>
+                            </button>
                             <div
                                 onClick={() => {
                                     setSelectedItemId(item.id);
