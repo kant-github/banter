@@ -9,6 +9,8 @@ import { getServerSession } from "next-auth";
 export default async function () {
     const session = await getServerSession(authOption);
     const groups = await fetchGroups(session?.user?.token || null);
+    console.log("hi");
+    console.log("groups are : ", groups);
     const recentGroups = await fetchRecentGroup(session?.user?.token || null);
     return (
         <div>

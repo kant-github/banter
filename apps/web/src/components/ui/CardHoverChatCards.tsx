@@ -11,7 +11,7 @@ import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 import { IoIosCopy } from "react-icons/io";
 import { toast } from "sonner";
-import { GroupChatType } from "types";
+import { GroupChatType, UserType } from "types";
 import Image from "next/image";
 
 interface Item {
@@ -20,6 +20,7 @@ interface Item {
   title: string;
   passcode: string;
   created_at: string;
+  user: UserType
 }
 
 interface CardListProps {
@@ -33,8 +34,7 @@ export default function CardList({ items, className }: CardListProps) {
   const [deleteDialogBox, setDeleteDialogBox] = useState<boolean>(false);
   const [editDialogBox, setEditDialogBox] = useState<boolean>(false);
   const router = useRouter();
-  console.log("kela")
-  console.log("items is : ", items);
+  
 
   return (
     <>
@@ -227,7 +227,7 @@ function CardDate({
         className
       )}
     >
-      <p className="font-light">Created at:</p>
+      <p className="font-light">Created at :</p>
       <i className="ml-1 text-[10px] font-light">{children}</i>
     </div>
   );

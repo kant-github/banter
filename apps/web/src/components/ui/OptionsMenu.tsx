@@ -8,7 +8,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FRONTEND_BASE_URL } from "@/lib/apiAuthRoutes";
 import { useSession } from "next-auth/react";
 
-
 interface OptionsMenuProps {
     className?: string;
     setDeleteDialogBox: (value: boolean) => void;
@@ -74,9 +73,9 @@ export function OptionsMenu({
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute rounded-[4px] right-0  w-28 bg-white dark:bg-zinc-700 shadow-lg z-50"
+                        className="absolute rounded-[4px] right-0 w-28 bg-white dark:bg-zinc-700 shadow-lg z-50"
                     >
-                        <div className="py-0.5 text-sm text-zinc-900 dark:text-zinc-100 ">
+                        <div className="py-0.5 text-sm text-zinc-900 dark:text-zinc-100">
                             <div
                                 onClick={() => {
                                     navigator.clipboard.writeText(`${FRONTEND_BASE_URL}/chat/${item.id}`).then(() => {
@@ -84,27 +83,43 @@ export function OptionsMenu({
                                         setIsOpen(false);
                                     })
                                 }}
-                                className=" flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs">
+                                className="flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs"
+                            >
                                 <span>Copy</span>
                                 <IoIosCopy />
                             </div>
-                            <button type="button" disabled={!userCheck} onClick={() => {
-                                setSelectedItemId(item.id);
-                                setEditDialogBox(true);
-                            }} className={`flex items-center justify-between w-full px-4 py-2 dark:bg-zinc-700 cursor-pointer text-xs ${!userCheck ? "cursor-not-allowed" : "hover:bg-gray-200 dark:hover:bg-[#262629]"} `}>
-                                <span className={`${!userCheck && "text-zinc-400"}`}>Edit</span>
+                            <button
+                                type="button"
+                                disabled={!userCheck}
+                                onClick={() => {
+                                    setSelectedItemId(item.id);
+                                    setEditDialogBox(true);
+                                }}
+                                className={`flex items-center justify-between w-full px-4 py-2 dark:bg-zinc-700 text-xs ${
+                                    !userCheck
+                                        ? "cursor-not-allowed text-gray-400 dark:text-zinc-500"
+                                        : "hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer"
+                                }`}
+                            >
+                                <span>Edit</span>
                                 <LuPencilLine />
                             </button>
-                            <div
+                            <button
+                                type="button"
+                                disabled={!userCheck}
                                 onClick={() => {
                                     setSelectedItemId(item.id);
                                     setDeleteDialogBox(true);
                                 }}
-                                className="px-4 py-2 hover:bg-red-200 dark:hover:bg-red-600 dark:bg-red-700 cursor-pointer text-xs bg-red-50 flex flex-row items-center justify-between"
+                                className={`flex items-center justify-between w-full px-4 py-2 text-xs bg-red-50 dark:bg-red-700 ${
+                                    !userCheck
+                                        ? "cursor-not-allowed text-red-400 dark:text-red-300"
+                                        : "hover:bg-red-200 dark:hover:bg-red-600 cursor-pointer"
+                                }`}
                             >
-                                Delete
+                                <span>Delete</span>
                                 <MdDelete className="text-red-500 dark:text-red-200" size={14} />
-                            </div>
+                            </button>
                         </div>
                     </motion.div>
                 )}

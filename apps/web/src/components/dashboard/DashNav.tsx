@@ -3,11 +3,7 @@ import { useEffect, useState } from "react";
 import SearchInput from "../utility/SearchInput";
 import ProfileDropDown from "./ProfileDropDown";
 import axios from "axios";
-import {
-  CHAT_GROUP,
-  CHAT_GROUP_USERS,
-  FRONTEND_BASE_URL,
-} from "@/lib/apiAuthRoutes";
+import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 import { GroupChatType } from "types";
 import SearchResultDialogBox from "../utility/SearchResultDialogBox";
 import AppLogo from "../heading/AppLogo";
