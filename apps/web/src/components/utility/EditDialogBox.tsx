@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import InputBox from "./InputBox";
 import BigBlackButton from "../buttons/BigBlackButton";
 import axios from "axios";
@@ -35,6 +35,7 @@ export default function EditDialogBox({
   if (!session) {
     return null;
   }
+
   useEffect(() => {
     if (selectedItem) {
       setTitle(selectedItem.title);
@@ -42,7 +43,8 @@ export default function EditDialogBox({
     }
   }, [selectedItem]);
 
-  const handleSaveChanges = async () => {
+  const handleSaveChanges = async (e: FormEvent) => {
+    e.preventDefault(); // Prevents the default form submission
     try {
       setLoading(true);
       const finalPayload = new FormData();
@@ -64,7 +66,7 @@ export default function EditDialogBox({
       toast.success(data.message);
       setEditDialogBox(false);
     } catch (err) {
-      console.log("error in updating");
+      console.log("Error updating data");
     } finally {
       setLoading(false);
     }
@@ -88,37 +90,39 @@ export default function EditDialogBox({
         <div className="text-xs font-thin mb-4">
           Share the new passcode for access
         </div>
-        <div className="flex flex-row items-center gap-x-3">
-          <PhotoUploadIcon setGroupPhoto={setGroupPhoto} />
-          <InputBox
-            value={title}
-            label="Title"
-            input={title}
-            setInput={setTitle}
-          />
-        </div>
-        <div className="ml-0.5">
-          {groupPhoto ? (
-            <span className="text-[10px] text-yellow-500 font-medium max-w-4 overflow-hidden">
-              {groupPhoto.name.slice(0, 6)}...
-            </span>
-          ) : (
-            <span className="text-[10px] text-gray-500">Select file</span>
-          )}
-        </div>
-        <div className="mt-2">
-          <InputBox
-            type="password"
-            label="Passcode"
-            input={passcode}
-            setInput={setPasscode}
-          />
-        </div>
-        <div className="w-full pt-4 flex items-center justify-center">
-          <BigBlackButton disabled={loading} onClick={handleSaveChanges}>
-            {loading ? <Spinner /> : "Save Changes"}
-          </BigBlackButton>
-        </div>
+        <form onSubmit={handleSaveChanges}>
+          <div className="flex flex-row items-center gap-x-3">
+            <PhotoUploadIcon setGroupPhoto={setGroupPhoto} />
+            <InputBox
+              value={title}
+              label="Title"
+              input={title}
+              setInput={setTitle}
+            />
+          </div>
+          <div className="ml-0.5">
+            {groupPhoto ? (
+              <span className="text-[10px] text-yellow-500 font-medium max-w-4 overflow-hidden">
+                {groupPhoto.name.slice(0, 6)}...
+              </span>
+            ) : (
+              <span className="text-[10px] text-gray-500">Select file</span>
+            )}
+          </div>
+          <div className="mt-2">
+            <InputBox
+              type="password"
+              label="Passcode"
+              input={passcode}
+              setInput={setPasscode}
+            />
+          </div>
+          <div className="w-full pt-4 flex items-center justify-center">
+            <BigBlackButton disabled={loading}>
+              {loading ? <Spinner /> : "Save Changes"}
+            </BigBlackButton>
+          </div>
+        </form>
       </div>
     </div>
   );

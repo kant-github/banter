@@ -10,7 +10,7 @@ export default function ({
   groups: any;
   recentGroups: any;
 }) {
-  const [roomType, setRoomType] = useState("created by you");
+  const [roomType, setRoomType] = useState("recent joined rooms");
   const [displayGroups, setDisplayGroups] = useState(groups);
   const [fade, setFade] = useState(false);
 

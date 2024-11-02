@@ -8,55 +8,57 @@ interface CustomWebSocket extends WebSocket {
   isAlive?: boolean; // Track if connection is alive
 }
 
+// Redis URL
+const REDIS_URL = "rediss://default:AZ0pAAIjcDFiNjIyZmViODQ3NWY0N2NiODNlNjEwN2EzMTE4ZTY2N3AxMA@famous-sloth-40233.upstash.io:6379";
+
+let redisPublisher: ReturnType<typeof createClient>;
+let redisSubscriber: ReturnType<typeof createClient>;
+
+// Function to create Redis client with exponential backoff and error handling
+const createRedisClient = (url: string) => {
+  return createClient({
+    url,
+    socket: {
+      connectTimeout: 30000,
+      keepAlive: 60000,
+      reconnectStrategy: (retries) => {
+        if (retries > 10) return new Error("Max retries reached");
+        return Math.min(retries * 100, 5000); // Exponential backoff
+      },
+    },
+  });
+};
+
+// Initialize Redis clients
+const initRedisClients = () => {
+  if (!redisPublisher) {
+    redisPublisher = createRedisClient(REDIS_URL);
+    redisPublisher.connect().catch((err) => console.error("Redis Publisher Connection Error:", err));
+  }
+
+  if (!redisSubscriber) {
+    redisSubscriber = createRedisClient(REDIS_URL);
+    redisSubscriber.connect().catch((err) => console.error("Redis Subscriber Connection Error:", err));
+  }
+
+  const handleRedisError = (client: ReturnType<typeof createClient>, clientName: string) => {
+    client.on("error", (err) => {
+      console.error(`${clientName} Error:`, err);
+      if (err.code === "ETIMEDOUT") {
+        client.disconnect().finally(() => client.connect());
+      }
+    });
+  };
+
+  handleRedisError(redisPublisher, "Redis Publisher");
+  handleRedisError(redisSubscriber, "Redis Subscriber");
+};
+
+// Initialize Redis clients once at the start
+initRedisClients();
+
 export function setupWebSocket(wss: Server) {
-  const redisPublisher = createClient({
-    url: "rediss://default:AZ0pAAIjcDFiNjIyZmViODQ3NWY0N2NiODNlNjEwN2EzMTE4ZTY2N3AxMA@famous-sloth-40233.upstash.io:6379",
-    socket: {
-      connectTimeout: 10000,
-      reconnectStrategy: (retries) => {
-        if (retries > 10) return new Error("Max retries reached");
-        return Math.min(retries * 50, 2000);
-      },
-    },
-  });
-  
-  const redisSubscriber = createClient({
-    url: "rediss://default:AZ0pAAIjcDFiNjIyZmViODQ3NWY0N2NiODNlNjEwN2EzMTE4ZTY2N3AxMA@famous-sloth-40233.upstash.io:6379",
-    socket: {
-      connectTimeout: 10000,
-      reconnectStrategy: (retries) => {
-        if (retries > 10) return new Error("Max retries reached");
-        return Math.min(retries * 50, 2000);
-      },
-    },
-  });
-
-  let isReconnecting = false;
-
-  // Connect Redis clients with error handling
-  redisPublisher
-    .connect()
-    .catch((err) => console.error("Redis Publisher Connection Error:", err));
-  redisSubscriber
-    .connect()
-    .catch((err) => console.error("Redis Subscriber Connection Error:", err));
-
-  redisPublisher.on("error", (err) => {
-    console.error("Redis Publisher Error:", err);
-    if (!isReconnecting) {
-      isReconnecting = true;
-      redisPublisher.connect().finally(() => (isReconnecting = false));
-    }
-  });
-
-  redisSubscriber.on("error", (err) => {
-    console.error("Redis Subscriber Error:", err);
-    if (!isReconnecting) {
-      isReconnecting = true;
-      redisSubscriber.connect().finally(() => (isReconnecting = false));
-    }
-  });
-
+  // Redis subscription for chat messages and typing events
   redisSubscriber.subscribe("chat-messages", (message) => {
     const parsedMessage = JSON.parse(message);
     broadcastToRoom(parsedMessage.room, parsedMessage.data, wss);
@@ -69,20 +71,15 @@ export function setupWebSocket(wss: Server) {
 
   // Periodic ping to keep Redis connections alive
   setInterval(() => {
-    redisPublisher.ping().catch((err) => console.error("Ping error:", err));
-    redisSubscriber.ping().catch((err) => console.error("Ping error:", err));
-  }, 30000); // Ping every 30 seconds
+    redisPublisher.ping().catch((err) => console.error("Publisher Ping error:", err));
+    redisSubscriber.ping().catch((err) => console.error("Subscriber Ping error:", err));
+  }, 60000); // Ping every 60 seconds
 
   const broadcastToRoom = (room: string, message: any, wss: Server) => {
-    let sentCount = 0;
     wss.clients.forEach((client) => {
       const customClient = client as CustomWebSocket;
-      if (
-        customClient.readyState === WebSocket.OPEN &&
-        customClient.room === room
-      ) {
+      if (customClient.readyState === WebSocket.OPEN && customClient.room === room) {
         customClient.send(JSON.stringify(message));
-        sentCount++;
       }
     });
   };
@@ -125,10 +122,7 @@ export function setupWebSocket(wss: Server) {
             "chat-messages",
             JSON.stringify({ room: ws.room, data })
           );
-        } else if (
-          data.type === "typing-start" ||
-          data.type === "typing-stop"
-        ) {
+        } else if (data.type === "typing-start" || data.type === "typing-stop") {
           redisPublisher.publish(
             "typing-events",
             JSON.stringify({ room: ws.room, data })
@@ -156,7 +150,7 @@ export function setupWebSocket(wss: Server) {
       customClient.isAlive = false;
       customClient.ping();
     });
-  }, 30000); // 30 seconds
+  }, 30000); // Check every 30 seconds
 
   // Clean up interval and Redis clients on server shutdown
   wss.on("close", () => {
