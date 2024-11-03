@@ -146,7 +146,6 @@ function IconsMenu({ onSelect, onClose }: IconsMenuProps) {
         { icon: <GiDread /> },
         { icon: <GiEagleHead /> }
     ];
-
     return (
         <div ref={menuRef} className="absolute top-full left-full ml-2 mt-2 bg-white dark:bg-zinc-600 rounded shadow z-50 text-xs flex flex-wrap w-32 p-2">
             {icons.map(({ icon }, index) => (
