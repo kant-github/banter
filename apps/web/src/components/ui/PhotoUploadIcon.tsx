@@ -1,11 +1,49 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, SetStateAction, Dispatch } from "react";
 import { GiAbstract006, GiAbstract018, GiAbstract042, GiAbstract045, GiAmericanFootballHelmet, GiBarbute, GiBiceps, GiBoar, GiBookmarklet, GiBuffaloHead, GiCyberEye, GiDinosaurRex, GiDread, GiEagleHead } from "react-icons/gi";
 import { MdAddAPhoto, MdFavorite, MdThumbUp } from "react-icons/md";
 
 interface PhotoUploadIconProps {
     setGroupPhoto: (value: File) => void;
-    setIcon: (icon: JSX.Element) => void;
+    setIcon: Dispatch<SetStateAction<string | null>>;
 }
+
+// Define a union type for icon names
+type IconNames =
+    | 'favorite'
+    | 'thumbUp'
+    | 'abstract006'
+    | 'abstract018'
+    | 'abstract045'
+    | 'abstract042'
+    | 'americanFootball'
+    | 'barbute'
+    | 'biceps'
+    | 'boar'
+    | 'bookmarklet'
+    | 'buffaloHead'
+    | 'cyberEye'
+    | 'dinosaurRex'
+    | 'dread'
+    | 'eagleHead';
+
+export const iconMappings: Record<IconNames, JSX.Element> = {
+    favorite: <MdFavorite />,
+    thumbUp: <MdThumbUp />,
+    abstract006: <GiAbstract006 />,
+    abstract018: <GiAbstract018 />,
+    abstract045: <GiAbstract045 />,
+    abstract042: <GiAbstract042 />,
+    americanFootball: <GiAmericanFootballHelmet />,
+    barbute: <GiBarbute />,
+    biceps: <GiBiceps />,
+    boar: <GiBoar />,
+    bookmarklet: <GiBookmarklet />,
+    buffaloHead: <GiBuffaloHead />,
+    cyberEye: <GiCyberEye />,
+    dinosaurRex: <GiDinosaurRex />,
+    dread: <GiDread />,
+    eagleHead: <GiEagleHead />
+};
 
 export default function PhotoUploadIcon({ setGroupPhoto, setIcon }: PhotoUploadIconProps) {
     const [showOptionMenu, setShowOptionMenu] = useState(false);
@@ -56,8 +94,8 @@ export default function PhotoUploadIcon({ setGroupPhoto, setIcon }: PhotoUploadI
 
             {showIconsMenu && (
                 <IconsMenu
-                    onSelect={(icon) => {
-                        setIcon(icon);
+                    onSelect={(iconName) => {
+                        setIcon(iconName); // Set the icon name as a string
                         setShowIconsMenu(false);
                     }}
                     onClose={() => setShowIconsMenu(false)}
@@ -108,7 +146,7 @@ function GroupIconOptionMenu({ onSelect, onIconSelect, onClose }: GroupIconOptio
 }
 
 interface IconsMenuProps {
-    onSelect: (icon: JSX.Element) => void;
+    onSelect: (iconName: IconNames) => void; // Use the IconNames type
     onClose: () => void;
 }
 
@@ -128,33 +166,17 @@ function IconsMenu({ onSelect, onClose }: IconsMenuProps) {
         };
     }, [onClose]);
 
-    const icons = [
-        { icon: <MdFavorite /> },
-        { icon: <MdThumbUp /> },
-        { icon: <GiAbstract006 /> },
-        { icon: <GiAbstract018 /> },
-        { icon: <GiAbstract045 /> },
-        { icon: <GiAbstract042 /> },
-        { icon: <GiAmericanFootballHelmet /> },
-        { icon: <GiBarbute /> },
-        { icon: <GiBiceps /> },
-        { icon: <GiBoar /> },
-        { icon: <GiBookmarklet /> },
-        { icon: <GiBuffaloHead /> },
-        { icon: <GiCyberEye /> },
-        { icon: <GiDinosaurRex /> },
-        { icon: <GiDread /> },
-        { icon: <GiEagleHead /> }
-    ];
+    const icons = Object.keys(iconMappings) as IconNames[]; // Assert the keys to the IconNames type
+
     return (
         <div ref={menuRef} className="absolute top-full left-full ml-2 mt-2 bg-white dark:bg-zinc-600 rounded shadow z-50 text-xs flex flex-wrap w-32 p-2">
-            {icons.map(({ icon }, index) => (
+            {icons.map((iconName) => (
                 <div
-                    key={index}
-                    onClick={() => onSelect(icon)}
+                    key={iconName}
+                    onClick={() => onSelect(iconName)} // Pass the icon name
                     className="cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-800 px-2 py-2 flex items-center gap-2"
                 >
-                    {icon}
+                    {iconMappings[iconName]} {/* Render the icon JSX */}
                 </div>
             ))}
         </div>

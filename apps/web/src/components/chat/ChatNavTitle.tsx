@@ -2,13 +2,11 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { useParams, useRouter } from "next/navigation";
 import { RedBtn } from "../buttons/RedBtn";
-import axios from "axios";
-import { CHAT_GROUP_USERS } from "@/lib/apiAuthRoutes";
-import { toast } from "sonner";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
 import Image from "next/image";
 import { useState } from "react";
 import ExitRoomDialogBox from "../utility/ExitRoomDialogBox";
+import { iconMappings } from "../ui/PhotoUploadIcon";
 
 interface Props {
     groupTitle: string | null;
@@ -21,6 +19,12 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props)
     const router = useRouter();
     const params = useParams();
     let user_id: string | null = null;
+
+    for (const key in iconMappings) {
+        if (iconMappings.hasOwnProperty(key)) {
+          console.log(`${key}: ${iconMappings[key]}`);
+        }
+      }
 
     const data = localStorage.getItem(params["id"] as string);
     if (data) {
@@ -37,9 +41,10 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props)
     return (
         <div className="flex items-center justify-between bg-[#f2f2f2] dark:bg-[#1c1c1c] h-[82px] dark:text-gray-300">
             <h1 className="flex flex-row items-center gap-x-4 font-bold text-2xl ml-8 py-6">
-                {
+                {/* {
                     groupImage ? <Image src={groupImage} width={38} height={38} alt="logo" className="rounded-full" /> : <span className="bg-blue-500 px-3.5 rounded-full">{groupTitle![0]}</span>
-                }
+                } */}
+                {groupImage}
                 <p className="text-xl">{groupTitle}</p>
             </h1>
 

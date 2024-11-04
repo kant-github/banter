@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { ImHome } from "react-icons/im";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
-import { useState } from "react";
+import React, { useState } from "react";
 import CreateRoom from "./CreateRoom";
 import axios from "axios";
 import { toast } from "sonner";
@@ -17,6 +17,7 @@ export default function CreateRoomComponent({ user }: { user: any }) {
     const [roomPasscode, setRoomPasscode] = useState<string>("");
     const [loading, setLoading] = useState(false);
     const [groupPhoto, setGroupPhoto] = useState<File | null>(null);
+    const [icon, setIcon] = useState<string | null>(null);
 
     async function createChatHandler() {
         const payload = { title: roomTitle, passcode: roomPasscode };
@@ -34,7 +35,13 @@ export default function CreateRoomComponent({ user }: { user: any }) {
         if (groupPhoto) {
             finalPayload.append('groupPhoto', groupPhoto);
         }
-
+        if (icon) {
+            finalPayload.append("icon", icon);
+        }
+        console.log("Final payload is:");
+        finalPayload.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+        });
 
 
         try {
@@ -62,7 +69,6 @@ export default function CreateRoomComponent({ user }: { user: any }) {
             setLoading(false);
         }
     }
-
 
     function openModal() {
         setCreateRoomModal(true);
@@ -99,6 +105,7 @@ export default function CreateRoomComponent({ user }: { user: any }) {
                 setOpen={setCreateRoomModal}
                 groupPhoto={groupPhoto}
                 setGroupPhoto={setGroupPhoto}
+                setIcon={setIcon}
             />
         </>
     );

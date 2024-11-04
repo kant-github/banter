@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import InputBox from "../utility/InputBox";
 import BigBlackButton from "../buttons/BigBlackButton";
 import PhotoUploadIcon from "../ui/PhotoUploadIcon";
@@ -15,6 +15,7 @@ interface CreateRoomProps {
     createChatHandler: () => Promise<void>;
     groupPhoto: File | null;
     setGroupPhoto: (value: File) => void;
+    setIcon: Dispatch<SetStateAction<string | null>>
 }
 
 export default function CreateRoom({
@@ -26,7 +27,8 @@ export default function CreateRoom({
     setRoomPasscode,
     createChatHandler,
     groupPhoto,
-    setGroupPhoto
+    setGroupPhoto,
+    setIcon
 }: CreateRoomProps) {
     const [submitting, setSubmitting] = useState(false);
 
@@ -54,7 +56,7 @@ export default function CreateRoom({
                             <CrossButton setOpen={setOpen} /></div>
                         <div className="mt-4 flex flex-row items-center gap-x-3 w-full">
                             <div className="flex flex-col">
-                                <PhotoUploadIcon setGroupPhoto={setGroupPhoto} />
+                                <PhotoUploadIcon setIcon={setIcon} setGroupPhoto={setGroupPhoto} />
                             </div>
 
                             <InputBox input={roomTitle} setInput={setRoomTitle} label="Room Title" />
@@ -66,7 +68,7 @@ export default function CreateRoom({
 
                         <div className="flex justify-end mt-6">
                             <BigBlackButton disabled={submitting}>
-                                {submitting ? <Spinner/> : "Create Room"}
+                                {submitting ? <Spinner /> : "Create Room"}
                             </BigBlackButton>
                         </div>
                     </form>
