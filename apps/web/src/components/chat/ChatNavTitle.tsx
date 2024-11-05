@@ -3,7 +3,6 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useParams, useRouter } from "next/navigation";
 import { RedBtn } from "../buttons/RedBtn";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
-import Image from "next/image";
 import { useState } from "react";
 import ExitRoomDialogBox from "../utility/ExitRoomDialogBox";
 import { iconMappings } from "../ui/PhotoUploadIcon";
@@ -22,9 +21,9 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props)
 
     for (const key in iconMappings) {
         if (iconMappings.hasOwnProperty(key)) {
-          console.log(`${key}: ${iconMappings[key]}`);
+            console.log(`${key}: ${iconMappings[key]}`);
         }
-      }
+    }
 
     const data = localStorage.getItem(params["id"] as string);
     if (data) {
@@ -36,16 +35,19 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props)
         }
     }
 
-
+    const icon = groupImage && iconMappings[groupImage as keyof typeof iconMappings];
 
     return (
         <div className="flex items-center justify-between bg-[#f2f2f2] dark:bg-[#1c1c1c] h-[82px] dark:text-gray-300">
             <h1 className="flex flex-row items-center gap-x-4 font-bold text-2xl ml-8 py-6">
-                {/* {
-                    groupImage ? <Image src={groupImage} width={38} height={38} alt="logo" className="rounded-full" /> : <span className="bg-blue-500 px-3.5 rounded-full">{groupTitle![0]}</span>
-                } */}
-                {groupImage}
-                <p className="text-xl">{groupTitle}</p>
+                {icon ? (
+                    <span className="rounded-full text-3xl text-green-600">{icon}</span>
+                ) : (
+                    <span className="bg-blue-500 px-3.5 rounded-full">
+                        {groupTitle ? groupTitle[0] : "?"}
+                    </span>
+                )}
+                <p className="text-xl font-black mt-1">{groupTitle}</p>
             </h1>
 
             <div className="mr-4 flex items-center justify-center gap-x-6 w-[250px] group">
@@ -56,9 +58,15 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props)
                 <RedBtn onClick={() => setExitRoomDialogBox(true)}>Exit Room</RedBtn>
             </div>
             {
-                exitRoomDialogBox && <ExitRoomDialogBox groupId={groupId!} user_id={user_id} setExitRoomDialogBox={setExitRoomDialogBox} exitRoomDialogBox={exitRoomDialogBox} />
+                exitRoomDialogBox && (
+                    <ExitRoomDialogBox
+                        groupId={groupId!}
+                        user_id={user_id}
+                        setExitRoomDialogBox={setExitRoomDialogBox}
+                        exitRoomDialogBox={exitRoomDialogBox}
+                    />
+                )
             }
-
         </div>
     );
 }
