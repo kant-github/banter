@@ -15,6 +15,7 @@ import Version from "../buttons/Version";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { globalRoomHandler } from "@/lib/globalRoomHandler";
+import Greetings from "../utility/Greetings";
 
 const font = Cedarville_Cursive({ weight: "400", subsets: ["latin"] });
 
@@ -69,11 +70,7 @@ export default function Header({ groups }: Props) {
         <Version />
       </div>
       <div className="flex flex-row justify-center items-center gap-x-6">
-        <span
-          className={`text-center dark:text-gray-400 text-[19px] ${font.className}`}
-        >
-          Hey {session?.user.name?.split(" ")[0]}
-        </span>
+        <Greetings/>
         <WhiteBtn onClick={globalRoomButtonHandler}>Global room</WhiteBtn>
         <DarkMode />
         <div className="w-[340px]">

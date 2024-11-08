@@ -5,6 +5,7 @@ import ProfileDropDown from "../dashboard/ProfileDropDown";
 import AppLogo from "../heading/AppLogo";
 import { Cedarville_Cursive } from "next/font/google"
 import Version from "../buttons/Version";
+import Greetings from "../utility/Greetings";
 
 const font = Cedarville_Cursive({ weight: '400', subsets: ['latin'] })
 
@@ -18,7 +19,7 @@ export default function () {
                 <Version />
             </div>
             <div className="flex flex-row justify-center items-center gap-x-8">
-                <span className={`text-center dark:text-gray-200 text-[17px] select-none ${font.className}`}>Hey {session?.user.name?.split(" ")[0]}</span>
+                <Greetings/>
                 <DarkMode />
                 <ProfileDropDown />
             </div>
