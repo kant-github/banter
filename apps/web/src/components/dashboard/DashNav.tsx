@@ -68,9 +68,9 @@ export default function Header({ groups }: Props) {
         <AppLogo />
         <Version />
       </div>
-      <div className="flex flex-row justify-center items-center gap-x-4">
+      <div className="flex flex-row justify-center items-center gap-x-6">
         <span
-          className={`mr-4 text-center dark:text-gray-400 text-[19px] ${font.className}`}
+          className={`text-center dark:text-gray-400 text-[19px] ${font.className}`}
         >
           Hey {session?.user.name?.split(" ")[0]}
         </span>

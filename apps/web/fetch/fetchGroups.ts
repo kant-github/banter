@@ -54,6 +54,7 @@ export async function fetchChatGroupUsers(group_id: string) {
         if (!group_id) {
             return notFound();
         }
+        console.log("making call");
         const response = await fetch(`${CHAT_GROUP_USERS}?group_id=${group_id}`, {
             next: {
                 revalidate: 60 * 60,

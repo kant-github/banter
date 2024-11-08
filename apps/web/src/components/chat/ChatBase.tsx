@@ -14,6 +14,7 @@ interface Props {
 
 export default function ({ groupId, group, users, olderChats }: Props) {
   const [chatUser, setChatUser] = useState<UserType | null>(null);
+  const [ chatSidebarOpen, setChatSidebarOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchChatUserFromLocalStorage = () => {
@@ -31,8 +32,8 @@ export default function ({ groupId, group, users, olderChats }: Props) {
 
   return (
     <div className="flex flex-row w-screen bg-[#f2f2f2] dark:bg-[#1c1c1c]">
-      <ChatSideBar users={users} />
-      <div className="w-full mr-6">
+      <ChatSideBar chatSidebarOpen={chatSidebarOpen} setChatSidebarOpen={setChatSidebarOpen} users={users} />
+      <div className="w-full mx-6">
         <ChatNavTitle groupId={groupId} groupImage={group?.groupImage!} groupTitle={group?.title!} />
         <Chat users={users} chatUser={chatUser} olderChats={olderChats} group={group!} />
       </div>

@@ -5,11 +5,8 @@ export default async function (req: Request, res: Response) {
   try {
     const user_id = req.user?.id;
     const groupId = req.params.id;
-    console.log("user id is : ");
-    console.log(user_id);
-    console.log("group id is : ");
-    console.log(groupId);
-    if (!groupId) {
+
+    if (!groupId || !user_id) {
       return res.status(400).json({ message: "Group ID is required" });
     }
     if (groupId) {
