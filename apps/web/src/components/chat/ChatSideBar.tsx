@@ -4,6 +4,7 @@ import Image from "next/image";
 
 export default function ({ users }: { users: Array<GroupChatUserType> | [] }) {
   const participantLabel = users.length === 1 ? "participant" : "participants";
+  console.log("exact chat group users are : ", users);
 
   return (
     <div className="w-1/5 bg-[#f2f2f2] dark:bg-[#1c1c1c] dark:text-gray-300 h-[91.5vh] flex flex-col pb-[12px]">

@@ -9,10 +9,8 @@ import { getServerSession } from "next-auth";
 export default async function () {
     const session = await getServerSession(authOption);
     const groups = await fetchGroups(session?.user?.token || null);
-    
+
     const recentGroups = await fetchRecentGroup(session?.user?.token || null);
-    console.log("groups are : ",groups);
-    console.log("recenet griups are : ", recentGroups);
     return (
         <div>
             <DashNav groups={groups} />

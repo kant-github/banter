@@ -26,6 +26,9 @@ export async function getRecentJoinedChatGroup(req: Request, res: Response) {
           },
         },
       },
+      orderBy: {
+        joined_at: "desc",
+      },
     });
 
     if (data.length === 0) {

@@ -2,7 +2,7 @@ export default function SkeletonLoader() {
     return (
         <div className="animate-pulseCustom w-screen h-screen">
             <div className="h-16 bg-gray-50 dark:bg-zinc-900 rounded-md w-full flex items-center justify-between">
-                <div className="h-8 w-32 ml-12 dark:bg-zinc-800 bg-gray-200"></div>
+                <div className="h-8 w-48 ml-12 dark:bg-zinc-800 bg-gray-200"></div>
                 <div className="flex items-center justify-center gap-x-4 mr-8">
                     <div className="w-72 h-8 bg-gray-200 dark:bg-zinc-800 rounded-full"></div>
                     <div className="h-8 w-8 rounded-full dark:bg-zinc-800 bg-gray-200"></div>

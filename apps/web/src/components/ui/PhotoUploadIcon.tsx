@@ -7,7 +7,6 @@ interface PhotoUploadIconProps {
     setIcon: Dispatch<SetStateAction<string | null>>;
 }
 
-// Define a union type for icon names
 type IconNames =
     | 'favorite'
     | 'thumbUp'
@@ -95,7 +94,7 @@ export default function PhotoUploadIcon({ setGroupPhoto, setIcon }: PhotoUploadI
             {showIconsMenu && (
                 <IconsMenu
                     onSelect={(iconName) => {
-                        setIcon(iconName); // Set the icon name as a string
+                        setIcon(iconName);
                         setShowIconsMenu(false);
                     }}
                     onClose={() => setShowIconsMenu(false)}
@@ -137,8 +136,7 @@ function GroupIconOptionMenu({ onSelect, onIconSelect, onClose }: GroupIconOptio
             </div>
             <div
                 onClick={onSelect}
-                className="cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-800 w-full px-4 py-2"
-            >
+                className="cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-800 w-full px-4 py-2">
                 Choose from gallery
             </div>
         </div>
@@ -146,7 +144,7 @@ function GroupIconOptionMenu({ onSelect, onIconSelect, onClose }: GroupIconOptio
 }
 
 interface IconsMenuProps {
-    onSelect: (iconName: IconNames) => void; // Use the IconNames type
+    onSelect: (iconName: IconNames) => void;
     onClose: () => void;
 }
 
@@ -166,17 +164,17 @@ function IconsMenu({ onSelect, onClose }: IconsMenuProps) {
         };
     }, [onClose]);
 
-    const icons = Object.keys(iconMappings) as IconNames[]; // Assert the keys to the IconNames type
+    const icons = Object.keys(iconMappings) as IconNames[];
 
     return (
         <div ref={menuRef} className="absolute top-full left-full ml-2 mt-2 bg-white dark:bg-zinc-600 rounded shadow z-50 text-xs flex flex-wrap w-32 p-2">
             {icons.map((iconName) => (
                 <div
                     key={iconName}
-                    onClick={() => onSelect(iconName)} // Pass the icon name
+                    onClick={() => onSelect(iconName)}
                     className="cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-800 px-2 py-2 flex items-center gap-2"
                 >
-                    {iconMappings[iconName]} {/* Render the icon JSX */}
+                    {iconMappings[iconName]}
                 </div>
             ))}
         </div>

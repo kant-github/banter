@@ -5,7 +5,7 @@ import { RedBtn } from "../buttons/RedBtn";
 import { useState } from "react";
 import axios from "axios";
 import { clearCache } from "actions/common";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
 import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 
@@ -25,11 +25,12 @@ export default function DeleteDialogBox({
 
     async function deleteRoomHandler() {
         if (!session?.user?.token) {
-            console.error("User is not authenticated.");
+            toast.error("User is not authenticated.");
             return;
         }
         setLoading(true);
         try {
+            console.log("exitting dialog box");
             const { data } = await axios.delete(`${CHAT_GROUP}/${itemId}`, {
                 headers: {
                     authorization: `Bearer ${session.user.token}`,

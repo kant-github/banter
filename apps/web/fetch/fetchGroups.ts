@@ -27,9 +27,13 @@ export async function fetchGroups(token: string | null) {
         return [];
     }
 }
-export async function fetchGroup(group_id: string | null) {
+export async function fetchGroup(token: string, group_id: string | null) {
+    console.log("my token is : ", token);
     try {
         const res = await fetch(`${CHAT_GROUP}-check/${group_id}`,{
+            headers : {
+                authorization: `Bearer ${token}`
+            },
             cache: "no-cache"
         });
         if (!res.ok) {

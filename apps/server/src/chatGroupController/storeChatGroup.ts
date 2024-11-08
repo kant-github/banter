@@ -13,9 +13,6 @@ export default async function createChatGroup(req: Request, res: Response) {
       });
     }
 
-    // Log the provided icon (optional)
-    console.log("Icon is: ", icon);
-
     // Get the uploaded group photo from the request files
     //@ts-ignore
     const groupPhoto = req?.files?.groupPhoto?.tempFilePath;

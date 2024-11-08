@@ -10,6 +10,7 @@ import moment from 'moment';
 import { createChatSchema } from "@/validations/createChatZod";
 import { clearCache } from "actions/common";
 import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
+import { GoPlus } from "react-icons/go";
 
 export default function CreateRoomComponent({ user }: { user: any }) {
     const [createRoomModal, setCreateRoomModal] = useState<boolean>(false);
@@ -91,7 +92,9 @@ export default function CreateRoomComponent({ user }: { user: any }) {
                         <Image src="/images/talking.png" width={80} height={80} alt="talking" />
                     </div>
                     <div className="w-3/5 flex flex-row justify-center mt-8 mb-3">
-                        <BigWhiteBtn onClick={openModal}>Create Room</BigWhiteBtn>
+                        <BigWhiteBtn onClick={openModal}>
+                            <GoPlus size={16}/>
+                            Create Room</BigWhiteBtn>
                     </div>
                 </div>
             </div>

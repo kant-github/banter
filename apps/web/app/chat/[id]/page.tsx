@@ -7,67 +7,85 @@ import fetchChats from "fetch/fetchChats";
 import { fetchChatGroupUsers, fetchGroup } from "fetch/fetchGroups";
 import { useEffect, useState } from "react";
 import { MessageType } from "types";
+import { useSession } from "next-auth/react";
 
 export default function ChatComponent({ params }: { params: { id: string } }) {
-    const [loading, setLoading] = useState(false);
-    const [chats, setChats] = useState<Array<MessageType> | []>([]);
-    const [chatGroupUsers, setChatGroupUsers] = useState<any[]>([]);
-    const [group, setGroup] = useState<any>(null);
-    const [hasPermission, setHasPermission] = useState<boolean>(false);
-    const [permissionChecked, setPermissionChecked] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
+  const [chats, setChats] = useState<MessageType[]>([]);
+  const [chatGroupUsers, setChatGroupUsers] = useState<any[]>([]);
+  const [group, setGroup] = useState<any>(null);
+  const [hasPermission, setHasPermission] = useState<boolean>(false); // Initially false
+  const [permissionChecked, setPermissionChecked] = useState<boolean>(false); // New
+  const { data: session, status } = useSession();
 
-    useEffect(() => {
-        const checkPermission = () => {
-            const storedData = localStorage.getItem(params.id);
-            if (storedData) {
-                setHasPermission(true);
-            } else {
-                setHasPermission(false);
-            }
-            setPermissionChecked(true);
-        };
-        checkPermission();
-    }, [params.id]);
+  // Check localStorage for permission
+  useEffect(() => {
+    const storedData = localStorage.getItem(params.id);
+    setHasPermission(!!storedData); // True if stored
+  }, [params.id]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const groupData = await fetchGroup(params.id);
-
-                if (!groupData) return;
-
-                const chatGroupUsers = await fetchChatGroupUsers(params.id);
-                const chats = await fetchChats(params.id);
-
-                setGroup(groupData);
-                setChatGroupUsers(chatGroupUsers);
-                setChats(chats);
-            } catch (err) {
-                // console.log("Error in fetching data:", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [hasPermission, permissionChecked, params.id]);
-    
-    if (!permissionChecked || loading) {
-        return <ChatSkeleton />;
+  // Fetch data regardless of permission
+  useEffect(() => {
+    if (status === "loading") {
+      console.log("Waiting for session...");
+      return;
     }
-    if (!hasPermission) {
-        return (
-            <GroupPermissionDialogBox
-                group={group}
-                setPermissionDialogBox={setHasPermission}
-            />
-        );
+
+    if (!session?.user?.token) {
+      console.log("No valid session token");
+      setLoading(false); // Stop loading if no session token
+      return;
     }
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const token = session.user.token;
+
+        const [groupData, chatGroupUsersData, chatsData] = await Promise.all([
+          fetchGroup(token, params.id),
+          fetchChatGroupUsers(params.id),
+          fetchChats(params.id),
+        ]);
+
+        setGroup(groupData);
+        setChatGroupUsers(chatGroupUsersData);
+        setChats(chatsData);
+
+        setPermissionChecked(true); // Set after fetch
+      } catch (error) {
+        console.error("Error fetching chat data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [status, session?.user?.token, params.id]);
+
+  if (loading) {
+    return <ChatSkeleton />;
+  }
+
+  if (!hasPermission && permissionChecked) {
+    // Pass group data for password validation
     return (
-        <div>
-            <ChatNav />
-            <ChatBase users={chatGroupUsers} group={group} groupId={params.id} olderChats={chats} />
-        </div>
+      <GroupPermissionDialogBox
+        group={group}
+        setPermissionDialogBox={setHasPermission} // Update permission based on user input
+      />
     );
+  }
+
+  return (
+    <div>
+      <ChatNav />
+      <ChatBase
+        users={chatGroupUsers}
+        group={group}
+        groupId={params.id}
+        olderChats={chats}
+      />
+    </div>
+  );
 }

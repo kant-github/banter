@@ -13,7 +13,6 @@ import { Cedarville_Cursive } from "next/font/google";
 import { WhiteBtn } from "../buttons/WhiteBtn";
 import Version from "../buttons/Version";
 import { useRouter } from "next/navigation";
-import { clearCache } from "actions/common";
 import { toast } from "sonner";
 import { globalRoomHandler } from "@/lib/globalRoomHandler";
 
@@ -23,7 +22,7 @@ interface Props {
   groups: any;
 }
 
-export const globalGroupId: string = "0564c5cf-dc7b-4d9d-83e2-5b9b8a492c0c";
+export const globalGroupId: string = "926e02d2-e73e-4403-aaa4-9acf1f689276";
 export default function Header({ groups }: Props) {
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState<GroupChatType[] | []>([]);
@@ -71,7 +70,7 @@ export default function Header({ groups }: Props) {
       </div>
       <div className="flex flex-row justify-center items-center gap-x-4">
         <span
-          className={`mr-4 text-center dark:text-gray-200 text-[17px] ${font.className}`}
+          className={`mr-4 text-center dark:text-gray-400 text-[19px] ${font.className}`}
         >
           Hey {session?.user.name?.split(" ")[0]}
         </span>
