@@ -8,6 +8,7 @@ import ExitRoomDialogBox from "../utility/ExitRoomDialogBox";
 import { iconMappings } from "../ui/PhotoUploadIcon";
 import GroupImage from "../ui/GroupImage";
 import { Proza_Libre } from "next/font/google"
+import { WhiteBtn } from "../buttons/WhiteBtn";
 
 const font = Proza_Libre({
     subsets: ['latin'],
@@ -45,10 +46,10 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props)
             </h1>
 
             <div className="mr-4 flex items-center justify-center gap-x-6 w-[250px] group">
-                <BigWhiteBtn onClick={() => router.push("/dashboard")}>
+                <WhiteBtn onClick={() => router.push("/dashboard")}>
                     <IoIosArrowBack size={18} className="stroke-[2px] transition-transform transform group-hover:-translate-x-[1px]" />
-                    <span>Dashboard</span>
-                </BigWhiteBtn>
+                    <span>Home</span>
+                </WhiteBtn>
                 <RedBtn onClick={() => setExitRoomDialogBox(true)}>Exit Room</RedBtn>
             </div>
             {

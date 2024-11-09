@@ -1,55 +1,57 @@
-import prisma from "@repo/db/client";
 import { Request, Response } from "express";
-import { fileUploader } from "../utils/cloudinary/fileUploader";
+import prisma from "@repo/db/client"; // Adjust the import path as necessary
+import { fileUploader } from "../utils/cloudinary/fileUploader"; // Adjust the import path as necessary
 
 export default async function updateChatGroup(req: Request, res: Response) {
-    try {
-        const groupId = req.params.id;
+  try {
+    const { id: groupId } = req.params; // Extract group ID from URL parameters
+    const { title, passcode, icon } = req.body; // Extract title, passcode, and icon from the request body
 
-        // @ts-ignore
-        const groupPhoto = req?.files?.groupPhoto?.tempFilePath;
-
-        if (!groupId) {
-            return res.status(400).json({
-                message: "Group ID is required",
-            });
-        }
-
-        const updateData: {
-            title?: string;
-            passcode?: string;
-            groupImage?: string;
-        } = {
-            title: req.body.title,
-            passcode: req.body.passcode,
-        };
-
-
-        if (groupPhoto) {
-            const uploadedImage = await fileUploader(groupPhoto);
-            updateData.groupImage = uploadedImage.secure_url;
-        }
-
-        const chatGroup = await prisma.chatGroup.update({
-            where: {
-                id: groupId,
-            },
-            data: updateData,
-        });
-
-        if (chatGroup) {
-            return res.status(200).json({
-                message: "Chat group updated successfully",
-            });
-        } else {
-            return res.status(404).json({
-                message: "No chat group found with the given ID",
-            });
-        }
-    } catch (err) {
-        console.error("Error in updating the chat group:", err);
-        return res.status(500).json({
-            message: "Error in updating the chat group",
-        });
+    // Ensure the group ID is provided
+    if (!groupId) {
+      return res.status(400).json({
+        message: "Group ID is required",
+      });
     }
+
+    // @ts-ignore - For request files (file uploads)
+    const groupPhoto = req?.files?.groupPhoto?.tempFilePath;
+
+    // Initialize an object to hold update data
+    const updateData: {
+      title?: string;
+      passcode?: string;
+      groupImage?: string;
+    } = {};
+
+    // Conditionally update fields
+    if (title) updateData.title = title;
+    if (passcode) updateData.passcode = passcode;
+
+    if (groupPhoto) {
+      // If a new group photo is uploaded, upload it and update the group image
+      const uploadedImage = await fileUploader(groupPhoto);
+      updateData.groupImage = uploadedImage.secure_url;
+    } else if (icon) {
+      // If no new image is uploaded but an icon is provided, update the group image with the icon
+      updateData.groupImage = icon;
+    }
+
+    // Update the chat group in the database
+    const chatGroup = await prisma.chatGroup.update({
+      where: { id: groupId },
+      data: updateData,
+    });
+
+    // Respond with success message and updated chat group data
+    return res.status(200).json({
+      message: "Chat group updated successfully",
+      chatGroup,
+    });
+  } catch (err) {
+    console.error("Error in updating the chat group:", err);
+    return res.status(500).json({
+      message: "Error in updating the chat group",
+    });
+  }
 }

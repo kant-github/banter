@@ -7,31 +7,24 @@ import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
 import { FRONTEND_BASE_URL } from "@/lib/apiAuthRoutes";
 import { useSession } from "next-auth/react";
+import { GroupChatType } from "types";
 
 interface OptionsMenuProps {
     className?: string;
     setDeleteDialogBox: (value: boolean) => void;
     setEditDialogBox: (value: boolean) => void;
-    setSelectedItemId: (id: string | null) => void;
-    item: Item;
+    setSelectedItem: (value: GroupChatType) => void;
+    item: GroupChatType;
     color?: string;
 }
 
-interface Item {
-    id: string;
-    user_id: number;
-    title: string;
-    passcode: string;
-    created_at: string;
-}
 
 export function OptionsMenu({
     className,
     setDeleteDialogBox,
     setEditDialogBox,
-    setSelectedItemId,
+    setSelectedItem,
     item,
-    color
 }: OptionsMenuProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -92,7 +85,7 @@ export function OptionsMenu({
                                 type="button"
                                 disabled={!userCheck}
                                 onClick={() => {
-                                    setSelectedItemId(item.id);
+                                    setSelectedItem(item);
                                     setEditDialogBox(true);
                                 }}
                                 className={`flex items-center justify-between w-full px-4 py-2 dark:bg-zinc-700 text-xs ${
@@ -108,7 +101,7 @@ export function OptionsMenu({
                                 type="button"
                                 disabled={!userCheck}
                                 onClick={() => {
-                                    setSelectedItemId(item.id);
+                                    setSelectedItem(item);
                                     setDeleteDialogBox(true);
                                 }}
                                 className={`flex items-center justify-between w-full px-4 py-2 text-xs bg-red-50 dark:bg-red-700 ${

@@ -39,10 +39,7 @@ export default function CreateRoomComponent({ user }: { user: any }) {
         if (icon) {
             finalPayload.append("icon", icon);
         }
-        console.log("Final payload is:");
-        finalPayload.forEach((value, key) => {
-            console.log(`${key}: ${value}`);
-        });
+        
 
 
         try {
@@ -61,6 +58,7 @@ export default function CreateRoomComponent({ user }: { user: any }) {
 
             setRoomTitle("");
             setRoomPasscode("");
+            setIcon("");
             clearCache("dashboard");
             setCreateRoomModal(false);
         } catch (err) {
@@ -109,6 +107,7 @@ export default function CreateRoomComponent({ user }: { user: any }) {
                 groupPhoto={groupPhoto}
                 setGroupPhoto={setGroupPhoto}
                 setIcon={setIcon}
+                icon={icon}
             />
         </>
     );

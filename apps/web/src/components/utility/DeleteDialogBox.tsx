@@ -8,20 +8,22 @@ import { clearCache } from "actions/common";
 import { toast, Toaster } from "sonner";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
 import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
+import { GroupChatType } from "types";
 
 interface Props {
-    itemId: string;
+    item: GroupChatType;
     deleteDialogBox: boolean;
     setDeleteDialogBox: (value: boolean) => void;
 }
 
 export default function DeleteDialogBox({
-    itemId,
+    item,
     deleteDialogBox,
     setDeleteDialogBox,
 }: Props) {
     const [loading, setLoading] = useState(false);
     const { data: session } = useSession();
+    console.log("item is : ", item);
 
     async function deleteRoomHandler() {
         if (!session?.user?.token) {
@@ -31,7 +33,7 @@ export default function DeleteDialogBox({
         setLoading(true);
         try {
             console.log("exitting dialog box");
-            const { data } = await axios.delete(`${CHAT_GROUP}/${itemId}`, {
+            const { data } = await axios.delete(`${CHAT_GROUP}/${item.id}`, {
                 headers: {
                     authorization: `Bearer ${session.user.token}`,
                 },
@@ -50,8 +52,9 @@ export default function DeleteDialogBox({
         <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${!deleteDialogBox ? 'hidden' : ''}`}>
             <div className="bg-white dark:bg-[#262629] dark:text-gray-200 p-6 rounded-lg shadow-lg max-w-lg relative">
                 <div className="w-[400px]">
+                    
                     <p className="text-sm font-bold mb-4">
-                        Danger Zone
+                        Delete {" " + item.title}
                     </p>
                     <p className="text-xs font-light mb-4">
                         Are you sure you want to delete this room? Remember this action can't be undone, and you will lose all your data including chats...

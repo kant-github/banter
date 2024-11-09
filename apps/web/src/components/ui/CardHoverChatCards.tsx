@@ -13,6 +13,7 @@ import { IoIosCopy } from "react-icons/io";
 import { toast } from "sonner";
 import { GroupChatType, UserType } from "types";
 import Image from "next/image";
+import GroupImage from "./GroupImage";
 
 interface Item {
   id: string;
@@ -30,7 +31,7 @@ interface CardListProps {
 
 export default function CardList({ items, className }: CardListProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<GroupChatType | null>(null);
   const [deleteDialogBox, setDeleteDialogBox] = useState<boolean>(false);
   const [editDialogBox, setEditDialogBox] = useState<boolean>(false);
   const router = useRouter();
@@ -81,7 +82,7 @@ export default function CardList({ items, className }: CardListProps) {
                 <OptionsMenu
                   setDeleteDialogBox={setDeleteDialogBox}
                   setEditDialogBox={setEditDialogBox}
-                  setSelectedItemId={setSelectedItemId}
+                  setSelectedItem={setSelectedItem}
                   item={item}
                 />
               </div>
@@ -91,21 +92,18 @@ export default function CardList({ items, className }: CardListProps) {
           </div>
         ))}
       </div>
-      {deleteDialogBox && selectedItemId && (
+      {deleteDialogBox && selectedItem && (
         <DeleteDialogBox
-          itemId={selectedItemId}
+          item={selectedItem}
           deleteDialogBox={deleteDialogBox}
           setDeleteDialogBox={setDeleteDialogBox}
         />
       )}
-      {editDialogBox && selectedItemId && (
+      {editDialogBox && selectedItem && (
         <EditDialogBox
-          itemId={selectedItemId}
+          item={selectedItem}
           editDialogBox={editDialogBox}
           setEditDialogBox={setEditDialogBox}
-          selectedItem={
-            items.find((item) => item.id === selectedItemId) ?? null
-          }
         />
       )}
     </>
@@ -157,6 +155,7 @@ function CardTitle({
           className="rounded-[20px]"
         />
       )} */}
+      <GroupImage groupImage={groupImage!} groupTitle={title}/>
       <h4 className={cn("text-zinc-100 font-bold tracking-wide", className)}>
         {truncatedTitle}
       </h4>

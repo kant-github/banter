@@ -9,27 +9,24 @@ import PhotoUploadIcon from "../ui/PhotoUploadIcon";
 import CrossButton from "./CrossButton";
 import Spinner from "../loaders/Spinner";
 import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
+import { GroupChatType } from "types";
 
 interface Props {
-  itemId: string;
+  item: GroupChatType;
   editDialogBox: boolean;
   setEditDialogBox: (value: boolean) => void;
-  selectedItem: {
-    title: string;
-    passcode: string;
-  } | null;
 }
 
 export default function EditDialogBox({
-  itemId,
+  item,
   editDialogBox,
   setEditDialogBox,
-  selectedItem,
 }: Props) {
   const [title, setTitle] = useState("");
   const [passcode, setPasscode] = useState("");
   const [groupPhoto, setGroupPhoto] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [icon, setIcon] = useState<string | null>(null);
 
   const { data: session } = useSession();
   if (!session) {
@@ -37,11 +34,11 @@ export default function EditDialogBox({
   }
 
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setPasscode(selectedItem.passcode);
+    if (item) {
+      setTitle(item.title);
+      setPasscode(item.passcode);
     }
-  }, [selectedItem]);
+  }, [item]);
 
   const handleSaveChanges = async (e: FormEvent) => {
     e.preventDefault(); // Prevents the default form submission
@@ -53,8 +50,17 @@ export default function EditDialogBox({
       if (groupPhoto) {
         finalPayload.append("groupPhoto", groupPhoto);
       }
+      if (icon) {
+        finalPayload.append("icon", icon);
+      }
+
+      console.log("Final payload is:");
+      finalPayload.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+
       const { data } = await axios.put(
-        `${CHAT_GROUP}/${itemId}`,
+        `${CHAT_GROUP}/${item.id}`,
         finalPayload,
         {
           headers: {
@@ -72,7 +78,7 @@ export default function EditDialogBox({
     }
   };
 
-  if (!selectedItem) {
+  if (!item) {
     return null;
   }
 
@@ -83,7 +89,7 @@ export default function EditDialogBox({
       <div className="bg-white dark:bg-[#262629] dark:text-gray-200 p-6 rounded-lg shadow-lg max-w-lg relative w-2/6">
         <div className="flex justify-between">
           <p className="text-sm font-md">
-            Update the room's title and passcode.
+            Update {`${item.title}`}'s title and passcode.
           </p>
           <CrossButton setOpen={setEditDialogBox} />
         </div>
@@ -92,7 +98,7 @@ export default function EditDialogBox({
         </div>
         <form onSubmit={handleSaveChanges}>
           <div className="flex flex-row items-center gap-x-3">
-            <PhotoUploadIcon setGroupPhoto={setGroupPhoto} />
+            <PhotoUploadIcon setIcon={setIcon} setGroupPhoto={setGroupPhoto} />
             <InputBox
               value={title}
               label="Title"
@@ -106,7 +112,7 @@ export default function EditDialogBox({
                 {groupPhoto.name.slice(0, 6)}...
               </span>
             ) : (
-              <span className="text-[10px] text-gray-500">Select file</span>
+              <span className="text-[10px] text-yellow-500">{icon}</span>
             )}
           </div>
           <div className="mt-2">

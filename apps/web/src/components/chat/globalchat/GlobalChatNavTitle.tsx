@@ -59,7 +59,7 @@ export default function({ groupTitle, groupImage }: Props) {
             <div className="mr-4 flex items-center justify-center gap-x-6 group">
                 <WhiteBtn onClick={() => router.push("/dashboard")}>
                     <IoIosArrowBack size={18} className="stroke-[2px] transition-transform transform group-hover:-translate-x-[1px]" />
-                    <span>Dashboard</span>
+                    <span>Home</span>
                 </WhiteBtn>
             </div>
         </div>
