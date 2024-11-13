@@ -16,7 +16,7 @@ interface Props {
 export default function MyRoomDropdown({ myRoomDropdown, setMyRoomDropDown, groups = [] }: Props) {
     const [deleteDialogBox, setDeleteDialogBox] = useState<boolean>(false);
     const [editDialogBox, setEditDialogBox] = useState<boolean>(false);
-    const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+    const [selectedItem, setSelectedItem] = useState<GroupChatType| null>(null);
     const router = useRouter();
 
     return (
@@ -48,7 +48,7 @@ export default function MyRoomDropdown({ myRoomDropdown, setMyRoomDropDown, grou
                             >
                                 <div className="text-[12px] font-extralight">{group.title}</div>
                                 <div className="mr-4">
-                                    <OptionsMenu item={group} setSelectedItemId={setSelectedItemId} setEditDialogBox={setEditDialogBox} setDeleteDialogBox={setDeleteDialogBox} color={"black"} />
+                                    <OptionsMenu item={group} setSelectedItem={setSelectedItem} setEditDialogBox={setEditDialogBox} setDeleteDialogBox={setDeleteDialogBox} color={"black"} />
                                 </div>
                             </div>
                         ))
@@ -63,19 +63,18 @@ export default function MyRoomDropdown({ myRoomDropdown, setMyRoomDropDown, grou
                     </p>
                 </div>
             </div>
-            {deleteDialogBox && selectedItemId && (
+            {deleteDialogBox && selectedItem && (
                 <DeleteDialogBox
-                    itemId={selectedItemId}
+                    item={selectedItem}
                     deleteDialogBox={deleteDialogBox}
                     setDeleteDialogBox={setDeleteDialogBox}
                 />
             )}
-            {editDialogBox && selectedItemId && (
+            {editDialogBox && selectedItem && (
                 <EditDialogBox
-                    itemId={selectedItemId}
+                    item={selectedItem}
                     editDialogBox={editDialogBox}
                     setEditDialogBox={setEditDialogBox}
-                    selectedItem={groups.find(item => item.id === selectedItemId) ?? null}
                 />
             )}
         </>

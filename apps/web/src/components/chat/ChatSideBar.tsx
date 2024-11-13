@@ -69,7 +69,7 @@ export default function ChatSidebar({
                 return (
                   <div
                     key={index}
-                    className="flex flex-row items-center gap-x-2 border-[1px] dark:border-gray-600 text-[10px] px-4 h-16 bg-white rounded-[8px] transition-shadow dark:hover:shadow-lg hover:shadow-md dark:bg-[#262629]"
+                    className="flex flex-row items-center gap-x-2 border-[1px] dark:border-gray-600 text-[10px] px-4 bg-white rounded-[8px] transition-shadow dark:hover:shadow-lg hover:shadow-md dark:bg-[#262629]"
                   >
                     <Image
                       width={28}
@@ -78,8 +78,8 @@ export default function ChatSidebar({
                       src={item.user.image}
                       className="rounded-full"
                     />
-                    <div className="hidden md:block">
-                      <h2 className="text-[10px] font-semibold">
+                    <div className="flex flex-col py-2 gap-y-0.5">
+                      <h2 className="text-[12px] font-semibold">
                         {item.user.name.slice(0, 12)}
                       </h2>
                       <p className="text-[11px]">

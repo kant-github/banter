@@ -56,6 +56,7 @@ export default function ({ setPermissionDialogBox, group }: Props) {
 
             if (response.data.message === "User is already in the group" || response.data.message === "User added to group successfully") {
                 clearCache("chat-group-users");
+                clearCache("recentgroups");
                 console.log("cached clear");
                 localStorage.setItem(params["id"] as string, JSON.stringify(response.data.data));
                 toast.success("Successfully joined the group!");

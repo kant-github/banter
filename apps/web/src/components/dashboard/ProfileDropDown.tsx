@@ -74,7 +74,7 @@ export default function UserMenu({ groups }: props) {
             </div>
 
             {dropDown && (
-                <div className="absolute border-[1px] dark:border-zinc-800 cursor-pointer right-8 mt-2 w-36 font-light dark:bg-[#1c1c1c] bg-white rounded-[4] shadow-lg ring-1 ring-black ring-opacity-5 select-none">
+                <div className="absolute border-[1px] dark:border-zinc-800 cursor-pointer right-8 mt-2 w-36 font-light dark:bg-[#1c1c1c] bg-white rounded-[4] shadow-lg ring-1 ring-black ring-opacity-5 select-none z-50">
                     <div className="">
                         <div
                             onClick={() => {

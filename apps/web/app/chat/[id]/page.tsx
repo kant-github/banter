@@ -8,6 +8,7 @@ import { fetchChatGroupUsers, fetchGroup } from "fetch/fetchGroups";
 import { useEffect, useState } from "react";
 import { MessageType } from "types";
 import { useSession } from "next-auth/react";
+import { clearCache } from "actions/common";
 
 export default function ChatComponent({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState(true);
@@ -63,16 +64,22 @@ export default function ChatComponent({ params }: { params: { id: string } }) {
     fetchData();
   }, [status, session?.user?.token, params.id]);
 
+  // Always defined to avoid conditional hook usage
+  useEffect(() => {
+    if (hasPermission && permissionChecked) {
+      clearCache("recentgroups");
+    }
+  }, [hasPermission, permissionChecked]);
+
   if (loading) {
     return <ChatSkeleton />;
   }
 
   if (!hasPermission && permissionChecked) {
-    // Pass group data for password validation
     return (
       <GroupPermissionDialogBox
         group={group}
-        setPermissionDialogBox={setHasPermission} // Update permission based on user input
+        setPermissionDialogBox={setHasPermission}
       />
     );
   }

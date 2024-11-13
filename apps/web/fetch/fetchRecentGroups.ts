@@ -5,7 +5,7 @@ export async function fetchRecentGroup(token: string | null) {
 
     if (!token) {
         console.error("No token provided.");
-        return null; // Early exit if there's no token
+        return null;
     }
 
     try {
@@ -13,16 +13,11 @@ export async function fetchRecentGroup(token: string | null) {
             headers: {
                 authorization: `Bearer ${token}`,
             },
+            next: {
+                revalidate: 60*60,
+                tags: ["recentgroups"]
+            }
         });
-
-        // Check if the response is ok (status in the range 200-299)
-        // if (!response.ok) {
-        //     const errorData = await response.json(); // Get error details
-        //     console.error("Error fetching recent groups:", errorData);
-        //     throw new Error(`Error: ${errorData.message || "Failed to fetch"}`);
-        // }
-
-        // Parse and return the data
         const data = await response.json();
         return data.data;
 
