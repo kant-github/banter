@@ -6,6 +6,7 @@ import BigWhiteBtn from "../buttons/BigWhiteBtn";
 import { useState } from "react";
 import ExitRoomDialogBox from "../utility/ExitRoomDialogBox";
 import { iconMappings } from "../ui/PhotoUploadIcon";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import GroupImage from "../ui/GroupImage";
 import { Proza_Libre } from "next/font/google"
 import { WhiteBtn } from "../buttons/WhiteBtn";
@@ -45,12 +46,13 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props)
                 <p className={`${font.className} text-xl font-black mt-1`}>{groupTitle}</p>
             </h1>
 
-            <div className="mr-4 flex items-center justify-center gap-x-6 w-[250px] group">
+            <div className="mr-4 flex items-center justify-center gap-x-6 w-[270px] group">
                 <WhiteBtn onClick={() => router.push("/dashboard")}>
                     <IoIosArrowBack size={18} className="stroke-[2px] transition-transform transform group-hover:-translate-x-[1px]" />
                     <span>Home</span>
                 </WhiteBtn>
                 <RedBtn onClick={() => setExitRoomDialogBox(true)}>Exit Room</RedBtn>
+                <BsThreeDotsVertical size={48} />
             </div>
             {
                 exitRoomDialogBox && (

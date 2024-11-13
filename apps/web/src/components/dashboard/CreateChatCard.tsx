@@ -39,7 +39,7 @@ export default function CreateRoomComponent({ user }: { user: any }) {
         if (icon) {
             finalPayload.append("icon", icon);
         }
-        
+
 
 
         try {
@@ -89,10 +89,11 @@ export default function CreateRoomComponent({ user }: { user: any }) {
                         </div>
                         <Image src="/images/talking.png" width={80} height={80} alt="talking" />
                     </div>
-                    <div className="w-3/5 flex flex-row justify-center mt-8 mb-3">
+                    <div className="w-3/5 flex flex-row justify-center mt-8 mb-3 group">
                         <BigWhiteBtn onClick={openModal}>
-                            <GoPlus size={16}/>
-                            Create Room</BigWhiteBtn>
+                            <GoPlus className="group-hover:rotate-90 group-hover:-translate-x-2 transition-transform duration-300" size={16} />
+                            Create Room
+                        </BigWhiteBtn>
                     </div>
                 </div>
             </div>

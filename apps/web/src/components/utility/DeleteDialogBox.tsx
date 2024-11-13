@@ -9,6 +9,7 @@ import { toast, Toaster } from "sonner";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
 import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 import { GroupChatType } from "types";
+import CrossButton from "./CrossButton";
 
 interface Props {
     item: GroupChatType;
@@ -52,10 +53,13 @@ export default function DeleteDialogBox({
         <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${!deleteDialogBox ? 'hidden' : ''}`}>
             <div className="bg-white dark:bg-[#262629] dark:text-gray-200 p-6 rounded-lg shadow-lg max-w-lg relative">
                 <div className="w-[400px]">
-                    
-                    <p className="text-sm font-bold mb-4">
-                        Delete {" " + item.title}
-                    </p>
+
+                    <div className="flex justify-between">
+                        <p className="text-sm font-bold mb-4">
+                            Delete {" " + item.title} ??
+                        </p>
+                        <CrossButton setOpen={setDeleteDialogBox}/>
+                    </div>
                     <p className="text-xs font-light mb-4">
                         Are you sure you want to delete this room? Remember this action can't be undone, and you will lose all your data including chats...
                     </p>
