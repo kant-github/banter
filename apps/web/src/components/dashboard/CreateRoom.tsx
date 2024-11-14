@@ -4,6 +4,9 @@ import BigBlackButton from "../buttons/BigBlackButton";
 import PhotoUploadIcon from "../ui/PhotoUploadIcon";
 import CrossButton from "../utility/CrossButton";
 import Spinner from "../loaders/Spinner";
+import { RxCross2 } from "react-icons/rx";
+import RemoveIconCrossButton from "../ui/RemoveIconCrossButton";
+
 
 interface CreateRoomProps {
     open: boolean;
@@ -63,7 +66,14 @@ export default function CreateRoom({
 
                             <InputBox input={roomTitle} setInput={setRoomTitle} label="Room Title" />
                         </div>
-                        <div className="text-gray-600 text-sm ml-0.5">{groupPhoto ? <span className="text-[10px] text-yellow-500 font-medium max-w-4 overflow-hidden">{groupPhoto.name.slice(0, 6)}...</span> : <span className="text-[10px] text-yellow-500">{icon}</span>}</div>
+                        <div className="text-gray-600 text-sm ml-0.5 flex items-center justify-start gap-x-1">
+                            {
+                                groupPhoto ?
+                                    (<span className="text-[10px] text-yellow-500 font-medium max-w-4 overflow-hidden">{groupPhoto.name.slice(0, 6)}...</span>) :
+                                    (<span className="text-[10px] text-yellow-500">{icon}</span>)
+                            }
+                            <RemoveIconCrossButton icon={icon} setIcon={setIcon} />
+                        </div>
                         <div className="mt-2">
                             <InputBox type="password" input={roomPasscode} setInput={setRoomPasscode} label="Create Passcode" />
                         </div>

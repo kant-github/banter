@@ -10,6 +10,8 @@ import CrossButton from "./CrossButton";
 import Spinner from "../loaders/Spinner";
 import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 import { GroupChatType } from "types";
+import { RxCross2 } from "react-icons/rx";
+import RemoveIconCrossButton from "../ui/RemoveIconCrossButton";
 
 interface Props {
   item: GroupChatType;
@@ -106,7 +108,7 @@ export default function EditDialogBox({
               setInput={setTitle}
             />
           </div>
-          <div className="ml-0.5">
+          <div className="ml-0.5 flex items-center justify-start gap-x-1">
             {groupPhoto ? (
               <span className="text-[10px] text-yellow-500 font-medium max-w-4 overflow-hidden">
                 {groupPhoto.name.slice(0, 6)}...
@@ -114,6 +116,7 @@ export default function EditDialogBox({
             ) : (
               <span className="text-[10px] text-yellow-500">{icon}</span>
             )}
+            <RemoveIconCrossButton icon={icon} setIcon={setIcon}/>
           </div>
           <div className="mt-2">
             <InputBox
