@@ -10,7 +10,8 @@ import moment from 'moment';
 import { createChatSchema } from "@/validations/createChatZod";
 import { clearCache } from "actions/common";
 import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
-import { GoPlus } from "react-icons/go";
+import { CgMathPlus } from "react-icons/cg";
+
 
 export default function CreateRoomComponent({ user }: { user: any }) {
     const [createRoomModal, setCreateRoomModal] = useState<boolean>(false);
@@ -91,7 +92,7 @@ export default function CreateRoomComponent({ user }: { user: any }) {
                     </div>
                     <div className="w-3/5 flex flex-row justify-center mt-8 mb-3 group">
                         <BigWhiteBtn onClick={openModal}>
-                            <GoPlus className="group-hover:rotate-90 group-hover:-translate-x-2 transition-transform duration-300" size={16} />
+                            <CgMathPlus className="group-hover:rotate-90 group-hover:-translate-x-3 transition-transform duration-300 ease-in-out" size={16} />
                             Create Room
                         </BigWhiteBtn>
                     </div>

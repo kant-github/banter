@@ -23,7 +23,7 @@ const createRedisClient = (url: string) => {
       keepAlive: 60000,
       reconnectStrategy: (retries) => {
         if (retries > 10) return new Error("Max retries reached");
-        return Math.min(retries * 100, 5000); // Exponential backoff
+        return Math.min(retries * 100, 5000);
       },
     },
   });
@@ -73,7 +73,7 @@ export function setupWebSocket(wss: Server) {
   setInterval(() => {
     redisPublisher.ping().catch((err) => console.error("Publisher Ping error:", err));
     redisSubscriber.ping().catch((err) => console.error("Subscriber Ping error:", err));
-  }, 60000); // Ping every 60 seconds
+  }, 60000);
 
   const broadcastToRoom = (room: string, message: any, wss: Server) => {
     wss.clients.forEach((client) => {

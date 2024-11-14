@@ -46,7 +46,7 @@ export default function RootLayout({
         </head>
         <body className={`${geistSans.variable} ${geistMono.variable} dark:bg-zinc-800 bg-[#f2f2f2]`}>
           {children}
-          <Toaster position="bottom-right" closeButton duration={5000} />
+          <Toaster position="bottom-right" closeButton duration={2300} />
         </body>
       </SessionProvider>
     </html>
