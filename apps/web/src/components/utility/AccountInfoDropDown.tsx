@@ -62,20 +62,20 @@ export default function AccountInfoModal({ session, setAccountInfoDropDown }: Pr
 
                     </div>
 
-                    <div className="flex flex-col gap-y-2">
-                        <div className="my-2">
+                    <div className="flex flex-col gap-y-2 my-3">
+                        <div className="my-1">
                             <div className="text-md font-medium">Name</div>
                             <div className="font-thin text-sm">
                                 {userData?.name || session.user?.name || "No Name Available"}
                             </div>
                         </div>
-                        <div className="my-2">
+                        <div className="my-1">
                             <div className="text-md font-medium">Email</div>
                             <div className="font-thin text-sm">
                                 {userData?.email || session.user?.email || "No Email Available"}
                             </div>
                         </div>
-                        <div className="mb-2">
+                        <div className="my-1">
                             <div className="text-md font-medium">Joined At</div>
                             <div className="font-thin text-sm">
                                 {userData?.created_at
