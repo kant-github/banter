@@ -20,6 +20,7 @@ export async function updateUserDetails(req: Request, res: Response) {
             },
             data: {
                 name: req.body.name,
+                bio: req.body.bio
             }
         })    
         console.log("updated user is : ", updatedUser);

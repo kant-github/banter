@@ -20,6 +20,7 @@ export type UserType = {
   name: string;
   image: string;
   email: string;
+  bio: string;
   provider: string;
   oauth_id: string;
   created_at: string;
