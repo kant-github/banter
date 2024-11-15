@@ -61,8 +61,7 @@ export default function EditDialogBox({
         console.log(`${key}: ${value}`);
       });
 
-      const { data } = await axios.put(
-        `${CHAT_GROUP}/${item.id}`,
+      const { data } = await axios.put(`${CHAT_GROUP}/${item.id}`,
         finalPayload,
         {
           headers: {

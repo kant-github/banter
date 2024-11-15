@@ -7,9 +7,9 @@ import { CustomSession } from "app/api/auth/[...nextauth]/options";
 import { format } from "date-fns";
 import { UserType } from "types";
 import AppLogo from "../heading/AppLogo";
-import { MdEditNote } from "react-icons/md";
-import BlackBtn from "../buttons/BlackBtn";
 import Spinner from "../loaders/Spinner";
+import AccountInfoButtonGroup from "../ui/AccountInfoButtonGroup";
+import { useSession } from "next-auth/react";
 
 interface Props {
     session: CustomSession;
@@ -22,14 +22,23 @@ export default function AccountInfoModal({ session, setAccountInfoDropDown }: Pr
     const [loading, setLoading] = useState<boolean>(false);
     const [formData, setFormData] = useState<UserType | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const { update } = useSession();
 
     async function get() {
-        if (session?.user?.id && session?.user?.token) {
-            setLoading(true);
+        if (!session?.user?.id || !session?.user?.token) {
+            setError("Invalid session. Please log in again.");
+            return;
+        }
+        setLoading(true);
+        try {
             const data = await fetchUser(session.user.id, session.user.token);
-            setLoading(false);
             setUserData(data);
-            setFormData(data); // Initialize formData with fetched data
+            setFormData(data);
+        } catch (err) {
+            console.error("Failed to fetch user data:", err);
+            setError("Unable to load account details. Please try again later.");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -38,63 +47,62 @@ export default function AccountInfoModal({ session, setAccountInfoDropDown }: Pr
     }, [session]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value } as UserType);
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }) as UserType);
     };
 
     const saveChanges = async () => {
-        if (!formData) return;
+        if (!formData || !session?.user?.token) return;
 
-        // Basic validation example
-        if (!formData.email || !formData.email.includes("@")) {
+        if (!formData.email.includes("@")) {
             setError("Invalid email format");
             return;
         }
 
         try {
-            // Update user data on the server
-            await updateUser(session?.user?.id, formData, session?.user?.token);
+            // Update user details in database
+            await updateUser(formData, session.user.token);
+
             setUserData(formData);
             setEditMode(false);
-            setError(null); // Clear any existing errors
+            setError(null);
+
+            // Update the session with new user details
+            await update({
+                ...session,
+                user: {
+                    ...session.user,
+                    name: formData.name,
+                    email: formData.email,
+                },
+            });
+
+            console.log("Session updated successfully");
         } catch (error) {
+            console.error("Failed to save changes:", error);
             setError("Failed to save changes. Please try again.");
-            console.error(error);
         }
     };
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-            <div className="bg-[#ededed] dark:bg-zinc-900 dark:text-gray-200 p-6 rounded-lg shadow-lg w-6/12 relative">
+            <div className="bg-zinc-300 dark:bg-zinc-900 dark:text-gray-300 p-6 rounded-lg shadow-lg w-6/12 relative">
                 <div className="flex flex-row justify-between relative">
                     <p className="text-lg font-semibold">Account Information</p>
-                    <div className="flex gap-x-4 items-center">
-                        <BlackBtn
-                            className="flex items-center justify-center gap-x-2 mr-12"
-                            onClick={() => setEditMode(!editMode)}
-                        >
-                            {/* {editMode ? "Cancel" : <MdEditNote size={18} />} */}
-                            {editMode ? "Cancel" : (<span className="flex items-center gap-x-2"><MdEditNote size={18} />Edit Profile</span>)}
-                        </BlackBtn>
-                        {editMode && (
-                            <BlackBtn
-                                className="mr-12 gap-x-2"
-                                onClick={saveChanges}
-                            >
-                                Save
-                            </BlackBtn>
-                        )}
-                    </div>
+                    <AccountInfoButtonGroup editMode={editMode} setEditMode={setEditMode} saveChanges={saveChanges} />
                     <CrossButton className="absolute top-2 right-3" setOpen={setAccountInfoDropDown} />
                 </div>
                 <p className="text-sm font-light">See all your account details below</p>
 
-                {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
+                {error && <div className="text-red-500 text-xs mb-2">{error}</div>}
 
                 {
-                    loading ? (<div className="dark:bg-zinc-800 bg-zinc-300 rounded-[4px] mt-4 h-[320px] flex items-center justify-center">
+                    loading ? (<div className="dark:bg-zinc-800 bg-zinc-200 rounded-[4px] mt-4 h-[320px] flex items-center justify-center">
                         <Spinner />
                     </div>) : (
-                        <div className="dark:bg-zinc-800 bg-zinc-300 rounded-[4px] p-2 pl-8 mt-4">
+                        <div className="dark:bg-zinc-800 bg-zinc-200 rounded-[4px] p-2 pl-8 mt-4">
                             <div className="mt-6 flex w-full">
                                 <Image
                                     className="rounded-full mr-4"
@@ -103,7 +111,7 @@ export default function AccountInfoModal({ session, setAccountInfoDropDown }: Pr
                                     height={80}
                                     alt="User Profile Image"
                                 />
-                                <div className="w-4/5 bg-zinc-700 font-thin text-[12px] px-4 py-2 relative">
+                                <div className="w-4/5 dark:bg-zinc-700 bg-gray-100 font-thin text-[12px] px-4 py-2 relative rounded-[2px]">
                                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi blanditiis error exercitationem reiciendis facere provident ab minus dolor cumque vero!
                                     <FaEdit className="absolute bottom-2 right-2 cursor-pointer" size={16} />
                                 </div>
@@ -117,7 +125,7 @@ export default function AccountInfoModal({ session, setAccountInfoDropDown }: Pr
                                             name="name"
                                             value={formData?.name || ""}
                                             onChange={handleInputChange}
-                                            className="font-thin text-sm bg-zinc-800 outline-none w-full"
+                                            className="font-thin text-sm dark:bg-zinc-800 bg-zinc-200 outline-none w-full"
                                             aria-label="Name"
                                         />
                                     ) : (
@@ -133,7 +141,7 @@ export default function AccountInfoModal({ session, setAccountInfoDropDown }: Pr
                                             name="email"
                                             value={formData?.email || ""}
                                             onChange={handleInputChange}
-                                            className="font-thin text-sm bg-zinc-800 outline-none w-full"
+                                            className="font-thin text-sm dark:bg-zinc-800 bg-zinc-200 outline-none w-full"
                                             aria-label="Email"
                                         />
                                     ) : (

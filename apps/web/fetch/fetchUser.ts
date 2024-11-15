@@ -1,4 +1,5 @@
 import { USER_URL } from "@/lib/apiAuthRoutes";
+import axios from "axios";
 
 export async function fetchUser(
   user_id: string | null | undefined,
@@ -35,6 +36,24 @@ export async function fetchUser(
     return pData.data;
   } catch (error) {
     console.error("Error fetching user data:", error);
+    return null;
+  }
+}
+
+export async function updateUser(formData: any, token: string | null) {
+  if (!token) return null;
+  
+  try {
+    const { data } = await axios.put(`${USER_URL}`, formData, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Data is:", data);
+    return data;
+  } catch (error) {
+    console.error("Error updating user:", error);
     return null;
   }
 }

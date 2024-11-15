@@ -12,10 +12,12 @@ import getChatGroupUserBySearch from "../chatGroupController/getChatGroupBySearc
 import getChats from "../chatController/getChats";
 import { getUserDetails } from "../userController/getUserDetails";
 import { getRecentJoinedChatGroup } from "../chatGroupController/getRecentJoinedChatGroup";
+import { updateUserDetails } from "../userController/updateUserDetails";
 const router = Router();
 
 // user_controller
 router.get("/user/:id", authmiddleware, getUserDetails);
+router.put("/user", authmiddleware, updateUserDetails);
 
 //chat-group-controller
 router.get("/chat-group", authmiddleware, getChatGroups);
