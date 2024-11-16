@@ -3,8 +3,6 @@ import { Request, Response } from "express";
 
 export async function updateUserDetails(req: Request, res: Response) {
     const user = req.user;
-    console.log("user is : ", user);
-    console.log("body is : ", req.body);
 
     if(!user) {
         res.status(403).json({
@@ -13,7 +11,6 @@ export async function updateUserDetails(req: Request, res: Response) {
     }
 
     try {
-        console.log("started updating the user");
         const updatedUser = await prisma.users.update({
             where: {
                 id: Number(user?.id)
@@ -23,7 +20,6 @@ export async function updateUserDetails(req: Request, res: Response) {
                 bio: req.body.bio
             }
         })    
-        console.log("updated user is : ", updatedUser);
         
         res.status(200).json({
             message: "User updated successfully",

@@ -1,18 +1,25 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import CardHoverChatCards from "../ui/CardHoverChatCards";
 import { IoIosArrowForward } from "react-icons/io";
+import { fetchRecentGroup } from "fetch/fetchRecentGroups";
+ // Import your fetch function
 
 export default function ({
   groups,
   recentGroups,
+  token,
 }: {
   groups: any;
   recentGroups: any;
+  token: string | null;
 }) {
   const [roomType, setRoomType] = useState("created by you");
   const [displayGroups, setDisplayGroups] = useState(groups);
   const [fade, setFade] = useState(false);
+  const [fetchAll, setFetchAll] = useState(false); // Flag to fetch all rooms
+  const [isLoading, setIsLoading] = useState(false); // Loading state for Load More
 
   function toggleRoomType() {
     setFade(true);
@@ -28,6 +35,23 @@ export default function ({
     setFade(false); // Start fading in
   }, [roomType, groups, recentGroups]);
 
+  async function loadMore() {
+    if (fetchAll || isLoading) return; // Prevent double-fetching
+    setIsLoading(true);
+
+    try {
+      const allGroups = await fetchRecentGroup(token, true); // Fetch all groups with fetchAll flag
+      if (allGroups) {
+        setDisplayGroups(allGroups); // Update the displayed groups
+        setFetchAll(true); // Indicate all rooms have been fetched
+      }
+    } catch (err) {
+      console.error("Error loading more rooms:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div className="bg-[#37474f] dark:bg-[#141313] pt-6 pb-16">
       {displayGroups.length >= 1 && (
@@ -39,8 +63,20 @@ export default function ({
           <IoIosArrowForward className="mt-[2px] transition-transform transform group-hover:translate-x-[2px]" />
         </span>
       )}
-      <div className={`transition-opacity duration-300 ${fade ? "opacity-0" : "opacity-100"}`}>
+      <div
+        className={`transition-opacity duration-300 ${
+          fade ? "opacity-0" : "opacity-100"
+        }`}
+      >
         <CardHoverChatCards items={displayGroups} />
+        {!fetchAll && (
+          <span
+            onClick={loadMore}
+            className="flex justify-end text-xs text-zinc-300 font-thin mr-52 mt-4 cursor-pointer"
+          >
+            {isLoading ? "Loading..." : "Load More"}
+          </span>
+        )}
       </div>
     </div>
   );

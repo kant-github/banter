@@ -66,7 +66,7 @@ export default function AccountInfoModal({ session, setAccountInfoDropDown }: Pr
         try {
             await updateUser(formData, session.user.token); // Save changes to the backend
 
-            setUserData(formData); // Update UI with new data
+            setUserData(formData);
             setEditMode(false);
             setError(null);
 
@@ -119,11 +119,11 @@ export default function AccountInfoModal({ session, setAccountInfoDropDown }: Pr
                                     onChange={handleInputChange}
                                     aria-label="bio"
                                     className="w-4/5 dark:bg-zinc-700 bg-gray-100 font-thin text-[12px] px-4 py-2 relative rounded-[2px] outline-none resize-none"
-                                    rows={4} // Adjust rows as needed
+                                    rows={4}
                                 />
                             ) : (
-                                <div className="w-4/5 dark:bg-zinc-700 bg-gray-100 font-thin text-[12px] px-4 py-2 relative rounded-[2px]">
-                                    {userData?.bio || "No bio available"}
+                                <div className="w-4/5 dark:bg-zinc-700 bg-gray-100 dark:text-zinc-400 font-light text-[12px] px-4 py-2 relative rounded-[2px]">
+                                    {userData?.bio || <span className="text-zinc-400 text-xs font-medium">Add your first bio...</span>}
                                     <FaEdit
                                         onClick={() => setEditMode(true)}
                                         className="absolute bottom-2 right-2 cursor-pointer"

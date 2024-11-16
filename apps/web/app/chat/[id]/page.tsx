@@ -28,13 +28,11 @@ export default function ChatComponent({ params }: { params: { id: string } }) {
   // Fetch data regardless of permission
   useEffect(() => {
     if (status === "loading") {
-      console.log("Waiting for session...");
       return;
     }
 
     if (!session?.user?.token) {
-      console.log("No valid session token");
-      setLoading(false); // Stop loading if no session token
+      setLoading(false);
       return;
     }
 

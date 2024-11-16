@@ -10,7 +10,7 @@ export default async function () {
     const session = await getServerSession(authOption);
     const groups = await fetchGroups(session?.user?.token || null);
 
-    const recentGroups = await fetchRecentGroup(session?.user?.token || null);
+    const recentGroups = await fetchRecentGroup(session?.user?.token || null, false);
     return (
         <div>
             <DashNav groups={groups} />

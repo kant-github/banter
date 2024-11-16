@@ -1,6 +1,6 @@
 import { RECENT_CHAT_GROUP } from "@/lib/apiAuthRoutes";
 
-export async function fetchRecentGroup(token: string | null) {
+export async function fetchRecentGroup(token: string | null, fetchAll: boolean) {
     console.log("Fetching recent chat groups...");
 
     if (!token) {
