@@ -4,8 +4,8 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 import { IoIosOptions } from "react-icons/io";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-
-
+import { SlOptionsVertical } from "react-icons/sl";
+import ChatSideBarUserInfo from "../ui/ChatSideBarUserInfo";
 export default function ChatSidebar({
   users,
   chatSidebarOpen,
@@ -24,27 +24,27 @@ export default function ChatSidebar({
 
   return (
     <div
-      className={`transition-all duration-200 ${hidden ? "w-12 overflow-hidden" : "w-1/5"
-        } bg-[#f2f2f2] dark:bg-[#1c1c1c] dark:text-gray-300 h-[91.5vh] flex flex-col pb-[12px]`}
+      className={`transition-all duration-200 ${hidden ? "w-12" : "w-1/5"} bg-[#f2f2f2] dark:bg-[#1c1c1c] dark:text-gray-300 h-[91.5vh] flex flex-col pb-[12px]`}
     >
       <span className="flex justify-end mt-4">
         <span className="border-[1px] border-zinc-600 p-1 rounded-[4px]">
-          {hidden ? (<MdOutlineKeyboardArrowRight
-            onClick={hiddenSidebarHandler}
-            className="cursor-pointer dark:text-zinc-400 text-zinc-600"
-            size={18}
-          />) :
-            (<IoIosOptions
+          {hidden ? (
+            <MdOutlineKeyboardArrowRight
               onClick={hiddenSidebarHandler}
               className="cursor-pointer dark:text-zinc-400 text-zinc-600"
               size={18}
-            />)
-          }
-
+            />
+          ) : (
+            <IoIosOptions
+              onClick={hiddenSidebarHandler}
+              className="cursor-pointer dark:text-zinc-400 text-zinc-600"
+              size={18}
+            />
+          )}
         </span>
       </span>
       {!hidden && (
-        <div>
+        <div className="">
           <div className="text-[10px] font-mono ml-9 mt-[1rem]">
             {users.length} {participantLabel}
           </div>
@@ -79,8 +79,9 @@ export default function ChatSidebar({
                       className="rounded-full"
                     />
                     <div className="flex flex-col py-2 gap-y-0.5">
-                      <h2 className="text-[12px] font-semibold">
+                      <h2 className="text-[12px] font-semibold flex justify-between overflow-y-visible">
                         {item.user.name.slice(0, 12)}
+                        <ChatSideBarUserInfo className="mt-1" user={item} />
                       </h2>
                       <p className="text-[11px]">
                         Joined: <i className="font-thin">{joinTimeDisplay}</i>

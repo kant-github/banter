@@ -120,9 +120,7 @@ export default function ChatComponent({
 
     if (!typingStartSentRef.current) {
       sendTypingEvent(chatUser?.id.toString()!, "typing-start");
-      console.log("typing started");
       typingStartSentRef.current = true;
-      console.log("sent ref is : true");
     }
 
     // Clear any existing timeout
@@ -131,12 +129,9 @@ export default function ChatComponent({
       clearTimeout(typingTimeoutRef.current);
     }
 
-    // Set a new timeout to send typing-stop after 3 seconds of no input
     typingTimeoutRef.current = setTimeout(() => {
       sendTypingEvent(chatUser?.id.toString()!, "typing-stop");
-      console.log("typing stopped");
-      typingStartSentRef.current = false; // Reset typing start flag
-      console.log("sent ref is : false");
+      typingStartSentRef.current = false;
     }, 2000);
   };
 
@@ -153,9 +148,8 @@ export default function ChatComponent({
       <div>
         {typingUsers.length > 0 && (
           <div
-            className={`text-xs text-yellow-500 flex flex-row items-center gap-x-2 font-light ml-4 transition-opacity duration-300 ease-in-out ${
-              typingUsers.length > 0 ? "opacity-100" : "opacity-0"
-            }`}
+            className={`text-xs text-yellow-500 flex flex-row items-center gap-x-2 font-light ml-4 transition-opacity duration-300 ease-in-out ${typingUsers.length > 0 ? "opacity-100" : "opacity-0"
+              }`}
           >
             <TypingDots />
             {typingUsers.length > 3 ? (

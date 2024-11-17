@@ -1,28 +1,33 @@
 import { RECENT_CHAT_GROUP } from "@/lib/apiAuthRoutes";
 
-export async function fetchRecentGroup(token: string | null, fetchAll: boolean) {
-    console.log("Fetching recent chat groups...");
+export async function fetchRecentGroup(
+  token: string | null,
+  fetchAll: boolean
+) {
+  console.log("Fetching recent chat groups...");
+  console.log(fetchAll);
 
-    if (!token) {
-        console.error("No token provided.");
-        return null;
+  if (!token) {
+    console.error("No token provided.");
+    return null;
+  }
+  const URL = `${RECENT_CHAT_GROUP}?fetchAll=${fetchAll}`;
+  console.log("url is : ", URL);
+  try {
+    const response = await fetch(`${URL}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.statusText}`);
     }
-
-    try {
-        const response = await fetch(`${RECENT_CHAT_GROUP}`, {
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-            next: {
-                revalidate: 60*60,
-                tags: ["recentgroups"]
-            }
-        });
-        const data = await response.json();
-        return data.data;
-
-    } catch (err) {
-        console.error("An error occurred while fetching recent groups:", err);
-        return null; // Return null or handle the error as needed
-    }
+    const data = await response.json();
+    console.log("data is : ", data);
+    return data.data;
+  } catch (err) {
+    console.error("An error occurred while fetching recent groups:", err);
+    return null;
+  }
 }

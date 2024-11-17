@@ -1,7 +1,7 @@
 type props = {
     onClick?: () => void;
     children: React.ReactNode;
-    className: string | null
+    className?: string | null
 }
 export default function BlackBtn({ onClick, children, className }: props) {
     return (

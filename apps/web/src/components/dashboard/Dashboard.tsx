@@ -2,9 +2,10 @@ import Image from "next/image";
 import ChatCards from "../base/ChatCards";
 import CreateChatCard from "./CreateChatCard";
 import { GroupChatType } from "types";
+import { CustomSession } from "app/api/auth/[...nextauth]/options";
 interface props {
     groups: GroupChatType[];
-    session: any;
+    session: CustomSession | null;
     recentGroups?: any
 }
 
@@ -18,7 +19,7 @@ export default async function ({ groups, session, recentGroups }: props) {
                 </div>
             </div>
             <div>
-                <ChatCards recentGroups={recentGroups} groups={groups} />
+                <ChatCards token={session?.user?.token!} recentGroups={recentGroups} groups={groups} />
             </div>
         </div>
     );
