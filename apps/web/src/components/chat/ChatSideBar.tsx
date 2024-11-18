@@ -87,6 +87,7 @@ export default function ChatSidebar({
                         Joined: <i className="font-thin">{joinTimeDisplay}</i>
                       </p>
                     </div>
+                    
                   </div>
                 );
               })}
