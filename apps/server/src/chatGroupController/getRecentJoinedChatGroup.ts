@@ -2,7 +2,7 @@ import prisma from "@repo/db/client";
 import { Request, Response } from "express";
 
 export async function getRecentJoinedChatGroup(req: Request, res: Response) {
-  console.log("reached here");
+
   const user = req.user;
   if (!user) {
     return res.status(404).json({
@@ -10,8 +10,6 @@ export async function getRecentJoinedChatGroup(req: Request, res: Response) {
     });
   }
   const fetchAll = req.query.fetchAll == "true";
-  console.log("fetchAll is ")
-  console.log("fetchall at backend is : ", fetchAll);
 
   try {
     const data = await prisma.recentlyJoinedGroups.findMany({
@@ -35,8 +33,6 @@ export async function getRecentJoinedChatGroup(req: Request, res: Response) {
       },
       take: fetchAll ? undefined : 6,
     });
-
-    console.log("recent group at backend is : ", data);
 
     if (data.length === 0) {
       return res.status(404).json({

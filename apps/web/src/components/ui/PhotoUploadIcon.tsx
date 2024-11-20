@@ -134,11 +134,11 @@ function GroupIconOptionMenu({ onSelect, onIconSelect, onClose }: GroupIconOptio
             >
                 Select Icon
             </div>
-            <div
+            {/* <div
                 onClick={onSelect}
                 className="cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-800 w-full px-4 py-2">
                 Choose from gallery
-            </div>
+            </div> */}
         </div>
     );
 }

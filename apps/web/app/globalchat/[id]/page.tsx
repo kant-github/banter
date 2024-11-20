@@ -26,17 +26,13 @@ export default function ChatPage({ params }: Props) {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // Wait until session is fully loaded
         if (status === "loading") return;
 
         if (!session?.user?.token) {
-            console.log("Session missing or invalid, redirecting to login");
             return;
         }
-        console.log("got the token : ", session.user.token);
         const fetchData = async () => {
             try {
-                console.log("Fetching group and chat data...");
                 const groupData = await fetchGroup(session.user.token, params.id);
                 if (!groupData) {
                     setError("Group not found");

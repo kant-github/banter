@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 import { IoIosOptions } from "react-icons/io";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { SlOptionsVertical } from "react-icons/sl";
 import ChatSideBarUserInfo from "../ui/ChatSideBarUserInfo";
 export default function ChatSidebar({
   users,
@@ -78,10 +77,10 @@ export default function ChatSidebar({
                       src={item.user.image}
                       className="rounded-full"
                     />
-                    <div className="flex flex-col py-2 gap-y-0.5">
-                      <h2 className="text-[12px] font-semibold flex justify-between overflow-y-visible">
+                    <div className="flex flex-col w-full py-2 gap-y-0.5">
+                      <h2 className="text-[12px] font-semibold flex justify-between">
                         {item.user.name.slice(0, 12)}
-                        <ChatSideBarUserInfo className="mt-1" user={item} />
+                        {/* <ChatSideBarUserInfo className="mt-1" user={item} /> */}
                       </h2>
                       <p className="text-[11px]">
                         Joined: <i className="font-thin">{joinTimeDisplay}</i>

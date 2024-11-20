@@ -7,7 +7,6 @@ interface TypingEvent {
 const handleTypingEvents = (event: MessageEvent) => {
     try {
         const typingData: TypingEvent = JSON.parse(event.data);
-        // Here, you could update the UI to show who is typing
     } catch (error) {
         console.error('Failed to parse typing event:', error);
     }

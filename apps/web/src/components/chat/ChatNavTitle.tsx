@@ -46,13 +46,13 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props)
                 <p className={`${font.className} text-xl font-black mt-1`}>{groupTitle}</p>
             </h1>
 
-            <div className="mr-4 flex items-center justify-center gap-x-6 w-[270px] group">
+            <div className="mr-4 flex items-center justify-center gap-x-6 w-[240px] group">
                 <WhiteBtn onClick={() => router.push("/dashboard")}>
                     <IoIosArrowBack size={18} className="stroke-[2px] transition-transform transform group-hover:-translate-x-[1px]" />
                     <span>Home</span>
                 </WhiteBtn>
                 <RedBtn onClick={() => setExitRoomDialogBox(true)}>Exit Room</RedBtn>
-                <BsThreeDotsVertical size={48} />
+                {/* <BsThreeDotsVertical size={48} /> */}
             </div>
             {
                 exitRoomDialogBox && (
