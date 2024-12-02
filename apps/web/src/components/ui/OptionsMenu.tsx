@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FRONTEND_BASE_URL } from "@/lib/apiAuthRoutes";
 import { useSession } from "next-auth/react";
 import { GroupChatType } from "types";
+import { handleClickOutside } from "@/lib/handleClickOutside";
 
 interface OptionsMenuProps {
     className?: string;
@@ -35,21 +36,19 @@ export function OptionsMenu({
         setIsOpen((prev) => !prev);
     };
 
-    const handleClickOutside = (event: MouseEvent) => {
-        if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-            setIsOpen(false);
-        }
-    };
-
     useEffect(() => {
+
+        const clickHandler = (event: MouseEvent) => {
+            handleClickOutside(event, menuRef, setIsOpen);
+        };
         if (isOpen) {
-            document.addEventListener("mousedown", handleClickOutside);
+            document.addEventListener("mousedown", clickHandler);
         } else {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", clickHandler);
         }
 
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", clickHandler);
         };
     }, [isOpen]);
 

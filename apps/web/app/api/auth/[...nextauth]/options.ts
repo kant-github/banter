@@ -26,7 +26,7 @@ export const authOption: AuthOptions = {
         async signIn({ user, account }: { user: UserType; account: Account | null }) {
             try {
                 if (account?.provider === "google") {
-                    
+
                     const existingUser = await prisma.users.findFirst({
                         where: {
                             email: user.email!,
@@ -81,12 +81,8 @@ export const authOption: AuthOptions = {
             }
             return token;
         },
-        async session({
-            session,
-            token,
-        }: {
-            session: CustomSession;
-            token: JWT;
+        async session({ session, token }: {
+            session: CustomSession; token: JWT;
         }) {
             session.user = token.user as UserType;
             return session;

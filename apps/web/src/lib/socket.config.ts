@@ -1,4 +1,5 @@
 let socket: WebSocket | null = null;
+
 interface TypingEvent {
     type: string;
     userId: string;

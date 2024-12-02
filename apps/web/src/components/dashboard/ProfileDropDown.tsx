@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { globalRoomHandler } from "@/lib/globalRoomHandler";
 import { globalGroupId } from "./DashNav";
 import { useRouter } from "next/navigation";
+import { handleClickOutside } from "@/lib/handleClickOutside";
 
 
 interface props {
@@ -26,12 +27,6 @@ export default function UserMenu({ groups }: props) {
     const { data: session } = useSession();
     const router = useRouter();
     const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const handleClickOutside = (event: MouseEvent) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-            setDropDown(false);
-        }
-    };
 
     function accountInfoHandler() {
         setAccountInfoDropDown(true);
@@ -52,10 +47,16 @@ export default function UserMenu({ groups }: props) {
     }
 
     useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
+
+        const clickHandler = (event: MouseEvent) => {
+            handleClickOutside(event, dropdownRef, setDropDown)
+        }
+        
+        document.addEventListener("mousedown", clickHandler);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", clickHandler);
         };
+
     }, []);
 
     return (

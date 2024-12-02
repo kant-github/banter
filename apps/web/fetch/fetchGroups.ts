@@ -1,3 +1,5 @@
+"use server"
+
 import { CHAT_GROUP, CHAT_GROUP_USERS } from "@/lib/apiAuthRoutes";
 import { notFound } from "next/navigation";
 

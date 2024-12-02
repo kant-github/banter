@@ -28,7 +28,7 @@ const wss = new WebSocketServer({ server });
 
 setupWebSocket(wss);
 
-app.get("/", (req, res) => {
+app.get("/health-check", (req, res) => {
     res.send("Server started");
 });
 

@@ -47,7 +47,7 @@ export default function ChatSidebar({
           <div className="text-[10px] font-mono ml-9 mt-[1rem]">
             {users.length} {participantLabel}
           </div>
-          <div className="pl-6 flex-grow overflow-y-auto space-y-4 mt-2">
+          <div className="pl-6 flex-grow space-y-4 mt-2">
             {users.length > 0 &&
               users.map((item, index) => {
                 const joinedAt = new Date(item.joined_at);
@@ -68,11 +68,11 @@ export default function ChatSidebar({
                 return (
                   <div
                     key={index}
-                    className="flex flex-row items-center gap-x-2 border-[1px] dark:border-gray-600 text-[10px] px-4 bg-white rounded-[8px] transition-shadow dark:hover:shadow-lg hover:shadow-md dark:bg-[#262629]"
+                    className="flex flex-row items-center gap-x-3 border-[1px] dark:border-gray-600 text-[10px] px-4 bg-white rounded-[8px] transition-shadow dark:hover:shadow-lg hover:shadow-md dark:bg-[#262629] "
                   >
                     <Image
-                      width={28}
-                      height={28}
+                      width={34}
+                      height={34}
                       alt="logo"
                       src={item.user.image}
                       className="rounded-full"
@@ -80,7 +80,7 @@ export default function ChatSidebar({
                     <div className="flex flex-col w-full py-2 gap-y-0.5">
                       <h2 className="text-[12px] font-semibold flex justify-between">
                         {item.user.name.slice(0, 12)}
-                        {/* <ChatSideBarUserInfo className="mt-1" user={item} /> */}
+                        <ChatSideBarUserInfo className="mt-1" user={item} />
                       </h2>
                       <p className="text-[11px]">
                         Joined: <i className="font-thin">{joinTimeDisplay}</i>
