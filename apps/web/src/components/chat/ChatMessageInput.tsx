@@ -1,7 +1,9 @@
+import { Dispatch, SetStateAction } from "react";
+
 interface ChatMessageInputProps {
     message: string;
-    setMessage: (value: string) => void;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Add onChange prop
+    setMessage: Dispatch<SetStateAction<string>>;
+    onChange: (e: any) => void; // Add onChange prop
 }
 
 export default function ChatMessageInput({ message, setMessage, onChange }: ChatMessageInputProps) {

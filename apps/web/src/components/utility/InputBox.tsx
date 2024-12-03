@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import ShowPassword from './ShowPassword';
 
 interface TextInputProps {
     label?: string;
     input?: string;
-    setInput?: (value: string) => void;
+    setInput?: Dispatch<SetStateAction<string>>;
     type?: string;
     value?: string;
     placeholder?: string;

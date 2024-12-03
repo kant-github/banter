@@ -6,15 +6,14 @@ import GlobalChatNavTitle from "./GlobalChatNavTitle";
 import { globalGroupId } from "@/components/dashboard/DashNav";
 
 interface Props {
-    groupId: string;
     group: GroupChatType;
     users: GroupChatUserType[];
     olderChats: MessageType[];
 }
 
-export default function ({ groupId, group, users, olderChats }: Props) {
+export default function ({ group, users, olderChats }: Props) {
     const [chatUser, setChatUser] = useState<UserType | null>(null);
-    const [ chatSidebarOpen, setChatSidebarOpen] = useState<boolean>(false);
+    const [chatSidebarOpen, setChatSidebarOpen] = useState<boolean>(false);
 
     useEffect(() => {
 

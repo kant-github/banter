@@ -3,7 +3,7 @@ import { GiAbstract006, GiAbstract018, GiAbstract042, GiAbstract045, GiAmericanF
 import { MdAddAPhoto, MdFavorite, MdThumbUp } from "react-icons/md";
 
 interface PhotoUploadIconProps {
-    setGroupPhoto: (value: File) => void;
+    setGroupPhoto: Dispatch<SetStateAction<File | null>>;
     setIcon: Dispatch<SetStateAction<string | null>>;
 }
 

@@ -73,7 +73,7 @@ export default function ChatPage({ params }: Props) {
     return (
         <div>
             <ChatNav />
-            <GlobalChatBase users={chatGroupUsers} group={group} groupId={params.id} olderChats={chats} />
+            <GlobalChatBase users={chatGroupUsers} group={group} olderChats={chats} />
         </div>
     );
 }

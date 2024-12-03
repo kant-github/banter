@@ -24,7 +24,9 @@ export default function ChatComponent({
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<MessageType[]>(olderChats);
   const [typingUsers, setTypingUsers] = useState<string[]>([]);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null); // Typed properly for scroll
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -68,7 +70,6 @@ export default function ChatComponent({
 
       if (type === "typing-start") {
         setTypingUsers((prev) => {
-          // Avoid duplicates
           if (!prev.includes(checkUsers.user.name)) {
             return [...prev, checkUsers.user.name];
           }
@@ -112,7 +113,6 @@ export default function ChatComponent({
     sendTypingEvent(chatUser?.id.toString(), "typing-stop");
   };
 
-  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const typingStartSentRef = useRef(false);
 
   const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,7 +125,6 @@ export default function ChatComponent({
 
     // Clear any existing timeout
     if (typingTimeoutRef.current) {
-      console.log("timeout removed");
       clearTimeout(typingTimeoutRef.current);
     }
 

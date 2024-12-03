@@ -1,11 +1,11 @@
 import { GiJigsawPiece } from "react-icons/gi";
 import { useRouter } from "next/navigation";
-import { Afacad } from "next/font/google"
-const font = Afacad({
-    subsets: ['latin'],
-    weight: '700',
-    display: 'swap',
-});
+// import { Afacad } from "next/font/google"
+// const font = Afacad({
+//     subsets: ['latin'],
+//     weight: '700',
+//     display: 'swap',
+// });
 
 type props = {
     className?: string | null
@@ -24,7 +24,7 @@ export default function ({className}: props) {
                 className="transition-transform transform group-hover:-translate-x-[2px] text-[#f2a633] dark:text-[#f2a633]"
             />
             <div
-                className={`text-xl md:text-3xl tracking-widest text-black dark:text-gray-300 flex items-center ${font.className}`}>
+                className={`text-xl md:text-3xl tracking-widest text-black dark:text-gray-300 flex items-center font-afacad`}>
                 <span className="text-[#f5a331]">B</span>anter
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import InputBox from "./InputBox";
 import BigBlackButton from "../buttons/BigBlackButton";
 import { useParams } from "next/navigation";
@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 
 interface Props {
     group: GroupChatType;
-    setPermissionDialogBox: (value: boolean) => void;
+    setPermissionDialogBox: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function ({ setPermissionDialogBox, group }: Props) {

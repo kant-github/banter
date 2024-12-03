@@ -1,4 +1,4 @@
-import { Account, AuthOptions, ISODateString, User } from "next-auth";
+import { Account, AuthOptions, ISODateString} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "@repo/db/client";
 import jwt from "jsonwebtoken";

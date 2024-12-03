@@ -1,7 +1,8 @@
+import { Dispatch, SetStateAction } from "react";
 import { RxCross2 } from "react-icons/rx";
 
 interface crossButtonProps {
-    setOpen: (value: boolean) => void;
+    setOpen: Dispatch<SetStateAction<boolean>>;
     className?: string | null
 }
 

@@ -7,8 +7,6 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import ChatSideBarUserInfo from "../ui/ChatSideBarUserInfo";
 export default function ChatSidebar({
   users,
-  chatSidebarOpen,
-  setChatSidebarOpen,
 }: {
   users: Array<GroupChatUserType> | [];
   chatSidebarOpen: boolean;

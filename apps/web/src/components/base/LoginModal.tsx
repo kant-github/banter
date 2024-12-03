@@ -1,10 +1,11 @@
 import GoogleSignInButton from "../buttons/GoogleSignInButton"
 import { signIn } from "next-auth/react"
+import { Dispatch, SetStateAction } from "react";
 import { RxCross2 } from "react-icons/rx";
 
 export default function ({ isModalOpen, setIsModalOpen }: {
     isModalOpen: boolean,
-    setIsModalOpen: (value: boolean) => void
+    setIsModalOpen: Dispatch<SetStateAction<boolean>>
 }) {
 
     async function handleLogin() {

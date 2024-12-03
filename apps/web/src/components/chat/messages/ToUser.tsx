@@ -19,11 +19,11 @@ export default function Message({ msg }: { msg: MessageType }) {
         <Image
           alt="rk"
           src={msg.user?.image!}
-          width={32}
-          height={32}
+          width={36}
+          height={36}
           className="rounded-full"
         />
-        <div className="flex flex-col rounded-[3px] px-3 py-1 text-sm font-light bg-gradient-to-r from-zinc-200 to-gray-300 text-black relative">
+        <div className="flex flex-col rounded-tr-[5px] rounded-bl-[5px] rounded-br-[5px] px-3 py-1 text-sm font-light bg-gradient-to-r from-zinc-200 to-gray-300 text-black relative">
           {like && <FcLike className="absolute -top-2 -left-1" />}
           <div className="absolute bottom-1 left-1">
             <MessageOptionsMenuToUser

@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { RedBtn } from "../buttons/RedBtn";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import axios from "axios";
 import { clearCache } from "actions/common";
 import { toast, Toaster } from "sonner";
@@ -14,7 +14,7 @@ import CrossButton from "./CrossButton";
 interface Props {
     item: GroupChatType;
     deleteDialogBox: boolean;
-    setDeleteDialogBox: (value: boolean) => void;
+    setDeleteDialogBox: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function DeleteDialogBox({

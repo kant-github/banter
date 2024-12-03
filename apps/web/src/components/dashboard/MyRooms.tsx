@@ -1,7 +1,7 @@
 import { RxCross2 } from "react-icons/rx";
 import { GroupChatType } from "types";
 import { OptionsMenu } from "../ui/OptionsMenu";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import DeleteDialogBox from "../utility/DeleteDialogBox";
 import EditDialogBox from "../utility/EditDialogBox";
 import AppLogo from "../heading/AppLogo";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 interface Props {
     myRoomDropdown: boolean;
-    setMyRoomDropDown: (value: boolean) => void;
+    setMyRoomDropDown: Dispatch<SetStateAction<boolean>>;
     groups: GroupChatType[];
 }
 

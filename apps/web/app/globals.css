@@ -28,3 +28,11 @@
 .delay-400 {
     animation-delay: 0.4s;
 }
+
+
+@font-face {
+    font-family: 'Afacad';
+    src: url('/fonts/Afacad-Bold.ttf') format('truetype');
+    font-weight: 700; /* Adjust based on font weights available */
+    font-style: normal; /* Adjust if italic is available */
+}

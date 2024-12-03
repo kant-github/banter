@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, Dispatch, SetStateAction } from "react";
 import InputBox from "./InputBox";
 import BigBlackButton from "../buttons/BigBlackButton";
 import axios from "axios";
@@ -10,13 +10,12 @@ import CrossButton from "./CrossButton";
 import Spinner from "../loaders/Spinner";
 import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 import { GroupChatType } from "types";
-import { RxCross2 } from "react-icons/rx";
 import RemoveIconCrossButton from "../ui/RemoveIconCrossButton";
 
 interface Props {
   item: GroupChatType;
   editDialogBox: boolean;
-  setEditDialogBox: (value: boolean) => void;
+  setEditDialogBox: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function EditDialogBox({

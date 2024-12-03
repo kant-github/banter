@@ -1,6 +1,6 @@
 import { LuPencilLine } from "react-icons/lu";
 import { IoIosCopy } from "react-icons/io";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { SlOptionsVertical } from "react-icons/sl";
 import { toast } from "sonner";
@@ -12,13 +12,12 @@ import { handleClickOutside } from "@/lib/handleClickOutside";
 
 interface OptionsMenuProps {
     className?: string;
-    setDeleteDialogBox: (value: boolean) => void;
-    setEditDialogBox: (value: boolean) => void;
-    setSelectedItem: (value: GroupChatType) => void;
+    setDeleteDialogBox: Dispatch<SetStateAction<boolean>>;
+    setEditDialogBox: Dispatch<SetStateAction<boolean>>;
+    setSelectedItem: Dispatch<SetStateAction<GroupChatType | null>>;
     item: GroupChatType;
     color?: string;
 }
-
 
 export function OptionsMenu({
     className,

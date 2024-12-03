@@ -1,11 +1,12 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
 import { PlaceholdersAndVanishInput } from "../ui/placeholders-and-vanish-input";
 
 interface SearchInputProps {
     input: string;
-    setInput: (value: string) => void;
-    setSearchResultDialogBox: (value: boolean) => void;
+    setInput: Dispatch<SetStateAction<string>>;
+    setSearchResultDialogBox: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function({ setInput, setSearchResultDialogBox }: SearchInputProps)  {

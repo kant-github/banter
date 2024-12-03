@@ -16,7 +16,7 @@ export default function Message({ msg }: { msg: MessageType }) {
   return (
     <div className="flex items-start gap-2 max-w-sm self-end">
       <div className="flex items-center gap-x-2">
-        <div onDoubleClick={() => setLike(prev => !prev)} className="relative text-sm font-light bg-gradient-to-r from-zinc-900 to-black text-white rounded-[5px] py-1.5 px-4 select-none">
+        <div onDoubleClick={() => setLike(prev => !prev)} className="relative text-sm font-light bg-gradient-to-r from-zinc-900 to-black text-white rounded-br-[6px] rounded-tl-[6px] rounded-bl-[6px] py-1.5 px-4 select-none">
           {like && <FcLike className="absolute -top-2 -left-1" />}
           <div className="absolute bottom-1 left-1">
             <MessageOptionsMenu
@@ -40,8 +40,8 @@ export default function Message({ msg }: { msg: MessageType }) {
         <Image
           alt="User Image"
           src={msg.user?.image!}
-          width={32}
-          height={32}
+          width={36}
+          height={36}
           className="rounded-full"
         />
       </div>

@@ -1,5 +1,5 @@
 import { handleClickOutside } from "@/lib/handleClickOutside";
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SlOptionsVertical } from "react-icons/sl";
 import { GroupChatUserType } from "types";
 
@@ -37,7 +37,7 @@ export default function ({ user, className }: Props) {
 
                 {openInfoDialogBox && (
                     <div ref={ref} className="absolute top-0 -right-40 w-40 bg-zinc-600 px-3 py-2 shadow-lg z-50 rounded-[4px]">
-                        <div className="text-xs font-normal">
+                        <div className="text-[10px] font-normal flex items-center justify-center">
                             {
                                 user?.user.bio.length === 0 ? "No bio available" : user?.user.bio
                             }

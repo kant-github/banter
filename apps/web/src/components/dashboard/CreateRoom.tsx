@@ -4,20 +4,19 @@ import BigBlackButton from "../buttons/BigBlackButton";
 import PhotoUploadIcon from "../ui/PhotoUploadIcon";
 import CrossButton from "../utility/CrossButton";
 import Spinner from "../loaders/Spinner";
-import { RxCross2 } from "react-icons/rx";
 import RemoveIconCrossButton from "../ui/RemoveIconCrossButton";
 
 
 interface CreateRoomProps {
     open: boolean;
-    setOpen: (value: boolean) => void;
+    setOpen: Dispatch<SetStateAction<boolean>>;
     roomTitle: string;
-    setRoomTitle: (value: string) => void;
+    setRoomTitle: Dispatch<SetStateAction<string>>;
     roomPasscode: string;
-    setRoomPasscode: (value: string) => void;
+    setRoomPasscode: Dispatch<SetStateAction<string>>;
     createChatHandler: () => Promise<void>;
     groupPhoto: File | null;
-    setGroupPhoto: (value: File) => void;
+    setGroupPhoto: Dispatch<SetStateAction<File | null>>;
     setIcon: Dispatch<SetStateAction<string | null>>;
     icon: string | null;
 }

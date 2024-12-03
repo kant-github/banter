@@ -1,6 +1,6 @@
 "use client";
 import { RedBtn } from "../buttons/RedBtn";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
@@ -11,7 +11,7 @@ interface Props {
     groupId: string;
     user_id: string | null;
     exitRoomDialogBox: boolean;
-    setExitRoomDialogBox: (value: boolean) => void;
+    setExitRoomDialogBox: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function ({

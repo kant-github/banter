@@ -1,8 +1,9 @@
+import { Dispatch, SetStateAction } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function ShowPassword({ type, setShowPassword, showPassword }: {
     type: string | undefined,
-    setShowPassword: (value: boolean) => void,
+    setShowPassword: Dispatch<SetStateAction<boolean>>,
     showPassword: boolean
 }) {
     const togglePasswordVisibility = () => {

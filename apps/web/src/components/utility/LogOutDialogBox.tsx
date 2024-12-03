@@ -2,10 +2,11 @@ import { RedBtn } from "../buttons/RedBtn";
 import { signOut } from "next-auth/react";
 import BigWhiteBtn from "../buttons/BigWhiteBtn";
 import CrossButton from "./CrossButton";
+import { Dispatch, SetStateAction } from "react";
 
 interface props {
     logoutDropdown: boolean;
-    setLogoutDropDown: (value: boolean) => void;
+    setLogoutDropDown: Dispatch<SetStateAction<boolean>>;
 }
 
 
