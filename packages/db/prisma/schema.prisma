@@ -20,6 +20,7 @@ model Users {
   GroupUsers           GroupUsers[]
   Chats                Chats[]
   RecentlyJoinedGroups RecentlyJoinedGroups[]
+  LikedMessages        LikedUser[]
 }
 
 model ChatGroup {
@@ -50,7 +51,7 @@ model GroupUsers {
 }
 
 model Chats {
-  id         String    @id @default(uuid())
+  id         String    @id @default(uuid()) @db.Uuid
   group      ChatGroup @relation(fields: [group_id], references: [id], onDelete: Cascade)
   group_id   String    @db.Uuid
   user       Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -58,9 +59,22 @@ model Chats {
   message    String?
   name       String
   created_at DateTime  @default(now())
+  LikedUsers LikedUser[]
 
   @@index([created_at])
   @@map("chats")
+}
+
+model LikedUser {
+  id         Int       @id @default(autoincrement())
+  message    Chats     @relation(fields: [message_id], references: [id], onDelete: Cascade)
+  message_id String    @db.Uuid
+  user       Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    Int
+  created_at DateTime  @default(now())
+
+  @@unique([message_id, user_id])
+  @@map("liked_users")
 }
 
 model RecentlyJoinedGroups {

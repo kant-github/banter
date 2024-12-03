@@ -2,16 +2,22 @@ import Image from "next/image";
 import { MessageType } from "types";
 import { formatDistanceToNowStrict } from "date-fns";
 import { PiDotsThreeVerticalBold } from "react-icons/pi";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { FcLike } from "react-icons/fc";
 import MessageOptionsMenu from "@/components/ui/MessageOptionsMenu";
 
-export default function Message({ msg }: { msg: MessageType }) {
+interface Props {
+  msg: MessageType
+  like: boolean;
+  setLike: Dispatch<SetStateAction<boolean>>
+}
+
+export default function Message({ msg, like, setLike }: Props) {
   const formattedDate = formatDistanceToNowStrict(new Date(msg.created_at), {
     addSuffix: true,
   });
   const [messageOptionDialogbox, setMessageOptionDialogbox] = useState(false);
-  const [like, setLike] = useState(false);
+
 
   return (
     <div className="flex items-start gap-2 max-w-sm self-end">

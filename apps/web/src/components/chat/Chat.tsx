@@ -26,6 +26,7 @@ export default function ChatComponent({
   const [typingUsers, setTypingUsers] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement | null>(null); // Typed properly for scroll
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const typingStartSentRef = useRef(false);
 
 
   const scrollToBottom = () => {
@@ -39,8 +40,12 @@ export default function ChatComponent({
     return null;
   }, [group.id, chatUser?.id]);
 
+
+
   useEffect(() => {
     if (!socket) return;
+
+
 
     const handleMessage = (event: MessageEvent) => {
       const data = JSON.parse(event.data);
@@ -91,6 +96,12 @@ export default function ChatComponent({
     };
   }, [socket, messages, chatUser?.id]);
 
+
+
+  const handleSendingLikes = () => {
+
+  }
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -113,7 +124,6 @@ export default function ChatComponent({
     sendTypingEvent(chatUser?.id.toString(), "typing-stop");
   };
 
-  const typingStartSentRef = useRef(false);
 
   const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);

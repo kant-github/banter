@@ -61,3 +61,30 @@ export const sendTypingEvent = (userId: string, type: 'typing-start' | 'typing-s
         console.error('WebSocket is not open. Unable to send typing event.');
     }
 };
+
+export const sendLikeEvent = (messageId: string, userId: Number) => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        const likeData = {
+            type: "like-event",
+            messageId,
+            userId
+        }
+        socket.send(JSON.stringify(likeData));
+    }
+    else {
+        console.error('WebSocket is not open. Unable to send like event.');
+    }
+}
+
+export const sendUnlikeEvent = (messageId: string, userId: number) => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        const unlikeData = {
+            type: "unlike-event",
+            messageId,
+            userId,
+        };
+        socket.send(JSON.stringify(unlikeData));
+    } else {
+        console.error('WebSocket is not open. Unable to send unlike event.');
+    }
+};

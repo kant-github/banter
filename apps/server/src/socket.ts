@@ -127,7 +127,12 @@ export function setupWebSocket(wss: Server) {
             "typing-events",
             JSON.stringify({ room: ws.room, data })
           );
-        } else {
+        } else if (data.type === "like-event") {
+          console.log(data);
+        } else if (data.type === "unlike-event") {
+          console.log(data);
+        }
+        else {
           console.log("Unknown message type:", data.type);
         }
       } catch (error) {
