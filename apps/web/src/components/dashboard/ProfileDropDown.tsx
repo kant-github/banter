@@ -33,8 +33,8 @@ export default function UserMenu({ groups }: props) {
         setDropDown(false);
     }
     async function globalRoomButtonHandler() {
-        
-        if(!session?.user?.id){
+
+        if (!session?.user?.id) {
             toast.error("User not authenticated");
             return;
         }
@@ -51,8 +51,13 @@ export default function UserMenu({ groups }: props) {
         const clickHandler = (event: MouseEvent) => {
             handleClickOutside(event, dropdownRef, setDropDown)
         }
-        
-        document.addEventListener("mousedown", clickHandler);
+
+        if (dropDown) {
+            document.addEventListener("mousedown", clickHandler);
+        } else {
+            document.removeEventListener("mousedown", clickHandler);
+        }
+
         return () => {
             document.removeEventListener("mousedown", clickHandler);
         };

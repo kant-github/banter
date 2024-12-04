@@ -6,7 +6,7 @@ export async function getChatGroupUsers(req: Request, res: Response) {
         const { group_id} = req.query;
         if(!group_id){
             return res.status(401).json({
-                message: "ChT GROUP id is unavailable"
+                message: "Chat group is unavailable"
             })
         }
         const users = await prisma.groupUsers.findMany({

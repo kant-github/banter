@@ -25,9 +25,9 @@ export const getSocket = (roomId: string, userId: number): WebSocket => {
         };
 
         socket.onmessage = (event) => {
-            const messageData = JSON.parse(event.data);
+            const data = JSON.parse(event.data);
             // Check if the message is a typing event
-            if (messageData.type === 'typing-start' || messageData.type === 'typing-stop') {
+            if (data.type === 'typing-start' || data.type === 'typing-stop') {
                 handleTypingEvents(event);
             }
         };
@@ -45,9 +45,9 @@ export const getSocket = (roomId: string, userId: number): WebSocket => {
 };
 
 
-export const sendMessage = (message: Record<string, any>) => {
+export const sendMessage = (message: Record<string, any>, type: "chat-message") => {
     if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify(message));
+        socket.send(JSON.stringify({ message, type }));
     } else {
         console.error('WebSocket is not open. Unable to send message.');
     }

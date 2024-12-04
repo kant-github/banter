@@ -1,11 +1,12 @@
 import { Server, WebSocket } from "ws";
 import prisma from "@repo/db/client";
 import { createClient } from "redis";
+import { json } from "express";
 
 interface CustomWebSocket extends WebSocket {
   room?: string;
   userId?: string;
-  isAlive?: boolean; // Track if connection is alive
+  isAlive?: boolean;
 }
 
 // Redis URL
@@ -54,11 +55,10 @@ const initRedisClients = () => {
   handleRedisError(redisSubscriber, "Redis Subscriber");
 };
 
-// Initialize Redis clients once at the start
 initRedisClients();
 
 export function setupWebSocket(wss: Server) {
-  // Redis subscription for chat messages and typing events
+
   redisSubscriber.subscribe("chat-messages", (message) => {
     const parsedMessage = JSON.parse(message);
     broadcastToRoom(parsedMessage.room, parsedMessage.data, wss);
@@ -69,7 +69,12 @@ export function setupWebSocket(wss: Server) {
     broadcastToRoom(parsedEvents.room, parsedEvents.data, wss);
   });
 
-  // Periodic ping to keep Redis connections alive
+  redisSubscriber.subscribe("like-events", (message) => {
+    const parsedEvents = JSON.parse(message);
+    const { room, subType, data } = parsedEvents;
+    broadcastToRoom(parsedEvents.room, { subType, data }, wss);
+  })
+
   setInterval(() => {
     redisPublisher.ping().catch((err) => console.error("Publisher Ping error:", err));
     redisSubscriber.ping().catch((err) => console.error("Subscriber Ping error:", err));
@@ -79,6 +84,7 @@ export function setupWebSocket(wss: Server) {
     wss.clients.forEach((client) => {
       const customClient = client as CustomWebSocket;
       if (customClient.readyState === WebSocket.OPEN && customClient.room === room) {
+        console.log("sent");
         customClient.send(JSON.stringify(message));
       }
     });
@@ -104,33 +110,35 @@ export function setupWebSocket(wss: Server) {
     });
 
     ws.on("message", async (message: string) => {
+
       try {
+
         const data = JSON.parse(message);
 
         if (data.type === "chat-message" || !data.type) {
+          console.log("checking data at backend : ", data);
+
           await prisma.chats.create({
             data: {
-              id: data.id,
-              message: data.message,
-              name: data.name,
-              group_id: data.group_id,
-              user_id: data.user_id,
-              created_at: data.created_at,
+              id: data.message.id,
+              message: data.message.message,
+              name: data.message.name,
+              group_id: data.message.group_id,
+              user_id: data.message.user_id,
+              created_at: data.message.created_at,
             },
           });
-          redisPublisher.publish(
-            "chat-messages",
-            JSON.stringify({ room: ws.room, data })
-          );
-        } else if (data.type === "typing-start" || data.type === "typing-stop") {
-          redisPublisher.publish(
-            "typing-events",
-            JSON.stringify({ room: ws.room, data })
-          );
-        } else if (data.type === "like-event") {
-          console.log(data);
-        } else if (data.type === "unlike-event") {
-          console.log(data);
+
+
+          redisPublisher.publish("chat-messages", JSON.stringify({ room: ws.room, data }));
+
+        }
+        else if (data.type === "typing-start" || data.type === "typing-stop") {
+          redisPublisher.publish("typing-events", JSON.stringify({ room: ws.room, data }));
+        }
+        else if (data.type === "like-event" || data.type === "unlike-event") {
+          const subType = data.type === "like-event" ? "like" : "unlike"
+          redisPublisher.publish("like-events", JSON.stringify({ room: ws.room, subType, data }))
         }
         else {
           console.log("Unknown message type:", data.type);
@@ -141,11 +149,11 @@ export function setupWebSocket(wss: Server) {
     });
 
     ws.on("close", () => {
-      // Handle WebSocket disconnection if needed
+
     });
   });
 
-  // Periodically check if clients are alive
+
   const interval = setInterval(() => {
     wss.clients.forEach((client) => {
       const customClient = client as CustomWebSocket;
@@ -157,7 +165,6 @@ export function setupWebSocket(wss: Server) {
     });
   }, 30000); // Check every 30 seconds
 
-  // Clean up interval and Redis clients on server shutdown
   wss.on("close", () => {
     clearInterval(interval);
     redisPublisher.disconnect();

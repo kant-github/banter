@@ -17,7 +17,7 @@ export default function ({ user, className }: Props) {
             handleClickOutside(event, ref, setOpenInfoDialogBox)
         }
 
-        if(openInfoDialogBox) {
+        if (openInfoDialogBox) {
             document.addEventListener('mousedown', clickHandler)
         } else {
             document.removeEventListener('mousedown', clickHandler)

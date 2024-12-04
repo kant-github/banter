@@ -48,12 +48,16 @@ export default function ChatComponent({
 
 
     const handleMessage = (event: MessageEvent) => {
-      const data = JSON.parse(event.data);
+      const parsedEvent = JSON.parse(event.data);
+      const data = parsedEvent.message;
+
 
       if (!data?.message?.trim()) {
-        console.warn("Received an empty message:", data);
+        // console.warn("Received an empty message:", data);
         return;
       }
+      console.log("printing message");
+      console.log(data);
 
       const messageExists = messages.some((msg) => msg.id === data.id);
       if (!messageExists) {
@@ -86,21 +90,24 @@ export default function ChatComponent({
         );
       }
     };
+    const handleWebSocketMessage = (event: MessageEvent) => {
+      const data = JSON.parse(event.data);
+      if (data.type === "chat-message") {
+        handleMessage(event);
+      } else if (data.type === "typing-start" || data.type === "typing-stop") {
+        handleTypingEvent(event);
+      }
+    };
 
-    socket.addEventListener("message", handleMessage);
-    socket.addEventListener("message", handleTypingEvent);
+    socket.removeEventListener("message", handleWebSocketMessage);
+    socket.addEventListener("message", handleWebSocketMessage);
+
 
     return () => {
-      socket.removeEventListener("message", handleMessage);
-      socket.removeEventListener("message", handleTypingEvent);
+      socket.removeEventListener("message", handleWebSocketMessage);
     };
   }, [socket, messages, chatUser?.id]);
 
-
-
-  const handleSendingLikes = () => {
-
-  }
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,7 +124,7 @@ export default function ChatComponent({
       user: chatUser,
     };
 
-    sendMessage(newMessage);
+    sendMessage(newMessage, "chat-message");
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setMessage("");
     scrollToBottom();
@@ -150,7 +157,7 @@ export default function ChatComponent({
       <div className="flex-1 overflow-y-auto flex flex-col-reverse">
         <div className="flex flex-col gap-2 px-2">
           {messages.map((msg) => (
-            <Messages key={msg.id} msg={msg} chatUser={chatUser!} />
+            <Messages socket={socket} key={msg.id} msg={msg} chatUser={chatUser!} />
           ))}
         </div>
       </div>
