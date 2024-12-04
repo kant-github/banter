@@ -33,5 +33,15 @@ export type MessageType = {
   message: string;
   name: string;
   created_at: string;
-  user?: UserType; // Optional in case the user might be missing in some cases
+  user?: UserType;
+  LikedUsers: LikedUser[];
+};
+
+export type LikedUser = {
+  id: number;
+  message_id: string;
+  user_id: number;
+  created_at: string;
+  message: MessageType;
+  user: UserType;
 };

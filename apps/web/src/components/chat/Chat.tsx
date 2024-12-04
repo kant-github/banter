@@ -56,8 +56,6 @@ export default function ChatComponent({
         // console.warn("Received an empty message:", data);
         return;
       }
-      console.log("printing message");
-      console.log(data);
 
       const messageExists = messages.some((msg) => msg.id === data.id);
       if (!messageExists) {
@@ -90,12 +88,54 @@ export default function ChatComponent({
         );
       }
     };
+
+    
+    const handleSocketMessage = (event: MessageEvent) => {
+      const data = JSON.parse(event.data);
+      console.log("Data received:", data);
+
+      if (data.type === "like-event" || data.type === "unlike-event") {
+        const { messageId, userId } = data;
+        console.log("reached here");
+        setMessages((prevMessages) =>
+          prevMessages.map((msg) => {
+            if (msg.id === messageId) {
+              console.log("Message found, processing like/unlike for message ID:", messageId);
+              
+              if (data.type === "like-event") {
+                console.log("User is liking the message, adding user to likedUsers:", userId);
+                return {
+                  ...msg,
+                  likedUsers: [...msg.LikedUsers, userId],
+                };
+              } else if (data.type === "unlike-event") {
+                console.log("User is unliking the message, removing user from likedUsers:", userId);
+                return {
+                  ...msg,
+                  likedUsers: msg.LikedUsers.filter((x) => x.user_id !== userId),
+                };
+              } else {
+                console.log("Unhandled event type:", data.type);
+                return msg; // No changes if event type is unrecognized
+              }
+            }
+        
+            console.log("Message ID does not match, no changes for message ID:", msg.id);
+            return msg; // Return unchanged message
+          })
+        );
+        
+      }
+    };
+
     const handleWebSocketMessage = (event: MessageEvent) => {
       const data = JSON.parse(event.data);
       if (data.type === "chat-message") {
         handleMessage(event);
       } else if (data.type === "typing-start" || data.type === "typing-stop") {
         handleTypingEvent(event);
+      } else if (data.type === "like-event" || data.type === "unlike-event") {
+        handleSocketMessage(event)
       }
     };
 

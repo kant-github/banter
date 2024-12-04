@@ -1,7 +1,7 @@
 import { MessageType, UserType } from "types";
 import FromUser from "./FromUser";
 import ToUser from "./ToUser";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { sendLikeEvent, sendUnlikeEvent } from "@/lib/socket.config";
 
 interface Props {
@@ -12,40 +12,23 @@ interface Props {
 
 export default function MessageComponent({ msg, chatUser, socket }: Props) {
     const [like, setLike] = useState(false);
-    const isInitialRender = useRef(true); // Track initial render
+    console.log("rendered");
+    // Use useMemo to compute the initial like state based on msg.LikedUsers
+    const initialLikeState = useMemo(() => msg.LikedUsers.length > 0, [msg]);
 
-    const handleSocketMessage = useCallback((event: MessageEvent) => {
-        const data = JSON.parse(event.data);
-        // Check if the message data is the same message (to avoid duplicates)
-        if (data.subType === "like" || data.subType === "unlike") {
-            // console.log(data);
-        }
-    }, []);
-
+    // Set the initial like state on mount only
     useEffect(() => {
-        if (!socket) return;
+        console.log("here");
+        setLike(initialLikeState);
+    }, [initialLikeState]); // Runs only once when initialLikeState changes
 
-        socket.addEventListener("message", handleSocketMessage);
-
-        return () => {
-            socket.removeEventListener("message", handleSocketMessage);
-        };
-    }, [socket, handleSocketMessage]);
-
+    // Send like/unlike event through WebSocket when like state changes
     useEffect(() => {
-        // Skip effect during the initial render
-        if (isInitialRender.current) {
-            isInitialRender.current = false;
-            return;
-        }
-
         if (chatUser?.id) {
             if (like) {
-                console.log("sending like event");
-                sendLikeEvent(msg.id, chatUser.id);
+                sendLikeEvent(msg.id, chatUser.id); // Send like event to WebSocket
             } else {
-                console.log("sending unlike event");
-                sendUnlikeEvent(msg.id, chatUser.id);
+                sendUnlikeEvent(msg.id, chatUser.id); // Send unlike event to WebSocket
             }
         }
     }, [like, chatUser?.id, msg.id]);

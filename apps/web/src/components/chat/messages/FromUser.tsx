@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { MessageType } from "types";
 import { formatDistanceToNowStrict } from "date-fns";
-import { PiDotsThreeVerticalBold } from "react-icons/pi";
 import { Dispatch, SetStateAction, useState } from "react";
 import { FcLike } from "react-icons/fc";
 import MessageOptionsMenu from "@/components/ui/MessageOptionsMenu";
@@ -17,8 +16,7 @@ export default function Message({ msg, like, setLike }: Props) {
     addSuffix: true,
   });
   const [messageOptionDialogbox, setMessageOptionDialogbox] = useState(false);
-
-
+  
   return (
     <div className="flex items-start gap-2 max-w-sm self-end">
       <div className="flex items-center gap-x-2">

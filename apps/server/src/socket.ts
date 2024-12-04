@@ -71,8 +71,8 @@ export function setupWebSocket(wss: Server) {
 
   redisSubscriber.subscribe("like-events", (message) => {
     const parsedEvents = JSON.parse(message);
-    const { room, subType, data } = parsedEvents;
-    broadcastToRoom(parsedEvents.room, { subType, data }, wss);
+    const { data } = parsedEvents;
+    broadcastToRoom(parsedEvents.room, data, wss);
   })
 
   setInterval(() => {
@@ -137,8 +137,30 @@ export function setupWebSocket(wss: Server) {
           redisPublisher.publish("typing-events", JSON.stringify({ room: ws.room, data }));
         }
         else if (data.type === "like-event" || data.type === "unlike-event") {
-          const subType = data.type === "like-event" ? "like" : "unlike"
-          redisPublisher.publish("like-events", JSON.stringify({ room: ws.room, subType, data }))
+
+          const action = data.type === "like-event" ? "like" : "unlike";
+
+          if (action === "like") {
+            // Add a new like entry in the LikedUsers table
+            await prisma.likedUser.create({
+              data: {
+                message_id: data.messageId,
+                user_id: Number(userId),
+              },
+            });
+          } else if (action === "unlike") {
+            // Remove the like entry from the LikedUsers table
+            await prisma.likedUser.delete({
+              where: {
+                message_id_user_id: {
+                  message_id: data.messageId,
+                  user_id: Number(userId),
+                },
+              },
+            });
+          }
+
+          redisPublisher.publish("like-events", JSON.stringify({ room: ws.room, data }))
         }
         else {
           console.log("Unknown message type:", data.type);
