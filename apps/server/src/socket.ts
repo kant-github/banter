@@ -61,18 +61,20 @@ export function setupWebSocket(wss: Server) {
 
   redisSubscriber.subscribe("chat-messages", (message) => {
     const parsedMessage = JSON.parse(message);
-    broadcastToRoom(parsedMessage.room, parsedMessage.data, wss);
+    const { data, ws } = parsedMessage;
+    broadcastToRoom(ws, data, wss);
   });
 
   redisSubscriber.subscribe("typing-events", (message) => {
-    const parsedEvents = JSON.parse(message);
-    broadcastToRoom(parsedEvents.room, parsedEvents.data, wss);
+    const parsedMessage = JSON.parse(message);
+    const { data, ws } = parsedMessage;
+    broadcastToRoom(ws, data, wss);
   });
 
   redisSubscriber.subscribe("like-events", (message) => {
-    const parsedEvents = JSON.parse(message);
-    const { data } = parsedEvents;
-    broadcastToRoom(parsedEvents.room, data, wss);
+    const parsedMessage = JSON.parse(message);
+    const { data, ws } = parsedMessage;
+    broadcastToRoom(ws, data, wss);
   })
 
   setInterval(() => {
@@ -80,10 +82,11 @@ export function setupWebSocket(wss: Server) {
     redisSubscriber.ping().catch((err) => console.error("Subscriber Ping error:", err));
   }, 60000);
 
-  const broadcastToRoom = (room: string, message: any, wss: Server) => {
+  const broadcastToRoom = (sender: CustomWebSocket, message: any, wss: Server) => {
+
     wss.clients.forEach((client) => {
       const customClient = client as CustomWebSocket;
-      if (customClient.readyState === WebSocket.OPEN && customClient.room === room) {
+      if (customClient.readyState === WebSocket.OPEN && customClient.room === sender.room && customClient !== sender) {
         console.log("sent");
         customClient.send(JSON.stringify(message));
       }
@@ -130,11 +133,11 @@ export function setupWebSocket(wss: Server) {
           });
 
 
-          redisPublisher.publish("chat-messages", JSON.stringify({ room: ws.room, data }));
+          redisPublisher.publish("chat-messages", JSON.stringify({ ws, data }));
 
         }
         else if (data.type === "typing-start" || data.type === "typing-stop") {
-          redisPublisher.publish("typing-events", JSON.stringify({ room: ws.room, data }));
+          redisPublisher.publish("typing-events", JSON.stringify({ ws, data }));
         }
         else if (data.type === "like-event" || data.type === "unlike-event") {
 
@@ -160,7 +163,7 @@ export function setupWebSocket(wss: Server) {
             });
           }
 
-          redisPublisher.publish("like-events", JSON.stringify({ room: ws.room, data }))
+          redisPublisher.publish("like-events", JSON.stringify({ ws, data })) //------------>
         }
         else {
           console.log("Unknown message type:", data.type);

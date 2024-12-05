@@ -89,42 +89,35 @@ export default function ChatComponent({
       }
     };
 
-    
+
     const handleSocketMessage = (event: MessageEvent) => {
       const data = JSON.parse(event.data);
-      console.log("Data received:", data);
 
       if (data.type === "like-event" || data.type === "unlike-event") {
-        const { messageId, userId } = data;
-        console.log("reached here");
+        const { messageId, userId, name } = data;
         setMessages((prevMessages) =>
           prevMessages.map((msg) => {
             if (msg.id === messageId) {
-              console.log("Message found, processing like/unlike for message ID:", messageId);
-              
+
               if (data.type === "like-event") {
-                console.log("User is liking the message, adding user to likedUsers:", userId);
                 return {
                   ...msg,
-                  likedUsers: [...msg.LikedUsers, userId],
+                  LikedUsers: [...msg.LikedUsers, userId],
                 };
-              } else if (data.type === "unlike-event") {
-                console.log("User is unliking the message, removing user from likedUsers:", userId);
+              }
+              else if (data.type === "unlike-event") {
                 return {
                   ...msg,
-                  likedUsers: msg.LikedUsers.filter((x) => x.user_id !== userId),
+                  LikedUsers: msg.LikedUsers.filter((x) => x.user_id !== userId),
                 };
               } else {
-                console.log("Unhandled event type:", data.type);
-                return msg; // No changes if event type is unrecognized
+                return msg;
               }
             }
-        
-            console.log("Message ID does not match, no changes for message ID:", msg.id);
-            return msg; // Return unchanged message
+            return msg;
           })
         );
-        
+
       }
     };
 
@@ -162,6 +155,7 @@ export default function ChatComponent({
       user_id: chatUser?.id ?? 0,
       created_at: new Date().toISOString(),
       user: chatUser,
+      LikedUsers: []
     };
 
     sendMessage(newMessage, "chat-message");

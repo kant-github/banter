@@ -12,6 +12,7 @@ interface Props {
 }
 
 export default function Message({ msg, like, setLike }: Props) {
+  
   const formattedDate = formatDistanceToNowStrict(new Date(msg.created_at), {
     addSuffix: true,
   });

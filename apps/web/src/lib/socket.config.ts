@@ -62,7 +62,7 @@ export const sendTypingEvent = (userId: string, type: 'typing-start' | 'typing-s
     }
 };
 
-export const sendLikeEvent = (messageId: string, userId: Number) => {
+export const sendLikeEvent = (messageId: string, userId: Number, name: string) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
         const likeData = {
             type: "like-event",
