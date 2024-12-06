@@ -189,7 +189,7 @@ export default function ChatComponent({
       <div className="flex-1 overflow-y-auto flex flex-col-reverse">
         <div className="flex flex-col gap-2 px-2">
           {messages.map((msg) => (
-            <Messages socket={socket} key={msg.id} msg={msg} chatUser={chatUser!} />
+            <Messages key={msg.id} msg={msg} chatUser={chatUser!} />
           ))}
         </div>
       </div>
