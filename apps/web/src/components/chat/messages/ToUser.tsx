@@ -38,6 +38,14 @@ export default function Message({ msg, like, setLike }: Props) {
               setIsOpen={setMessageOptionDialogbox}
             />
           </div>
+          {
+            
+            msg.LikedUsers.map((user) => {
+              return (
+                <div>{user.username}</div>
+              )
+            })
+          }
           <div className="">
             <span className="text-pink-600 text-xs font-medium">
               {msg.name}

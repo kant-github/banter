@@ -98,25 +98,23 @@ export default function ChatComponent({
         setMessages((prevMessages) =>
           prevMessages.map((msg) => {
             if (msg.id === messageId) {
-
               if (data.type === "like-event") {
                 return {
                   ...msg,
-                  LikedUsers: [...msg.LikedUsers, userId],
+                  LikedUsers: [
+                    ...msg.LikedUsers,
+                    { user_id: userId, username: name, created_at: new Date().toISOString() } as LikedUser,
+                  ],
                 };
-              }
-              else if (data.type === "unlike-event") {
+              } else if (data.type === "unlike-event") {
                 return {
                   ...msg,
                   LikedUsers: msg.LikedUsers.filter((x) => x.user_id !== userId),
                 };
-              } else {
-                return msg;
               }
             }
             return msg;
-          })
-        );
+          }))
 
       }
     };

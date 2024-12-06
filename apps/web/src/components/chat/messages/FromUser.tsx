@@ -19,9 +19,9 @@ export default function Message({ msg, like, setLike, chatUser }: Props) {
   });
   const [messageOptionDialogbox, setMessageOptionDialogbox] = useState(false);
 
-  const currentUserLiked = msg.LikedUsers.some((x) => x.user_id === chatUser?.id);
-  const otherUserLiked = msg.LikedUsers.some((x) => x.user_id !== chatUser?.id);
-
+  // const currentUserLiked = msg.LikedUsers.some((x) => x.user_id === chatUser?.id);
+  // const otherUserLiked = msg.LikedUsers.some((x) => x.user_id !== chatUser?.id);
+  
   const likeHandler = () => {
     setLike(prev => !prev)
   }
@@ -40,6 +40,14 @@ export default function Message({ msg, like, setLike, chatUser }: Props) {
               setIsOpen={setMessageOptionDialogbox}
             />
           </div>
+          {
+            
+            msg.LikedUsers.map((user) => {
+              return (
+                <div>{user.username}</div>
+              )
+            })
+          }
           <div className="ml-2">
             <span className="text-green-600 flex justify-start text-xs font-medium">
               You

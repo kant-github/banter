@@ -41,5 +41,6 @@ export type LikedUser = {
   id: number;
   message_id: string;
   user_id: number;
+  username: string
   created_at: string;
 };

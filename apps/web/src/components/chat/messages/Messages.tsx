@@ -11,12 +11,11 @@ interface Props {
 }
 
 export default function MessageComponent({ msg, chatUser, socket }: Props) {
+    // debugger
+    console.log("message liked users are : ", msg.LikedUsers);
     const [like, setLike] = useState(false);
-
-
     useEffect(() => {
-        debugger
-        console.log("Printing liked user", msg.LikedUsers);
+
         setLike(msg.LikedUsers.length > 0);
     }, [msg.LikedUsers]);
 
@@ -25,7 +24,7 @@ export default function MessageComponent({ msg, chatUser, socket }: Props) {
             if (like) {
                 sendLikeEvent(msg.id, chatUser.id, chatUser.name);
             } else {
-                sendUnlikeEvent(msg.id, chatUser.id);
+                sendUnlikeEvent(msg.id, chatUser.id, chatUser.name);
             }
         }
     }, [like, chatUser?.id, msg.id]);

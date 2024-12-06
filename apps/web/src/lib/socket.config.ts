@@ -67,7 +67,8 @@ export const sendLikeEvent = (messageId: string, userId: Number, name: string) =
         const likeData = {
             type: "like-event",
             messageId,
-            userId
+            userId,
+            name
         }
         socket.send(JSON.stringify(likeData));
     }
@@ -76,12 +77,13 @@ export const sendLikeEvent = (messageId: string, userId: Number, name: string) =
     }
 }
 
-export const sendUnlikeEvent = (messageId: string, userId: number) => {
+export const sendUnlikeEvent = (messageId: string, userId: number, name: string) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
         const unlikeData = {
             type: "unlike-event",
             messageId,
             userId,
+            name
         };
         socket.send(JSON.stringify(unlikeData));
     } else {

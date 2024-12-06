@@ -30,7 +30,6 @@ const createRedisClient = (url: string) => {
   });
 };
 
-// Initialize Redis clients
 const initRedisClients = () => {
   if (!redisPublisher) {
     redisPublisher = createRedisClient(REDIS_URL);
@@ -56,6 +55,8 @@ const initRedisClients = () => {
 };
 
 initRedisClients();
+
+
 
 export function setupWebSocket(wss: Server) {
 
@@ -84,13 +85,14 @@ export function setupWebSocket(wss: Server) {
 
   const broadcastToRoom = (sender: CustomWebSocket, message: any, wss: Server) => {
 
-    wss.clients.forEach((client) => {
-      const customClient = client as CustomWebSocket;
-      if (customClient.readyState === WebSocket.OPEN && customClient.room === sender.room && customClient !== sender) {
+    wss.clients.forEach((socket) => {
+      const client = socket as CustomWebSocket;
+      if (client.readyState === WebSocket.OPEN && client.room === sender.room && client !== sender) {
         console.log("sent");
-        customClient.send(JSON.stringify(message));
+        client.send(JSON.stringify(message));
       }
     });
+
   };
 
   wss.on("connection", (ws: CustomWebSocket, req) => {
@@ -149,6 +151,7 @@ export function setupWebSocket(wss: Server) {
               data: {
                 message_id: data.messageId,
                 user_id: Number(userId),
+                username: data.name
               },
             });
           } else if (action === "unlike") {
