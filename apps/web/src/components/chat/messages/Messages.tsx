@@ -10,6 +10,7 @@ interface Props {
 
 export default function MessageComponent({ msg, chatUser }: Props) {
 
+    
     return (
         <>
             {msg.user_id === chatUser?.id ? (

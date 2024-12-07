@@ -1,10 +1,12 @@
 import Image from "next/image";
 import { MessageType, UserType } from "types";
 import { formatDistanceToNowStrict } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FcLike } from "react-icons/fc";
 import MessageOptionsMenu from "@/components/ui/MessageOptionsMenu";
 import { sendLikeEvent, sendUnlikeEvent } from "@/lib/socket.config";
+import LikedUsersDropdown from "../LikedUsersDropdown";
+import { AiFillLike } from "react-icons/ai";
 
 interface Props {
   msg: MessageType;
@@ -12,12 +14,16 @@ interface Props {
 }
 
 export default function Message({ msg, chatUser }: Props) {
+  const [messageOptionDialogbox, setMessageOptionDialogbox] = useState(false);
+  const [likeCount, setLikeCount] = useState(msg.LikedUsers.length);
+  const [likedUsersDropDown, setLikedUsersDropdown] = useState<boolean>(false);
   const formattedDate = formatDistanceToNowStrict(new Date(msg.created_at), {
     addSuffix: true,
   });
-  const [messageOptionDialogbox, setMessageOptionDialogbox] = useState(false);
-  const [likeCount, setLikeCount] = useState(msg.LikedUsers.length);
-  console.log("Like count is : ", likeCount);
+
+  useEffect(() => {
+    setLikeCount(msg.LikedUsers.length);
+  }, [msg.LikedUsers.length])
 
   const likeHandler = () => {
     if (!chatUser) return;
@@ -34,46 +40,39 @@ export default function Message({ msg, chatUser }: Props) {
   };
 
   return (
-    <div className="flex items-start gap-2 max-w-sm self-end">
-      <div className="flex items-center gap-x-2">
+    <div className="flex items-start gap-2 max-w-sm self-end mb-6">
+      <div className="flex items-end gap-x-2">
         <div
           onDoubleClick={likeHandler}
-          className="relative text-sm font-light bg-gradient-to-r from-zinc-900 to-black text-white rounded-br-[6px] rounded-tl-[6px] rounded-bl-[6px] py-1.5 px-4 select-none"
+          className="relative text-sm font-light bg-gradient-to-r from-zinc-900 to-black text-white rounded-bl-[9px] rounded-tl-[9px] rounded-tr-[9px] py-1.5 px-4 select-none cursor-pointer"
         >
-          {likeCount > 0 && <FcLike className="absolute -top-2 -left-1" />}
+          {likeCount > 0 &&
+            <div className="bg-zinc-700 flex items-center justify-center gap-x-2 rounded-[12px] px-2 absolute -top-2 left-3" onClick={() => setLikedUsersDropdown(true)}>
+              <AiFillLike onClick={() => setLikedUsersDropdown(true)} className="text-yellow-500" />
+              {<span className="text-red-500 text-[10px]">{likeCount}</span>}
+            </div>
+          }
           <div className="absolute bottom-1 left-1">
-            <MessageOptionsMenu
-              like={likeCount > 0}
-              setLike={() => { }}
-              msg={msg}
-              isOpen={messageOptionDialogbox}
-              setIsOpen={setMessageOptionDialogbox}
+            <MessageOptionsMenu like={likeCount > 0} setLike={() => { }} msg={msg} isOpen={messageOptionDialogbox} setIsOpen={setMessageOptionDialogbox}
             />
           </div>
           <div className="ml-2">
-            <span className="text-green-600 flex justify-start text-xs font-medium">
+            <span className="text-green-600 flex justify-end text-xs font-medium">
               You
             </span>
-            {likeCount > 0 && (
-              <div className="text-xs text-gray-400">
-                Liked by {msg.LikedUsers.slice(0, 2).map((user) => user.username).join(", ")}
-                {likeCount > 2 && ` and ${likeCount - 2} others`}
-              </div>
-            )}
             <span className="block">{msg.message}</span>
             <span className="text-[8px] flex justify-end text-gray-400 ">
               {formattedDate}
             </span>
           </div>
         </div>
-        <Image
-          alt="User Image"
-          src={msg.user?.image!}
-          width={36}
-          height={36}
-          className="rounded-full"
+        <Image alt="User Image" src={msg.user?.image!} width={36} height={36} className="rounded-full"
         />
       </div>
+
+      {
+        likedUsersDropDown && <LikedUsersDropdown open={likedUsersDropDown} setOpen={setLikedUsersDropdown} />
+      }
     </div>
   );
 }

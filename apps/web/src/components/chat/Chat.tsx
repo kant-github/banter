@@ -103,7 +103,7 @@ export default function ChatComponent({
                   ...msg,
                   LikedUsers: [
                     ...msg.LikedUsers,
-                    { user_id: userId, username: name, created_at: new Date().toISOString() } as LikedUser,
+                    { user_id: userId, message_id:msg.id, username: name, created_at: new Date().toISOString() } as LikedUser,
                   ],
                 };
               } else if (data.type === "unlike-event") {
@@ -187,7 +187,7 @@ export default function ChatComponent({
     <div className="flex flex-col h-[82vh] p-4 bg-white dark:bg-[#262629] rounded-[6px]">
       <div className="mt-4">{messages.length < 1 && <EmptyConversation />}</div>
       <div className="flex-1 overflow-y-auto flex flex-col-reverse">
-        <div className="flex flex-col gap-2 px-2">
+        <div className="flex flex-col gap-2 px-2 mb-4">
           {messages.map((msg) => (
             <Messages key={msg.id} msg={msg} chatUser={chatUser!} />
           ))}
