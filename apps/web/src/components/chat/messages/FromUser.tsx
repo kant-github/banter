@@ -70,9 +70,9 @@ export default function Message({ msg, chatUser }: Props) {
         />
       </div>
 
-      {
-        likedUsersDropDown && <LikedUsersDropdown open={likedUsersDropDown} setOpen={setLikedUsersDropdown} />
-      }
+
+      <LikedUsersDropdown likedUsers={msg.LikedUsers} open={likedUsersDropDown} setOpen={setLikedUsersDropdown} />
+
     </div>
   );
 }

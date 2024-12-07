@@ -6,6 +6,7 @@ import { FcLike } from "react-icons/fc";
 import MessageOptionsMenuToUser from "@/components/ui/MessageOptionsMenuToUser";
 import { sendLikeEvent, sendUnlikeEvent } from "@/lib/socket.config";
 import { AiFillLike } from "react-icons/ai";
+import LikedUsersDropdown from "../LikedUsersDropdown";
 
 interface Props {
   msg: MessageType;
@@ -79,6 +80,7 @@ export default function Message({ msg, chatUser }: Props) {
           </div>
         </div>
       </div>
+      <LikedUsersDropdown likedUsers={msg.LikedUsers} open={likedUsersDropDown} setOpen={setLikedUsersDropdown} />
     </div>
   );
 }
