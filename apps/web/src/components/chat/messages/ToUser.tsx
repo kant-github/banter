@@ -17,6 +17,7 @@ export default function Message({ msg, chatUser }: Props) {
   const [messageOptionDialogbox, setMessageOptionDialogbox] = useState(false);
   const [likedUsersDropDown, setLikedUsersDropdown] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState(msg.LikedUsers.length);
+  const [like, setLike] = useState<boolean>(msg.LikedUsers.some((user) => user.id === chatUser?.id));
   useEffect(() => {
     setLikeCount(msg.LikedUsers.length);
   }, [msg.LikedUsers.length])
@@ -39,8 +40,6 @@ export default function Message({ msg, chatUser }: Props) {
     addSuffix: true,
   });
 
-  console.log("like count is : ", likeCount);
-
   return (
     <div className="flex items-start gap-2 max-w-sm self-start mb-2">
       <div className="flex flex-row items-end gap-x-2">
@@ -58,16 +57,17 @@ export default function Message({ msg, chatUser }: Props) {
           className="flex flex-col rounded-br-[7px] rounded-tl-[7px] rounded-tr-[7px] px-3 py-1 text-sm font-light bg-gradient-to-r from-zinc-200 to-gray-300 text-black relative select-none"
         >
           {likeCount > 0 &&
-            <div className="bg-zinc-700 flex items-center justify-center gap-x-2 rounded-[12px] px-2 absolute -top-2 right-1" onClick={() => setLikedUsersDropdown(true)}>
+            <div className="bg-zinc-700 flex items-center justify-center gap-x-2 rounded-[12px] px-2 absolute -top-3 right-1" onClick={() => setLikedUsersDropdown(true)}>
               <AiFillLike onClick={() => setLikedUsersDropdown(true)} className="text-yellow-500" />
               {<span className="text-[10px] text-red-500">{likeCount}</span>}
 
             </div>
           }
-          <div className="absolute bottom-1 left-1">
+          <div className="absolute bottom-1 right-4">
             <MessageOptionsMenuToUser
-              like={likeCount > 0}
-              setLike={() => { }}
+              like={like}
+              setLike={setLike}
+              likeHandler={likeHandler}
               msg={msg}
               isOpen={messageOptionDialogbox}
               setIsOpen={setMessageOptionDialogbox}

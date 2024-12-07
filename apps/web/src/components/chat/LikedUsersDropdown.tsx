@@ -36,7 +36,6 @@ export default function ({ open, setOpen, likedUsers }: Props) {
             >
 
                 <div className="flex items-center justify-start gap-x-3 ml-4 mt-4 p-4 cursor-pointer">
-                    <CrossButton setOpen={setOpen} />
                     <h1 className="text-2xl font-bold tracking-wide">See all liked Users</h1>
                 </div>
                 <div className="px-12">

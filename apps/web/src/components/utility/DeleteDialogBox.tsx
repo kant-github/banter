@@ -24,7 +24,6 @@ export default function DeleteDialogBox({
 }: Props) {
     const [loading, setLoading] = useState(false);
     const { data: session } = useSession();
-    console.log("item is : ", item);
 
     async function deleteRoomHandler() {
         if (!session?.user?.token) {
@@ -33,7 +32,6 @@ export default function DeleteDialogBox({
         }
         setLoading(true);
         try {
-            console.log("exitting dialog box");
             const { data } = await axios.delete(`${CHAT_GROUP}/${item.id}`, {
                 headers: {
                     authorization: `Bearer ${session.user.token}`,

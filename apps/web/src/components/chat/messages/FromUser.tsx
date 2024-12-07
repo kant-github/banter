@@ -17,6 +17,7 @@ export default function Message({ msg, chatUser }: Props) {
   const [messageOptionDialogbox, setMessageOptionDialogbox] = useState(false);
   const [likeCount, setLikeCount] = useState(msg.LikedUsers.length);
   const [likedUsersDropDown, setLikedUsersDropdown] = useState<boolean>(false);
+  const [like, setLike] = useState<boolean>(msg.LikedUsers.some((user) => user.id === chatUser?.id));
   const formattedDate = formatDistanceToNowStrict(new Date(msg.created_at), {
     addSuffix: true,
   });
@@ -47,13 +48,13 @@ export default function Message({ msg, chatUser }: Props) {
           className="relative text-sm font-light bg-gradient-to-r from-zinc-900 to-black text-white rounded-bl-[9px] rounded-tl-[9px] rounded-tr-[9px] py-1.5 px-4 select-none cursor-pointer"
         >
           {likeCount > 0 &&
-            <div className="bg-zinc-700 flex items-center justify-center gap-x-2 rounded-[12px] px-2 absolute -top-2 left-3" onClick={() => setLikedUsersDropdown(true)}>
+            <div className="bg-zinc-700 flex items-center justify-center gap-x-2 rounded-[12px] px-2 absolute -top-3 left-3" onClick={() => setLikedUsersDropdown(true)}>
               <AiFillLike onClick={() => setLikedUsersDropdown(true)} className="text-yellow-500" />
               {<span className="text-red-500 text-[10px]">{likeCount}</span>}
             </div>
           }
           <div className="absolute bottom-1 left-1">
-            <MessageOptionsMenu like={likeCount > 0} setLike={() => { }} msg={msg} isOpen={messageOptionDialogbox} setIsOpen={setMessageOptionDialogbox}
+            <MessageOptionsMenu like={like} setLike={setLike} likeHandler={likeHandler} msg={msg} isOpen={messageOptionDialogbox} setIsOpen={setMessageOptionDialogbox}
             />
           </div>
           <div className="ml-2">

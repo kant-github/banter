@@ -18,10 +18,10 @@ export default function ChatSidebar({
   function hiddenSidebarHandler() {
     setHidden((prev) => !prev);
   }
-
+  
   return (
     <div
-      className={`transition-all duration-200 ${hidden ? "w-12" : "w-1/5"} bg-[#f2f2f2] dark:bg-[#1c1c1c] dark:text-gray-300 h-[91.5vh] flex flex-col pb-[12px]`}
+      className={`transition-all  duration-150 ease-in ${hidden ? "w-12" : "w-1/5"} bg-[#f2f2f2] dark:bg-[#1c1c1c] dark:text-gray-300 h-[91.5vh] flex flex-col pb-[12px]`}
     >
       <span className="flex justify-end mt-4">
         <span className="border-[1px] border-zinc-600 p-1 rounded-[4px]">

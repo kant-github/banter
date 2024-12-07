@@ -18,9 +18,9 @@ export default async function getChats(req: Request, res: Response) {
             include: {
                 user: true,
                 LikedUsers: true
-            }
+            },
+
         });
-        console.log(chats[0]?.LikedUsers);
 
         res.status(200).json({
             message: "Successfully fetched all chats",

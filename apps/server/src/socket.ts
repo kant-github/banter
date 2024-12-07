@@ -88,7 +88,6 @@ export function setupWebSocket(wss: Server) {
     wss.clients.forEach((socket) => {
       const client = socket as CustomWebSocket;
       if (client.readyState === WebSocket.OPEN && client.room === sender.room && client !== sender) {
-        console.log("sent");
         client.send(JSON.stringify(message));
       }
     });
@@ -121,8 +120,6 @@ export function setupWebSocket(wss: Server) {
         const data = JSON.parse(message);
 
         if (data.type === "chat-message" || !data.type) {
-          console.log("checking data at backend : ", data);
-
           await prisma.chats.create({
             data: {
               id: data.message.id,

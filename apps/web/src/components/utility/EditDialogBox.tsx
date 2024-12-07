@@ -55,11 +55,6 @@ export default function EditDialogBox({
         finalPayload.append("icon", icon);
       }
 
-      console.log("Final payload is:");
-      finalPayload.forEach((value, key) => {
-        console.log(`${key}: ${value}`);
-      });
-
       const { data } = await axios.put(`${CHAT_GROUP}/${item.id}`,
         finalPayload,
         {

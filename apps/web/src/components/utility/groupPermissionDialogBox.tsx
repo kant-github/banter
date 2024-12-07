@@ -37,27 +37,23 @@ export default function ({ setPermissionDialogBox, group }: Props) {
 
     const joinRoomHandler = async () => {
         setLoading(true);
-        console.log("checking password");
         
         if (group.passcode !== passcode) {
             toast.error("Incorrect passcode");
             setLoading(false);
             return;
         }
-        console.log("password checked");
 
         try {
             const response = await axios.post(`${CHAT_GROUP_USERS}`, {
                 user_id: session?.user?.id,
                 group_id: group.id,
             });
-            console.log("prisnting response");
-            console.log(response);
+            
 
             if (response.data.message === "User is already in the group" || response.data.message === "User added to group successfully") {
                 clearCache("chat-group-users");
                 clearCache("recentgroups");
-                console.log("cached clear");
                 localStorage.setItem(params["id"] as string, JSON.stringify(response.data.data));
                 toast.success("Successfully joined the group!");
                 setPermissionDialogBox(true);

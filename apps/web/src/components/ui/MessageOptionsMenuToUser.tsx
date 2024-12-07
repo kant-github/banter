@@ -18,15 +18,16 @@ interface MessageOptionsMenuProps {
   like: boolean;
   setLike: Dispatch<SetStateAction<boolean>>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  likeHandler: () => void
 }
 
 export default function ({
   msg,
-  color,
   like,
   setLike,
   isOpen,
   setIsOpen,
+  likeHandler
 }: MessageOptionsMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
   const [positionAbove, setPositionAbove] = useState(false);
@@ -75,24 +76,24 @@ export default function ({
             initial={{ opacity: 0, y: positionAbove ? 10 : -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: positionAbove ? 10 : -10 }}
-            className={`absolute rounded-[4px] right-0 w-24 bg-white dark:bg-zinc-700 shadow-lg z-50 ${
-              positionAbove ? "bottom-full mb-2" : "top-full mt-2"
-            }`}
+            className={`absolute rounded-[4px] right-0 w-24 bg-white dark:bg-zinc-700 shadow-lg z-50 ${positionAbove ? "bottom-full mb-2" : "top-full mt-2"
+              }`}
           >
             <div className="py-0.5 text-xs text-zinc-900 dark:text-zinc-100">
               <div
                 onClick={() => {
+                  likeHandler();
                   setLike((prev) => !prev);
                   setIsOpen(false);
                 }}
                 className="flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs"
               >
-                <span>{like ? "Unlike" : "Like"}</span>
+                <span>{like ? "Like" : "Like"}</span>
                 <span>{like ? <IoHeartDislikeSharp /> : <AiFillLike />}</span>
               </div>
 
               <div
-                onClick={() => {}}
+                onClick={() => { }}
                 className="flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs"
               >
                 <span>Edit</span>
@@ -110,7 +111,7 @@ export default function ({
                 <IoIosCopy />
               </div>
               <div
-                onClick={() => {}}
+                onClick={() => { }}
                 className="px-4 py-2 hover:bg-red-200 dark:hover:bg-red-600 dark:bg-red-700 cursor-pointer text-xs bg-red-50 flex flex-row items-center justify-between"
               >
                 Delete

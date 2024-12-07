@@ -20,10 +20,6 @@ export const getSocket = (roomId: string, userId: number): WebSocket => {
         }
         socket = new WebSocket(`ws://localhost:7001/api?userId=${userId}&room=${roomId}`);
 
-        socket.onopen = () => {
-            console.log('WebSocket connection opened');
-        };
-
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
             // Check if the message is a typing event
@@ -33,7 +29,7 @@ export const getSocket = (roomId: string, userId: number): WebSocket => {
         };
 
         socket.onclose = () => {
-            console.log('WebSocket connection closed');
+            
             socket = null;
         };
 

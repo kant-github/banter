@@ -78,8 +78,6 @@ export default function AccountInfoModal({ session, setAccountInfoDropDown }: Pr
                     email: formData.email,
                 },
             });
-
-            console.log("Session updated successfully");
         } catch (error) {
             console.error("Failed to save changes:", error);
             setError("Failed to save changes. Please try again.");

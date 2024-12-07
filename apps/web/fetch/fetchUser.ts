@@ -49,8 +49,7 @@ export async function updateUser(formData: any, token: string | null) {
         authorization: `Bearer ${token}`,
       },
     });
-
-    console.log("Data is:", data);
+    
     return data;
   } catch (error) {
     console.error("Error updating user:", error);

@@ -16,14 +16,15 @@ interface MessageOptionsMenuProps {
   color?: string;
   isOpen: boolean;
   like: boolean;
+  likeHandler: () => void
   setLike: Dispatch<SetStateAction<boolean>>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function MessageOptionsMenu({
   msg,
-  color,
   like,
+  likeHandler,
   setLike,
   isOpen,
   setIsOpen,
@@ -60,7 +61,7 @@ export default function MessageOptionsMenu({
   }, [isOpen]);
 
   return (
-    <div ref={menuRef} className="relative">
+    <div ref={menuRef} className="relative z-50">
       <div className="absolute bottom-1 left-1">
         <PiDotsThreeVerticalBold
           size={12}
@@ -81,12 +82,13 @@ export default function MessageOptionsMenu({
             <div className="py-0.5 text-xs text-zinc-900 dark:text-zinc-100">
               <div
                 onClick={() => {
+                  likeHandler()
                   setLike((prev) => !prev);
                   setIsOpen(false);
                 }}
                 className="flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs"
               >
-                <span>{like ? "Unlike" : "Like"}</span>
+                <span>{like ? "Like" : "Unlike"}</span>
                 <span>{like ? <IoHeartDislikeSharp /> : <AiFillLike />}</span>
               </div>
 

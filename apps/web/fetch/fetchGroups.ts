@@ -30,7 +30,6 @@ export async function fetchGroups(token: string | null) {
     }
 }
 export async function fetchGroup(token: string, group_id: string | null) {
-    console.log("my token is : ", token);
     try {
         const res = await fetch(`${CHAT_GROUP}-check/${group_id}`,{
             headers : {
@@ -56,7 +55,6 @@ export async function fetchChatGroupUsers(group_id: string) {
         if (!group_id) {
             return notFound();
         }
-        console.log("making call");
         const response = await fetch(`${CHAT_GROUP_USERS}?group_id=${group_id}`, {
             next: {
                 revalidate: 60 * 60,
