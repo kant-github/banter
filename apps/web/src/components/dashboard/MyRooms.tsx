@@ -1,7 +1,7 @@
 import { RxCross2 } from "react-icons/rx";
 import { GroupChatType } from "types";
 import { OptionsMenu } from "../ui/OptionsMenu";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import DeleteDialogBox from "../utility/DeleteDialogBox";
 import EditDialogBox from "../utility/EditDialogBox";
 import AppLogo from "../heading/AppLogo";
@@ -16,20 +16,36 @@ interface Props {
 export default function MyRoomDropdown({ myRoomDropdown, setMyRoomDropDown, groups = [] }: Props) {
     const [deleteDialogBox, setDeleteDialogBox] = useState<boolean>(false);
     const [editDialogBox, setEditDialogBox] = useState<boolean>(false);
-    const [selectedItem, setSelectedItem] = useState<GroupChatType| null>(null);
+    const [selectedItem, setSelectedItem] = useState<GroupChatType | null>(null);
+    const ref = useRef<HTMLDivElement | null>(null)
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (ref.current && !ref.current.contains(event.target as Node)) {
+                setMyRoomDropDown(false);
+            }
+        }
+
+        if (myRoomDropdown) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+    }, [myRoomDropdown, setMyRoomDropDown]);
+
     const router = useRouter();
 
     return (
         <>
-            <div
+            <div ref={ref}
                 className={`fixed top-0 right-0 h-screen w-[350px] bg-[#f2f2f2] border-l-[1px] dark:border-zinc-800 dark:bg-[#1c1c1c] dark:text-gray-200 shadow-xl z-50 rounded-xl transform transition-transform ease-in-out duration-300 ${myRoomDropdown ? "translate-x-0" : "translate-x-full"}`}
             >
                 <div>
                     <div className="flex items-center justify-start gap-x-3 ml-4 mt-4 p-4 cursor-pointer">
-                        <RxCross2
-                            size={22}
-                            onClick={() => setMyRoomDropDown(false)}
-                        />
                         <h1 className="text-2xl font-bold tracking-wide">All rooms</h1>
                     </div>
                     <p className="mx-8 text-xs text-gray-500">

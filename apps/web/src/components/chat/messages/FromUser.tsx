@@ -2,7 +2,6 @@ import Image from "next/image";
 import { MessageType, UserType } from "types";
 import { formatDistanceToNowStrict } from "date-fns";
 import { useEffect, useState } from "react";
-import { FcLike } from "react-icons/fc";
 import MessageOptionsMenu from "@/components/ui/MessageOptionsMenu";
 import { sendLikeEvent, sendUnlikeEvent } from "@/lib/socket.config";
 import LikedUsersDropdown from "../LikedUsersDropdown";

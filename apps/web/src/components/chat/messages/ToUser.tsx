@@ -2,7 +2,6 @@ import Image from "next/image";
 import { formatDistanceToNowStrict } from "date-fns";
 import { MessageType, UserType } from "types";
 import { useEffect, useState } from "react";
-import { FcLike } from "react-icons/fc";
 import MessageOptionsMenuToUser from "@/components/ui/MessageOptionsMenuToUser";
 import { sendLikeEvent, sendUnlikeEvent } from "@/lib/socket.config";
 import { AiFillLike } from "react-icons/ai";
@@ -43,7 +42,6 @@ export default function Message({ msg, chatUser }: Props) {
   return (
     <div className="flex items-start gap-2 max-w-sm self-start mb-2">
       <div className="flex flex-row items-end gap-x-2">
-        <div className="flex items-center">
           <Image
             alt="rk"
             src={msg.user?.image!}
@@ -51,7 +49,6 @@ export default function Message({ msg, chatUser }: Props) {
             height={36}
             className="rounded-full"
           />
-        </div>
         <div
           onDoubleClick={likeHandler}
           className="flex flex-col rounded-br-[7px] rounded-tl-[7px] rounded-tr-[7px] px-3 py-1 text-sm font-light bg-gradient-to-r from-zinc-200 to-gray-300 text-black relative select-none"

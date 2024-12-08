@@ -7,7 +7,6 @@ import { MessageType } from "types";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
 import { Dispatch, SetStateAction } from "react";
-import { setDefaultHighWaterMark } from "stream";
 import { AiFillLike } from "react-icons/ai";
 import { IoHeartDislikeSharp } from "react-icons/io5";
 
@@ -88,7 +87,7 @@ export default function ({
                 }}
                 className="flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs"
               >
-                <span>{like ? "Like" : "Like"}</span>
+                <span>{like ? "Like" : "Unlike"}</span>
                 <span>{like ? <IoHeartDislikeSharp /> : <AiFillLike />}</span>
               </div>
 

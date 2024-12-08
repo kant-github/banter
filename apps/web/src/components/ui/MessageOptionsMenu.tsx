@@ -7,7 +7,6 @@ import { MessageType } from "types";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
 import { Dispatch, SetStateAction } from "react";
-import { setDefaultHighWaterMark } from "stream";
 import { AiFillLike } from "react-icons/ai";
 import { IoHeartDislikeSharp } from "react-icons/io5";
 
@@ -61,7 +60,7 @@ export default function MessageOptionsMenu({
   }, [isOpen]);
 
   return (
-    <div ref={menuRef} className="relative z-50">
+    <div ref={menuRef} className="relative">
       <div className="absolute bottom-1 left-1">
         <PiDotsThreeVerticalBold
           size={12}
