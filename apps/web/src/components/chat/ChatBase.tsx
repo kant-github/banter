@@ -56,6 +56,7 @@ export default function ({ groupId, group, users, olderChats }: Props) {
 
     return () => {
       socket.removeEventListener('message', handleOnlineUsers);
+      socket.close()
     }
 
   }, [socket, groupId, chatUser?.id]);

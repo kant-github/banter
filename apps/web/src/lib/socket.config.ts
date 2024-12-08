@@ -29,7 +29,6 @@ export const getSocket = (roomId: string, userId: number): WebSocket => {
         };
 
         socket.onclose = () => {
-            
             socket = null;
         };
 

@@ -98,7 +98,7 @@ export function setupWebSocket(wss: Server) {
   };
 
   const broadcastOnlineUsers = () => {
-    
+
     const onlineUserList = Array.from(onlineUsers);
     const data = {
       type: "online-users",
@@ -215,6 +215,7 @@ export function setupWebSocket(wss: Server) {
       //     lastSeen: new Date()
       //   }
       // })
+      console.log(`${ws.userId} is disconnected`);
 
       onlineUsers.delete(Number(userId));
       broadcastOnlineUsers();

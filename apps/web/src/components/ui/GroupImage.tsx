@@ -6,7 +6,7 @@ export default function ({ groupImage, groupTitle }: { groupImage: string; group
             {icon ? (
                 <span className="text-3xl text-green-600">{icon}</span>
             ) : (
-                <span className="bg-red-500 dark:text-zinc-800 px-3 py-2 rounded-full">
+                <span className="bg-red-500 text-lg dark:text-zinc-800 px-3 py-2 rounded-full">
                     {groupTitle ? groupTitle[0] : "?"}
                 </span>
             )}
