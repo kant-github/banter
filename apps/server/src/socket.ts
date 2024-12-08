@@ -60,6 +60,9 @@ initRedisClients();
 
 export function setupWebSocket(wss: Server) {
 
+  const onlineUsers = new Set<number>();
+
+
   redisSubscriber.subscribe("chat-messages", (message) => {
     const parsedMessage = JSON.parse(message);
     const { data, ws } = parsedMessage;
@@ -94,7 +97,25 @@ export function setupWebSocket(wss: Server) {
 
   };
 
-  wss.on("connection", (ws: CustomWebSocket, req) => {
+  const broadcastOnlineUsers = () => {
+    
+    const onlineUserList = Array.from(onlineUsers);
+    const data = {
+      type: "online-users",
+      count: onlineUserList.length,
+      list: onlineUserList
+    }
+
+    console.log(data);
+
+    wss.clients.forEach((ws) => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify(data));
+      }
+    })
+  }
+
+  wss.on("connection", async (ws: CustomWebSocket, req) => {
     const params = new URLSearchParams(req.url?.split("?")[1]);
     const room = params.get("room") || "";
     const userId = params.get("userId") || "";
@@ -105,9 +126,21 @@ export function setupWebSocket(wss: Server) {
       return;
     }
 
+    onlineUsers.add(Number(userId));
+    broadcastOnlineUsers();
+
     ws.room = room;
     ws.userId = userId;
     ws.isAlive = true;
+
+
+    // await prisma.users.update({
+    //   where: {
+    //     id: Number(userId)
+    //   }, data: {
+    //     isOnline: true
+    //   }
+    // })
 
     ws.on("pong", () => {
       ws.isAlive = true;
@@ -143,7 +176,7 @@ export function setupWebSocket(wss: Server) {
           const action = data.type === "like-event" ? "like" : "unlike";
 
           if (action === "like") {
-            // Add a new like entry in the LikedUsers table
+
             await prisma.likedUser.create({
               data: {
                 message_id: data.messageId,
@@ -152,7 +185,7 @@ export function setupWebSocket(wss: Server) {
               },
             });
           } else if (action === "unlike") {
-            // Remove the like entry from the LikedUsers table
+
             await prisma.likedUser.delete({
               where: {
                 message_id_user_id: {
@@ -173,8 +206,18 @@ export function setupWebSocket(wss: Server) {
       }
     });
 
-    ws.on("close", () => {
+    ws.on("close", async () => {
+      // await prisma.users.update({
+      //   where: {
+      //     id: Number(userId)
+      //   }, data: {
+      //     isOnline: false,
+      //     lastSeen: new Date()
+      //   }
+      // })
 
+      onlineUsers.delete(Number(userId));
+      broadcastOnlineUsers();
     });
   });
 

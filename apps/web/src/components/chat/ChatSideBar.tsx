@@ -5,20 +5,23 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { IoIosOptions } from "react-icons/io";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import ChatSideBarUserInfo from "../ui/ChatSideBarUserInfo";
+
+interface Props {
+  users: Array<GroupChatUserType> | [];
+  onlineUsersList: number[];
+}
+
 export default function ChatSidebar({
   users,
-}: {
-  users: Array<GroupChatUserType> | [];
-  chatSidebarOpen: boolean;
-  setChatSidebarOpen: Dispatch<SetStateAction<boolean>>;
-}) {
+  onlineUsersList
+}: Props) {
   const participantLabel = users.length === 1 ? "participant" : "participants";
   const [hidden, setHidden] = useState(false);
 
   function hiddenSidebarHandler() {
     setHidden((prev) => !prev);
   }
-  
+
   return (
     <div
       className={`transition-all  duration-150 ease-in ${hidden ? "w-12" : "w-1/5"} bg-[#f2f2f2] dark:bg-[#1c1c1c] dark:text-gray-300 h-[91.5vh] flex flex-col pb-[12px]`}
@@ -62,11 +65,11 @@ export default function ChatSidebar({
                 } else {
                   joinTimeDisplay = format(joinedAt, "MMMM dd, yyyy");
                 }
-
+                const isOnline = onlineUsersList.includes(item.user.id)
                 return (
                   <div
                     key={index}
-                    className="flex flex-row items-center gap-x-3 border-[1px] dark:border-gray-600 text-[10px] px-4 bg-white rounded-[8px] transition-shadow dark:hover:shadow-lg hover:shadow-md dark:bg-[#262629] "
+                    className="flex flex-row items-center gap-x-3 border-[1px] dark:border-gray-600 text-[10px] px-4 bg-white rounded-[8px] transition-shadow dark:hover:shadow-lg hover:shadow-md dark:bg-[#262629] relative"
                   >
                     <Image
                       width={34}
@@ -84,7 +87,10 @@ export default function ChatSidebar({
                         Joined: <i className="font-thin">{joinTimeDisplay}</i>
                       </p>
                     </div>
-                    
+                    {isOnline && (
+                      <div className="bg-green-500 text-white rounded-full px-[2.5px] py-[2.5px] absolute right-3 bottom-2 animate-pulse glow-effect"></div>
+                    )}
+
                   </div>
                 );
               })}

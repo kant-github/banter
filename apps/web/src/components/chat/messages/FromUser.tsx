@@ -40,7 +40,7 @@ export default function Message({ msg, chatUser }: Props) {
   };
 
   return (
-    <div className="flex items-start gap-2 max-w-sm self-end mb-6">
+    <div className="flex items-start gap-2 max-w-sm self-end mb-4">
       <div className="flex items-end gap-x-2">
         <div
           onDoubleClick={likeHandler}

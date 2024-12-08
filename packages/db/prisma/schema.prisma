@@ -21,6 +21,8 @@ model Users {
   Chats                Chats[]
   RecentlyJoinedGroups RecentlyJoinedGroups[]
   LikedMessages        LikedUser[]
+  isOnline             Boolean                @default(false)
+  lastSeen             DateTime?
 }
 
 model ChatGroup {

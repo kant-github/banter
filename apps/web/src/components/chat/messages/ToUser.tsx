@@ -40,7 +40,7 @@ export default function Message({ msg, chatUser }: Props) {
   });
 
   return (
-    <div className="flex items-start gap-2 max-w-sm self-start mb-2">
+    <div className="flex items-start gap-2 max-w-sm self-start mb-4">
       <div className="flex flex-row items-end gap-x-2">
           <Image
             alt="rk"

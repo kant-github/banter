@@ -10,6 +10,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import GroupImage from "../ui/GroupImage";
 import { Proza_Libre } from "next/font/google"
 import { WhiteBtn } from "../buttons/WhiteBtn";
+import { MdOutlineOnlinePrediction } from "react-icons/md";
 
 const font = Proza_Libre({
     subsets: ['latin'],
@@ -21,9 +22,10 @@ interface Props {
     groupTitle: string | null;
     groupImage: string | null;
     groupId: string | null;
+    onlineUsersCount: number
 }
 
-export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props) {
+export default function ChatNavTitle({ groupTitle, groupImage, groupId, onlineUsersCount }: Props) {
     const [exitRoomDialogBox, setExitRoomDialogBox] = useState(false);
     const router = useRouter();
     const params = useParams();
@@ -41,10 +43,16 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props)
 
     return (
         <div className="flex items-center justify-between bg-[#f2f2f2] dark:bg-[#1c1c1c] h-[82px] dark:text-gray-300">
-            <h1 className="flex flex-row items-center gap-x-4 font-bold text-2xl ml-8 py-6">
-                <GroupImage groupImage={groupImage!} groupTitle={groupTitle!} />
-                <p className={`${font.className} text-xl font-black mt-1`}>{groupTitle}</p>
-            </h1>
+            <div className="flex items-center justify-center gap-x-4">
+                <h1 className="flex flex-row items-center gap-x-4 font-bold text-2xl ml-8 py-6">
+                    <GroupImage groupImage={groupImage!} groupTitle={groupTitle!} />
+                    <p className={`${font.className} text-xl font-black mt-1`}>{groupTitle}</p>
+                </h1>
+                <span className="text-[11px] mt-1 flex items-center gap-x-1 ">
+                    <MdOutlineOnlinePrediction size={16} className="text-green-500" />
+                    {onlineUsersCount + " online.."}
+                </span>
+            </div>
 
             <div className="mr-4 flex items-center justify-center gap-x-6 w-[240px] group">
                 <WhiteBtn onClick={() => router.back()}>
@@ -52,7 +60,6 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId }: Props)
                     <span>Home</span>
                 </WhiteBtn>
                 <RedBtn onClick={() => setExitRoomDialogBox(true)}>Exit Room</RedBtn>
-                {/* <BsThreeDotsVertical size={48} /> */}
             </div>
             {
                 exitRoomDialogBox && (

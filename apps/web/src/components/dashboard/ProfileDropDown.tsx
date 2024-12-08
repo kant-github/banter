@@ -62,7 +62,7 @@ export default function UserMenu({ groups }: props) {
             document.removeEventListener("mousedown", clickHandler);
         };
 
-    }, []);
+    }, [dropDown, setDropDown]);
 
     return (
         <div ref={dropdownRef}>

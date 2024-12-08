@@ -7,12 +7,14 @@ import ChatMessageInput from "./ChatMessageInput";
 import { EmptyConversation } from "./EmptyConversation";
 import BlackBtn from "../buttons/BlackBtn";
 import TypingDots from "../loaders/TypingDots";
+import { IoSendSharp } from "react-icons/io5";
 
 interface Props {
   olderChats: MessageType[];
   chatUser?: UserType | null;
   group: GroupChatType;
   users: GroupChatUserType[];
+  socket: WebSocket | null
 }
 
 export default function ChatComponent({
@@ -20,6 +22,7 @@ export default function ChatComponent({
   olderChats,
   group,
   users,
+  socket
 }: Props) {
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<MessageType[]>(olderChats);
@@ -32,16 +35,7 @@ export default function ChatComponent({
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
-  const socket = useMemo(() => {
-    if (chatUser?.id) {
-      return getSocket(group.id, chatUser.id);
-    }
-    return null;
-  }, [group.id, chatUser?.id]);
-
-
-
+  
   useEffect(() => {
     if (!socket) return;
 
@@ -103,7 +97,7 @@ export default function ChatComponent({
                   ...msg,
                   LikedUsers: [
                     ...msg.LikedUsers,
-                    { user_id: userId, message_id:msg.id, username: name, created_at: new Date().toISOString() } as LikedUser,
+                    { user_id: userId, message_id: msg.id, username: name, created_at: new Date().toISOString() } as LikedUser,
                   ],
                 };
               } else if (data.type === "unlike-event") {
@@ -225,7 +219,9 @@ export default function ChatComponent({
             setMessage={setMessage}
             onChange={handleTyping}
           />
-          <BlackBtn>Send</BlackBtn>
+          <BlackBtn className={"flex items-center justify-center gap-x-2"}>
+            <IoSendSharp className="text-yellow-500" />
+          </BlackBtn>
         </div>
       </form>
     </div>
