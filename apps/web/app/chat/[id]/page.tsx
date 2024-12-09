@@ -81,8 +81,6 @@ export default function ChatComponent({ params }: { params: { id: string } }) {
     );
   }
 
-  // debugger
-
   return (
     <div>
       <ChatNav />

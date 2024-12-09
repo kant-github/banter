@@ -44,7 +44,6 @@ export default function ChatComponent({
     const handleMessage = (event: MessageEvent) => {
       const parsedEvent = JSON.parse(event.data);
       const data = parsedEvent.message;
-      debugger
 
 
       if (!data?.message?.trim()) {
@@ -89,7 +88,6 @@ export default function ChatComponent({
       const data = JSON.parse(event.data);
 
       if (data.type === "like-event" || data.type === "unlike-event") {
-        debugger
         const { messageId, userId, name } = data;
         setMessages((prevMessages) =>
           prevMessages.map((msg) => {

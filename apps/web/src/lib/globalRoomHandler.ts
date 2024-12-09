@@ -25,7 +25,6 @@ export async function globalRoomHandler(
       response.data.message === "User is already in the group" ||
       response.data.message === "User added to group successfully"
     ) {
-      console.log("user is already in the group : )");
       clearCache("chat-group-users");
       localStorage.setItem(globalGroupId, JSON.stringify(response.data.data));
       router.push(`${FRONTEND_BASE_URL}/globalchat/${globalGroupId}`);

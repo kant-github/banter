@@ -90,10 +90,6 @@ export function setupWebSocket(wss: Server) {
     wss.clients.forEach((socket) => {
       const client = socket as CustomWebSocket;
       if (client.readyState === WebSocket.OPEN && client.room === sender.room && client.userId !== sender.userId) {
-        if (message.type === 'chat-message') {
-          console.log("sending data to : ", client.userId + " and the message is ");
-          console.log(message);
-        }
         client.send(JSON.stringify(message));
       }
     });
@@ -201,7 +197,7 @@ export function setupWebSocket(wss: Server) {
           redisPublisher.publish("like-events", JSON.stringify({ ws, data })) //------------>
         }
         else {
-          
+
         }
       } catch (error) {
         console.error("Error handling message:", error);

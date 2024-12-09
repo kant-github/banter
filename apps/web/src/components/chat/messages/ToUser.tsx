@@ -17,7 +17,7 @@ export default function Message({ msg, chatUser }: Props) {
   const [likedUsersDropDown, setLikedUsersDropdown] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState(msg.LikedUsers.length);
   const [like, setLike] = useState<boolean>(msg.LikedUsers.some((user) => user.user_id === chatUser?.id));
-  console.log("like right now is : ", like);
+  
   useEffect(() => {
     setLikeCount(msg.LikedUsers.length);
   }, [msg.LikedUsers.length])

@@ -21,9 +21,6 @@ export default function ({ setPermissionDialogBox, group, setChatGroupUsers }: P
     const [loading, setLoading] = useState<boolean>(false);
     const params = useParams();
     const { data: session } = useSession();
-    useEffect(() => {
-        console.log(passcode);
-    }, [passcode]);
 
 
     useEffect(() => {

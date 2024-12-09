@@ -30,7 +30,6 @@ export default function ({
 }: MessageOptionsMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
   const [positionAbove, setPositionAbove] = useState(false);
-  console.log("inside option like is : ", like);
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
