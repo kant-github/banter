@@ -30,11 +30,7 @@ export default function ({
 }: MessageOptionsMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
   const [positionAbove, setPositionAbove] = useState(false);
-
-  useEffect(() => {
-    setLike(like);
-  }, [like])
-
+  console.log("inside option like is : ", like);
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
@@ -85,15 +81,19 @@ export default function ({
             <div className="py-0.5 text-[11px] text-zinc-900 dark:text-zinc-100">
               <div
                 onClick={() => {
-                  likeHandler();
-                  setLike((prev) => !prev);
+                  setLike((prev) => {
+                    const newLikeState = !prev; // Calculate the new state
+                    likeHandler(); // Handle side effects, if any
+                    return newLikeState;
+                  });
                   setIsOpen(false);
                 }}
                 className="flex items-center justify-between px-4 py-1 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-[11px]"
               >
                 <span>{like ? "Unlike" : "Like"}</span>
-                <span>{like ? <AiFillLike /> : <IoHeartDislikeSharp />}</span>
+                <span>{like ? <IoHeartDislikeSharp /> : <AiFillLike />}</span>
               </div>
+
 
               <div
                 onClick={() => { }}

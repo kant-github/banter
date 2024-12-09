@@ -16,7 +16,8 @@ export default function Message({ msg, chatUser }: Props) {
   const [messageOptionDialogbox, setMessageOptionDialogbox] = useState(false);
   const [likedUsersDropDown, setLikedUsersDropdown] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState(msg.LikedUsers.length);
-  const [like, setLike] = useState<boolean>(msg.LikedUsers.some((user) => user.id === chatUser?.id));
+  const [like, setLike] = useState<boolean>(msg.LikedUsers.some((user) => user.user_id === chatUser?.id));
+  console.log("like right now is : ", like);
   useEffect(() => {
     setLikeCount(msg.LikedUsers.length);
   }, [msg.LikedUsers.length])
@@ -30,10 +31,12 @@ export default function Message({ msg, chatUser }: Props) {
       sendUnlikeEvent(msg.id, chatUser.id, chatUser.name);
       msg.LikedUsers = msg.LikedUsers.filter((user) => user.user_id !== chatUser.id);
       setLikeCount((prev) => Math.max(0, prev - 1));
+      setLike(false);
     } else {
       sendLikeEvent(msg.id, chatUser.id, chatUser.name);
       msg.LikedUsers.push({ user_id: chatUser.id, username: chatUser.name, message_id: msg.id });
       setLikeCount((prev) => prev + 1);
+      setLike(true);
     }
   };
 
@@ -44,13 +47,13 @@ export default function Message({ msg, chatUser }: Props) {
   return (
     <div className="flex items-start gap-2 max-w-sm self-start mb-4">
       <div className="flex flex-row items-end gap-x-2">
-          <Image
-            alt="rk"
-            src={msg.user?.image!}
-            width={36}
-            height={36}
-            className="rounded-full"
-          />
+        <Image
+          alt="rk"
+          src={msg.user?.image!}
+          width={36}
+          height={36}
+          className="rounded-full"
+        />
         <div
           onDoubleClick={likeHandler}
           className="flex flex-col rounded-br-[7px] rounded-tl-[7px] rounded-tr-[7px] px-3 py-1 text-sm font-light bg-gradient-to-r from-zinc-200 to-gray-300 text-black relative select-none"

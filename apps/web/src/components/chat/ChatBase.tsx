@@ -45,7 +45,6 @@ export default function ({ groupId, group, users, olderChats }: Props) {
     const handleOnlineUsers = (message: MessageEvent) => {
       const data = JSON.parse(message.data);
       if (data.type === "online-users") {
-        console.log("logging online data", data.list);
         setOnlineUsersCount(data.list.length);
         setOnlineUsersList(data.list);
       }

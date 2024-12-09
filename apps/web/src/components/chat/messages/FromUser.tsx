@@ -16,7 +16,7 @@ export default function Message({ msg, chatUser }: Props) {
   const [messageOptionDialogbox, setMessageOptionDialogbox] = useState(false);
   const [likeCount, setLikeCount] = useState(msg.LikedUsers.length);
   const [likedUsersDropDown, setLikedUsersDropdown] = useState<boolean>(false);
-  const [like, setLike] = useState<boolean>(msg.LikedUsers.some((user) => user.id === chatUser?.id));
+  const [like, setLike] = useState<boolean>(msg.LikedUsers.some((user) => user.user_id === chatUser?.id));
   const formattedDate = formatDistanceToNowStrict(new Date(msg.created_at), {
     addSuffix: true,
   });
@@ -34,10 +34,12 @@ export default function Message({ msg, chatUser }: Props) {
       sendUnlikeEvent(msg.id, chatUser.id, chatUser.name);
       msg.LikedUsers = msg.LikedUsers.filter((user) => user.user_id !== chatUser.id);
       setLikeCount((prev) => Math.max(0, prev - 1));
+      setLike(false);
     } else {
       sendLikeEvent(msg.id, chatUser.id, chatUser.name);
       msg.LikedUsers.push({ user_id: chatUser.id, username: chatUser.name, message_id: msg.id });
       setLikeCount((prev) => prev + 1);
+      setLike(true);
     }
   };
 
