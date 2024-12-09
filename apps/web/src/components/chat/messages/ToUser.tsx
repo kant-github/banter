@@ -28,9 +28,11 @@ export default function Message({ msg, chatUser }: Props) {
 
     if (currentUserLiked) {
       sendUnlikeEvent(msg.id, chatUser.id, chatUser.name);
+      msg.LikedUsers = msg.LikedUsers.filter((user) => user.user_id !== chatUser.id);
       setLikeCount((prev) => Math.max(0, prev - 1));
     } else {
       sendLikeEvent(msg.id, chatUser.id, chatUser.name);
+      msg.LikedUsers.push({ user_id: chatUser.id, username: chatUser.name, message_id: msg.id });
       setLikeCount((prev) => prev + 1);
     }
   };

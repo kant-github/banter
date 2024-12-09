@@ -53,3 +53,24 @@
     animation: glow 1.5s ease-in-out infinite;
   }
   
+
+  @keyframes red-glow {
+    0% {
+      box-shadow: 0 0 4px rgba(239, 68, 68, 0.3), 0 0 8px rgba(239, 68, 68, 0.2), 0 0 12px rgba(239, 68, 68, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 6px rgba(239, 68, 68, 0.6), 0 0 12px rgba(239, 68, 68, 0.4), 0 0 18px rgba(239, 68, 68, 0.3);
+    }
+    100% {
+      box-shadow: 0 0 4px rgba(239, 68, 68, 0.3), 0 0 8px rgba(239, 68, 68, 0.2), 0 0 12px rgba(239, 68, 68, 0.1);
+    }
+  }
+  
+  .glow-effect-red {
+    animation: red-glow 1.5s ease-in-out infinite;
+  }
+
+  
+  .red-glow-effect {
+    animation: red-glow 1.5s ease-in-out infinite;
+  }

@@ -8,13 +8,15 @@ import Image from "next/image";
 import BigWhiteBtn from "@/components/buttons/BigWhiteBtn";
 import { WhiteBtn } from "@/components/buttons/WhiteBtn";
 import { GiJigsawPiece } from "react-icons/gi";
+import { MdOutlineOnlinePrediction } from "react-icons/md";
 
 interface Props {
     groupTitle: string;
     groupImage: string;
+    onlineUsersCount: number
 }
 
-export default function({ groupTitle, groupImage }: Props) {
+export default function ({ groupTitle, groupImage, onlineUsersCount }: Props) {
     const router = useRouter();
     const params = useParams();
     const data = localStorage.getItem(params["id"] as string);
@@ -47,13 +49,15 @@ export default function({ groupTitle, groupImage }: Props) {
     return (
         <div className="flex items-center justify-between bg-[#f2f2f2] dark:bg-[#1c1c1c] h-[82px] dark:text-gray-300">
             <h1 className="flex flex-row items-center gap-x-4 font-bold text-2xl ml-8 py-6">
-                
-            <GiJigsawPiece
-                size={34}
-                className="transition-transform transform group-hover:-translate-x-[2px] text-[#f2a633] dark:text-[#f2a633]"
-            />
-                
+                <GiJigsawPiece
+                    size={34}
+                    className="transition-transform transform group-hover:-translate-x-[2px] text-[#f2a633] dark:text-[#f2a633]"
+                />
                 <p className="text-xl">{groupTitle}</p>
+                <span className="text-[11px] font-medium mt-1 flex items-center gap-x-1 ">
+                    <MdOutlineOnlinePrediction size={16} className="text-green-500" />
+                    {onlineUsersCount + " online.."}
+                </span>
             </h1>
 
             <div className="mr-4 flex items-center justify-center gap-x-6 group">

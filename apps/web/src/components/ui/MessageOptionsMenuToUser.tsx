@@ -31,6 +31,10 @@ export default function ({
   const menuRef = useRef<HTMLDivElement>(null);
   const [positionAbove, setPositionAbove] = useState(false);
 
+  useEffect(() => {
+    setLike(like);
+  }, [like])
+
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
@@ -45,7 +49,7 @@ export default function ({
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
       const rect = menuRef.current?.getBoundingClientRect();
-      if (rect && window.innerHeight - rect.bottom < 100) {
+      if (rect && window.innerHeight - rect.bottom < 200) {
         setPositionAbove(true);
       } else {
         setPositionAbove(false);
@@ -75,25 +79,25 @@ export default function ({
             initial={{ opacity: 0, y: positionAbove ? 10 : -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: positionAbove ? 10 : -10 }}
-            className={`absolute rounded-[4px] right-0 w-24 bg-white dark:bg-zinc-700 shadow-lg z-50 ${positionAbove ? "bottom-full mb-2" : "top-full mt-2"
+            className={`absolute rounded-[4px] left-0 w-24 bg-white dark:bg-zinc-700 shadow-lg z-50 ${positionAbove ? "bottom-full mb-2" : "top-full mt-2"
               }`}
           >
-            <div className="py-0.5 text-xs text-zinc-900 dark:text-zinc-100">
+            <div className="py-0.5 text-[11px] text-zinc-900 dark:text-zinc-100">
               <div
                 onClick={() => {
                   likeHandler();
                   setLike((prev) => !prev);
                   setIsOpen(false);
                 }}
-                className="flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs"
+                className="flex items-center justify-between px-4 py-1 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-[11px]"
               >
-                <span>{like ? "Like" : "Unlike"}</span>
-                <span>{like ? <IoHeartDislikeSharp /> : <AiFillLike />}</span>
+                <span>{like ? "Unlike" : "Like"}</span>
+                <span>{like ? <AiFillLike /> : <IoHeartDislikeSharp />}</span>
               </div>
 
               <div
                 onClick={() => { }}
-                className="flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs"
+                className="flex items-center justify-between px-4 py-1 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-[11px]"
               >
                 <span>Edit</span>
                 <LuPencilLine />
@@ -104,14 +108,14 @@ export default function ({
                   toast.success("Message copied to clipboard");
                   setIsOpen(false);
                 }}
-                className="flex items-center justify-between px-4 py-2 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-xs"
+                className="flex items-center justify-between px-4 py-1 dark:bg-zinc-700 hover:bg-gray-200 dark:hover:bg-[#262629] cursor-pointer text-[11px]"
               >
                 <span>Copy</span>
                 <IoIosCopy />
               </div>
               <div
                 onClick={() => { }}
-                className="px-4 py-2 hover:bg-red-200 dark:hover:bg-red-600 dark:bg-red-700 cursor-pointer text-xs bg-red-50 flex flex-row items-center justify-between"
+                className="px-4 py-1 hover:bg-red-200 dark:hover:bg-red-600 dark:bg-red-700 cursor-pointer text-[11px] bg-red-50 flex flex-row items-center justify-between"
               >
                 Delete
                 <MdDelete

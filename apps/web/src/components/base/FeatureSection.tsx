@@ -17,18 +17,18 @@ export const projects = [
     id: "1",
     title: "Secure Rooms",
     description: "Creating highly secure digital environments for private, safe, and seamless online interactions.",
-    icon: <FaHouseLock color="white" size={17}/>
+    icon: <FaHouseLock className="text-yellow-500" size={17}/>
   },
   {
     id: "2",
     title: "Password Authentication",
     description: "Providing robust, password-protected access to digital content and online services for enhanced security.",
-    icon: <PiPasswordFill color="white" size={17}/>
+    icon: <PiPasswordFill className="text-yellow-500" size={17}/>
   },
   {
     id: "3",
     title: "Chat with Friends",
     description: "Enabling fast, secure, and reliable messaging to stay connected and communicate effortlessly with friends.",
-    icon: <SiWechat color="white" size={17}/>
+    icon: <SiWechat className="text-yellow-500" size={17}/>
   },
 ];

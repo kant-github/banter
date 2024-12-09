@@ -15,7 +15,6 @@ interface Props {
 
 export default function ({ groupId, group, users, olderChats }: Props) {
   const [chatUser, setChatUser] = useState<UserType | null>(null);
-  const [chatSidebarOpen, setChatSidebarOpen] = useState<boolean>(false);
   const [onlineUsersCount, setOnlineUsersCount] = useState<number>(0);
   const [onlineUsersList, setOnlineUsersList] = useState<number[] | []>([])
 

@@ -62,6 +62,7 @@ export async function fetchChatGroupUsers(group_id: string) {
             },
         });
         const data = await response.json();
+
         return data.data;
     } catch (err) {
         console.log("error", err);

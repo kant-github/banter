@@ -45,7 +45,7 @@ export default function MessageOptionsMenu({
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
       const rect = menuRef.current?.getBoundingClientRect();
-      if (rect && window.innerHeight - rect.bottom < 100) {
+      if (rect && window.innerHeight - rect.bottom < 200) {
         setPositionAbove(true);
       } else {
         setPositionAbove(false);

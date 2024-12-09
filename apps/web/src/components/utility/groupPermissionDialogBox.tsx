@@ -8,13 +8,15 @@ import { GroupChatType } from "types";
 import { toast } from "sonner";
 import { clearCache } from "actions/common";
 import { useSession } from "next-auth/react";
+import { fetchChatGroupUsers } from "fetch/fetchGroups";
 
 interface Props {
     group: GroupChatType;
     setPermissionDialogBox: Dispatch<SetStateAction<boolean>>;
+    setChatGroupUsers: Dispatch<SetStateAction<any[]>>;
 }
 
-export default function ({ setPermissionDialogBox, group }: Props) {
+export default function ({ setPermissionDialogBox, group, setChatGroupUsers }: Props) {
     const [passcode, setPasscode] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const params = useParams();
@@ -37,7 +39,7 @@ export default function ({ setPermissionDialogBox, group }: Props) {
 
     const joinRoomHandler = async () => {
         setLoading(true);
-        
+
         if (group.passcode !== passcode) {
             toast.error("Incorrect passcode");
             setLoading(false);
@@ -49,10 +51,12 @@ export default function ({ setPermissionDialogBox, group }: Props) {
                 user_id: session?.user?.id,
                 group_id: group.id,
             });
-            
+
 
             if (response.data.message === "User is already in the group" || response.data.message === "User added to group successfully") {
                 clearCache("chat-group-users");
+                const updatedChatGroupUsers = await fetchChatGroupUsers(params["id"] as string);
+                setChatGroupUsers(updatedChatGroupUsers);
                 clearCache("recentgroups");
                 localStorage.setItem(params["id"] as string, JSON.stringify(response.data.data));
                 toast.success("Successfully joined the group!");

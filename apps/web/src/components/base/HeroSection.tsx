@@ -8,7 +8,7 @@ export default function () {
         <div className="bg-[#F1F1F1] dark:bg-[#141313] dark:text-gray-400 w-full h-full">
             <div className="flex flex-col items-center justify-center">
                 <div className="mt-12">
-                    <Heading>Real-Time Conversations, Scalable Connections</Heading>
+                    <Heading>Group Chats with scalable Connections</Heading>
                 </div>
                 <div className="w-1/2 mt-8">
                     <p className="text-center font-extralight">Experience seamless, real-time communication with our lightning-fast, Redis-powered chat app, designed to scale effortlessly as your connections grow
@@ -20,9 +20,7 @@ export default function () {
                 <div>
                     <Image className="transform transition-transform duration-300 hover:scale-105" src={"/images/conversation.svg"} width={600} height={600} alt="hero" />
                 </div>
-                <div className="">
-                    <FeatureSection />
-                </div>
+                <FeatureSection />
             </div>
         </div>
     )

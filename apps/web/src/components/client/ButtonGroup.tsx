@@ -4,6 +4,7 @@ import LoginModal from "../base/LoginModal";
 import BlackBtn from "../buttons/BlackBtn";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { WhiteBtn } from "../buttons/WhiteBtn";
 
 
 
@@ -21,7 +22,7 @@ export default function() {
     }
     return (
         <>
-            <BlackBtn onClick={handleStartchattingButton}>Start Chatting</BlackBtn>
+            <WhiteBtn onClick={handleStartchattingButton}>Start Chatting</WhiteBtn>
             <LoginModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
         </>
     )

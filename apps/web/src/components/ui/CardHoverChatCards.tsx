@@ -12,7 +12,6 @@ import { IoEyeOff } from "react-icons/io5";
 import { IoIosCopy } from "react-icons/io";
 import { toast } from "sonner";
 import { GroupChatType, UserType } from "types";
-import Image from "next/image";
 import GroupImage from "./GroupImage";
 
 interface Item {

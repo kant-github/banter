@@ -19,13 +19,11 @@ export default function ChatComponent({ params }: { params: { id: string } }) {
   const [permissionChecked, setPermissionChecked] = useState<boolean>(false); // New
   const { data: session, status } = useSession();
 
-  // Check localStorage for permission
   useEffect(() => {
     const storedData = localStorage.getItem(params.id);
-    setHasPermission(!!storedData); // True if stored
+    setHasPermission(!!storedData);
   }, [params.id]);
 
-  // Fetch data regardless of permission
   useEffect(() => {
     if (status === "loading") {
       return;
@@ -51,7 +49,7 @@ export default function ChatComponent({ params }: { params: { id: string } }) {
         setChatGroupUsers(chatGroupUsersData);
         setChats(chatsData);
 
-        setPermissionChecked(true); // Set after fetch
+        setPermissionChecked(true);
       } catch (error) {
         console.error("Error fetching chat data:", error);
       } finally {
@@ -76,11 +74,14 @@ export default function ChatComponent({ params }: { params: { id: string } }) {
   if (!hasPermission && permissionChecked) {
     return (
       <GroupPermissionDialogBox
+        setChatGroupUsers={setChatGroupUsers}
         group={group}
         setPermissionDialogBox={setHasPermission}
       />
     );
   }
+
+  // debugger
 
   return (
     <div>
