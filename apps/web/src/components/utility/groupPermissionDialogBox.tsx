@@ -34,7 +34,8 @@ export default function ({ setPermissionDialogBox, group, setChatGroupUsers }: P
     }, [params, setPermissionDialogBox]);
 
 
-    const joinRoomHandler = async () => {
+    const joinRoomHandler = async (event: React.FormEvent) => {
+        event.preventDefault();
         setLoading(true);
 
         if (group.passcode !== passcode) {
@@ -72,15 +73,17 @@ export default function ({ setPermissionDialogBox, group, setChatGroupUsers }: P
     return (
         <div className="fixed inset-0 dark:bg-black bg-zinc-300 bg-opacity-200 flex items-center justify-center z-50">
             <div className="bg-white dark:bg-[#262629] dark:text-gray-200 p-6 rounded-lg shadow-lg max-w-xl w-[400px] relative">
-                <p className="text-md font-bold mb-1">Enter Room's Passcode</p>
-                <div className="mt-2">
-                    <InputBox type="password" label="Passcode" input={passcode} setInput={setPasscode} />
-                </div>
-                <div className="mt-4">
-                    <BigBlackButton disabled={loading} onClick={joinRoomHandler}>
-                        {loading ? "Joining..." : "Join"}
-                    </BigBlackButton>
-                </div>
+                <form onSubmit={joinRoomHandler}>
+                    <p className="text-md font-bold mb-1">Enter Room's Passcode</p>
+                    <div className="mt-2">
+                        <InputBox type="password" label="Passcode" input={passcode} setInput={setPasscode} />
+                    </div>
+                    <div className="mt-4">
+                        <BigBlackButton disabled={loading}>
+                            {loading ? "Joining..." : "Join"}
+                        </BigBlackButton>
+                    </div>
+                </form>
             </div>
         </div>
     );

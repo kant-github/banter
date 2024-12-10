@@ -2,7 +2,7 @@ import { GroupChatUserType } from "types";
 import { format, differenceInMinutes, differenceInHours } from "date-fns";
 import Image from "next/image";
 import { useState } from "react";
-import { IoIosOptions } from "react-icons/io";
+import { HiBars4 } from "react-icons/hi2";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import ChatSideBarUserInfo from "../ui/ChatSideBarUserInfo";
 
@@ -35,7 +35,8 @@ export default function ChatSidebar({
               size={18}
             />
           ) : (
-            <IoIosOptions
+            <HiBars4
+
               onClick={hiddenSidebarHandler}
               className="cursor-pointer dark:text-zinc-400 text-zinc-600"
               size={18}
@@ -72,9 +73,9 @@ export default function ChatSidebar({
                     className="flex flex-row items-center gap-x-3 border-[1px] dark:border-gray-600 text-[10px] px-4 bg-white rounded-[8px] transition-shadow dark:hover:shadow-lg hover:shadow-md dark:bg-[#262629] relative"
                   >
                     <ChatSideBarUserInfo user={item} />
-                    
-                      <div className={`${isOnline ? "bg-green-500 animate-pulse glow-effect" : "bg-red-500 animate-pulse red-glow-effect"} text-white rounded-full px-[2.5px] py-[2.5px] absolute right-4 top-3 `}></div>
-                    
+
+                    <div className={`${isOnline ? "bg-green-500 animate-pulse glow-effect" : "bg-red-500 animate-pulse red-glow-effect"} text-white rounded-full px-[2.5px] py-[2.5px] absolute right-4 top-3 `}></div>
+
                     <Image
                       width={34}
                       height={34}
@@ -90,7 +91,7 @@ export default function ChatSidebar({
                         Joined: <i className="font-thin">{joinTimeDisplay}</i>
                       </p>
                     </div>
-                    
+
 
                   </div>
                 );

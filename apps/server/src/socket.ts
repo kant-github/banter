@@ -9,13 +9,11 @@ interface CustomWebSocket extends WebSocket {
   isAlive?: boolean;
 }
 
-// Redis URL
 const REDIS_URL = "rediss://default:AZ0pAAIjcDFiNjIyZmViODQ3NWY0N2NiODNlNjEwN2EzMTE4ZTY2N3AxMA@famous-sloth-40233.upstash.io:6379";
 
 let redisPublisher: ReturnType<typeof createClient>;
 let redisSubscriber: ReturnType<typeof createClient>;
 
-// Function to create Redis client with exponential backoff and error handling
 const createRedisClient = (url: string) => {
   return createClient({
     url,
@@ -205,16 +203,6 @@ export function setupWebSocket(wss: Server) {
     });
 
     ws.on("close", async () => {
-      // await prisma.users.update({
-      //   where: {
-      //     id: Number(userId)
-      //   }, data: {
-      //     isOnline: false,
-      //     lastSeen: new Date()
-      //   }
-      // })
-      console.log(`${ws.userId} is disconnected`);
-
       onlineUsers.delete(Number(userId));
       broadcastOnlineUsers();
     });

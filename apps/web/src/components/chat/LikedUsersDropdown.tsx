@@ -41,12 +41,12 @@ export default function ({ open, setOpen, likedUsers }: Props) {
                 <p className="mx-8 text-xs text-gray-500">
                     See all the users who have upvoted / liked this message below
                 </p>
-                <div className="flex mt-4 flex-col justify-start mx-8 h-[500px] overflow-y-auto text-zinc-600 dark:text-zinc-400">
+                <div className="flex mt-4 flex-col justify-start mx-6 h-[500px] overflow-y-auto text-zinc-600 dark:text-zinc-400">
                     {
                         likedUsers.map((user, index) => (
-                            <div key={index} className="flex flex-col mb-1">
+                            <div key={index} className="flex items-center justify-between py-[10px] pl-4 ml-2 hover:bg-gray-200 dark:hover:bg-[#262629] rounded-[4px] select-none hide-scrollbar">
                                 <div className="text-xs">
-                                    <span>{index + 1 + ". "}</span>
+                                    <span>{index + 1 + ".    "}&nbsp;&nbsp;</span>
                                     <span>{user.username}</span>
                                 </div>
                             </div>

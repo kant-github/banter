@@ -55,7 +55,7 @@ export default function ChatNavTitle({ groupTitle, groupImage, groupId, onlineUs
             </div>
 
             <div className="mr-4 flex items-center justify-center gap-x-6 w-[240px] group">
-                <WhiteBtn onClick={() => router.back()}>
+                <WhiteBtn onClick={() => router.push("/dashboard")}>
                     <IoIosArrowBack size={18} className="stroke-[2px] transition-transform transform group-hover:-translate-x-[1px]" />
                     <span>Home</span>
                 </WhiteBtn>
