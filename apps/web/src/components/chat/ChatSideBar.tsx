@@ -46,8 +46,10 @@ export default function ChatSidebar({
       </span>
 
       <div className="">
-        <div className="text-[10px] font-mono ml-9 mt-[1rem]">
-          {users.length} {participantLabel}
+        <div className={`text-[10px] font-mono ml-9 ${hidden ? "mt-10" : "mt-[1rem]"}`}>
+          {
+            !hidden && <>{users.length} {participantLabel}</>
+          }
         </div>
         <div className="pl-6 flex-grow space-y-4 mt-2">
           {users.length > 0 &&
@@ -70,7 +72,7 @@ export default function ChatSidebar({
               return (
                 <div
                   key={index}
-                  className={`flex flex-row items-center justify-center gap-x-3 border-[1px] dark:border-gray-600 text-[10px] pr-4 pl-2 py-1 min-h-[72px] h-[72px] bg-white rounded-[8px] transition-shadow dark:hover:shadow-lg hover:shadow-md dark:bg-[#262629] relative`}
+                  className={`flex flex-row items-center justify-center gap-x-3 border-[1px] dark:border-gray-600 text-[10px] ${hidden ? "h-[64px]" : "h-[70px] pr-4 pl-2"} bg-white rounded-[8px] transition-shadow dark:hover:shadow-lg hover:shadow-md dark:bg-[#262629] relative`}
                 >
                   {
                     !hidden && <ChatSideBarUserInfo user={item} />
@@ -78,13 +80,24 @@ export default function ChatSidebar({
 
                   {!hidden && <div className={`${isOnline ? "bg-green-500 animate-pulse glow-effect" : "bg-red-500 animate-pulse red-glow-effect"} text-white rounded-full px-[2.5px] py-[2.5px] absolute right-4 top-3 `}></div>}
 
-                  <Image
-                    width={34}
-                    height={34}
-                    alt="logo"
-                    src={item.user.image}
-                    className="rounded-full"
-                  />
+                  {
+                    !hidden ? (<Image
+                      width={34}
+                      height={34}
+                      alt="logo"
+                      src={item.user.image}
+                      className="rounded-full"
+                    />) : (<span className="relative">
+                      <Image
+                        width={34}
+                        height={34}
+                        alt="logo"
+                        src={item.user.image}
+                        className="rounded-full"
+                      />
+                      <div className={`${isOnline ? "bg-green-500" : "bg-red-500"} text-white rounded-full px-[3px] py-[3px] absolute -right-[3px] top-3 border-4 border-[#262629]`}></div>
+                    </span>)
+                  }
                   {
                     !hidden &&
                     <div className="flex flex-col w-full py-2 gap-y-0.5">
