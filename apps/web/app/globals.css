@@ -74,3 +74,15 @@
   .red-glow-effect {
     animation: red-glow 1.5s ease-in-out infinite;
   }
+
+
+  /* This class will hide the scrollbar */
+.scrollbar-hide {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer 10+ */
+}
+
+/* For Webkit-based browsers (Chrome, Safari, Edge) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

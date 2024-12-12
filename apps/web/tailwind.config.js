@@ -5,7 +5,7 @@ module.exports = {
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 		"./pages/**/*.{js,ts,jsx,tsx,mdx}",
 		"./components/**/*.{js,ts,jsx,tsx,mdx}",
-
+		"./styles/**/*.{css}",  // Ensure global styles are included if needed
 		"./src/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
@@ -41,5 +41,7 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate"),
+
+	],
 };
